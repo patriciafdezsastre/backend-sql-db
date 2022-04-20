@@ -52,9 +52,12 @@ public class Vehiculo {
 
     @Column(name = "libre", nullable = false)
     private Boolean libre;
+
+
     public Vehiculo() {
 
     }
+    
     public String getTipo() {
         return this.tipo;
     }
