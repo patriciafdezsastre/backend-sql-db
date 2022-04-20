@@ -63,54 +63,29 @@ public class VehiculoController {
    * @throws ResourceNotFoundException the resource not found exception
    */
   @GetMapping("/vehiculo/{id}")
-  public ResponseEntity<Vehiculo> getVehiculosById(@PathVariable(value = "id") Long vehiculoId)
+  public ResponseEntity<Vehiculo> dejarVehiculosById(@PathVariable(value = "id") Long vehiculoId)
       throws ResourceNotFoundException {
     Vehiculo vehiculo =
         vehiculoRepository
             .findById(vehiculoId)
             .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
 
-    vehiculo.setLibre(false);
+    vehiculo.setLibre(true);
     final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
     return ResponseEntity.ok(updatedVehiculo);
   }
 
-  /**
-   * Create vehiculo vehiculo.
-   *
-   * @param vehiculo the vehiculo
-   * @return the vehiculo
-   */
-  @PostMapping("/vehiculo")
-  public Vehiculo createVehiculo(@Valid @RequestBody Vehiculo vehiculo) {
-    return vehiculoRepository.save(vehiculo);
-  }
-
-  /**
-   * Update vehiculo response entity.
-   *
-   * @param vehiculoId the vehiculo id
-   * @param vehiculoDetails the vehiculo details
-   * @return the response entity
-   * @throws ResourceNotFoundException the resource not found exception
-   */
   @PutMapping("/vehiculo/{id}")
-  public ResponseEntity<Vehiculo> updateVehiculo(
-      @PathVariable(value = "id") Long vehiculoId, @Valid @RequestBody Vehiculo vehiculoDetails)
-      throws ResourceNotFoundException {
-
-    Vehiculo vehiculo =
-        vehiculoRepository
-            .findById(vehiculoId)
-            .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-
-    vehiculo.setId(vehiculoId);
-    vehiculo.setLibre(vehiculoDetails.getLibre());
-    vehiculo.setTipo(vehiculoDetails.getTipo());
-    vehiculo.setLatitud(vehiculoDetails.getLatitud());
-    vehiculo.setLongitud(vehiculoDetails.getLongitud());
-    final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
-    return ResponseEntity.ok(updatedVehiculo);
+    public ResponseEntity<Vehiculo> cogerVehiculosById(@PathVariable(value = "id") Long vehiculoId)
+    throws ResourceNotFoundException {
+      Vehiculo vehiculo =
+          vehiculoRepository
+              .findById(vehiculoId)
+              .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+  
+      vehiculo.setLibre(false);
+      final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
+      return ResponseEntity.ok(updatedVehiculo);
   }
 
   /**
