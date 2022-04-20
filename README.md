@@ -3,19 +3,19 @@
 
 
 
-# Sample REST CRUD API with Spring Boot, Mysql, JPA and Hibernate 
+# HIGO Fullstack
 
 ## Steps to Setup
 
 **1. Clone the application**
 
 ```bash
-https://github.com/givanthak/spring-boot-rest-api-tutorial.git
+https://github.com/aserrano3198/backend-sql-db.git
 ```
 
 **2. Create Mysql database**
 ```bash
-create database user_database
+create database users_database
 ```
 
 **3. Change mysql username and password as per your installation**
@@ -24,18 +24,16 @@ create database user_database
 
 + change `spring.datasource.username` and `spring.datasource.password` as per your mysql installation
 
-**4. Build and run the app using maven**
-
-```bash
-mvn package
-java -jar target/spring-boot-rest-api-tutorial-0.0.1-SNAPSHOT.jar
-
-```
-
-Alternatively, you can run the app without packaging it using -
+**4. Build and run the app**
 
 ```bash
 mvn spring-boot:run
+
+```
+
+
+```bash
+yarn start
 ```
 
 The app will start running at <http://localhost:8080>.
@@ -44,15 +42,7 @@ The app will start running at <http://localhost:8080>.
 
 The app defines following CRUD APIs.
 
-    GET /api/v1/users
-    
-    POST /api/v1/users
-    
-    GET /api/v1/users/{userId}
-    
-    PUT /api/v1/users/{userId}
-    
-    DELETE /api/v1/users/{userId}
+    GET /api/v1/vehiculos/{id}
 
 You can find the tutorial for this application on my blog -
 
