@@ -38,6 +38,12 @@ yarn start
 
 The app will start running at <http://localhost:8080>.
 
+## Add rows to the database
+
+```bash
+INSERT INTO \`users_database\`.\`users\` (\`id\`, \`aparcadook\`, \`latitud\`, \`libre\`, \`longitud\`, \`tipo\`) VALUES (\'2\', 1, \'1222\', 1, \'1222\', \'patinete\');
+```
+
 ## Explore Rest APIs
 
 The app defines following CRUD APIs.
