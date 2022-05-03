@@ -53,7 +53,7 @@ public class VehiculoController {
   public List<Vehiculo> getAllVehiculos() {
     return vehiculoRepository.findAll();
   }
-
+     
   /**
    * Gets vehiculoss by id.
    *
