@@ -28,9 +28,9 @@ export function Bike(props) {
                     <Text style={styles.texto}>Precio: 0,2€/min</Text>
                 </View>
 
-                {/* <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("malAparcado")}>
+                <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("malAparcado")}>
                     <Text style={styles.textButton}>¿Mal aparcado?</Text>
-                </TouchableHighlight> */}
+                </TouchableHighlight>
                 <TouchableHighlight style={styles.button} onPress={() => {
                     props.navigation.navigate("encurso");
                     changeLibre(2);

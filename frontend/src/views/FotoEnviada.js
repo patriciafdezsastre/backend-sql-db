@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
 
-export function noDisponible(props) {
+export function FotoEnviada(props) {
 
     return (
         <View style={styles.container}>
@@ -14,10 +14,16 @@ export function noDisponible(props) {
                 </Text>
             </View>
             <View style={styles.user}>
-                <Image style={{ top: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/sad.png')} />
+                <Image style={{ top: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/happy.png')} />
                 <View style={styles.info}>
-                    <Text style={styles.texto}>Lo sentimos, este vehículo no se encuentra disponible. </Text>
+                    <Text style={styles.texto}>Se ha registrado su aviso y pronto un administrador lo verificará. </Text>
+                    <Text style={styles.texto}>Muchas gracias por su colaboración.</Text>                
                 </View>
+                <TouchableHighlight style={styles.button} onPress={() => {
+                    props.navigation.navigate("Map");
+                }}>
+                    <Text style={styles.textButton}>Volver</Text>
+                </TouchableHighlight>
 
             </View>
         </View>
@@ -53,5 +59,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'Times New Roman'
     },
+    button: {
+        alignSelf: 'center',
+        width: 350,
+        height: 60,
+        bottom: 15,
+        top: 170,
+        borderRadius: 50,
+        backgroundColor: '#333333',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 25
+    },
+    textButton: {
+        color: '#FEFAE0',
+        fontWeight: 'bold',
+        fontFamily: 'AmericanTypewriter-Bold',
+        fontSize: 40
+    }
 });
-export default noDisponible;
+export default FotoEnviada;

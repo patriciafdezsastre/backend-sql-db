@@ -67,13 +67,17 @@ export function Map(props) {
                     >
                         <View style={{ width: 50 }}>
                             <Image source={
-                                marker.libre ? 
+                                marker.libre ?
                                     marker.tipo === Bici ? Bici : Patinete
-                                :   marker.tipo === Bici ? BiciNo : PatineteNo 
-                                } />
+                                    : marker.tipo === Bici ? BiciNo : PatineteNo
+                            } />
                         </View>
                     </Marker>
                 ))}
+                <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("QR")}>
+                    <Text style={styles.textButton} >Leer QR</Text>
+                </TouchableHighlight>
+
             </MapView>
         </View>
     );
@@ -121,6 +125,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'AmericanTypewriter-Bold',
         fontSize: 15
+    },
+    button: {
+        alignSelf: 'center',
+        width: 250,
+        height: 60,
+        top: Dimensions.get("window").height * 0.6,
+        bottom: 15,
+        borderRadius: 50,
+        backgroundColor: '#fefae0',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 25
+    },
+    textButton: {
+        color: '#333333',
+        fontWeight: 'bold',
+        fontFamily: 'AmericanTypewriter-Bold',
+        fontSize: 35
     }
 });
 
