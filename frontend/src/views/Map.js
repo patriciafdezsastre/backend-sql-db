@@ -7,7 +7,12 @@ import { StyleSheet, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { mapStyle } from './mapStyle';
 import { MARKERS_DATA } from './Markers';
-import { default as Bike } from '../assets/bikeMap.png';
+import { default as Bici } from '../assets/vmps/BiciDisp.png';
+import { default as BiciNo } from '../assets/vmps/BiciNoDisp.png';
+import { default as Patinete } from '../assets/vmps/patineteDisp.png';
+import { default as PatineteNo } from '../assets/vmps/patineteNoDisp.png';
+
+import Bike from './Bike';
 
 export function Map(props) {
 
@@ -19,9 +24,21 @@ export function Map(props) {
                     style={{ color: '#333333', fontWeight: 'bold', fontFamily: 'Baskerville-Bold', fontSize: 30 }}>
                     Hi-Go!
                 </Text>
-                <TouchableHighlight onPress={() => props.navigation.navigate("User")}>
-                    <Image style={{ width: 50, height: 50, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
-                </TouchableHighlight>
+                <View style={styles.profiles}>
+                    <TouchableHighlight onPress={() => props.navigation.navigate("User")}>
+                        <Image style={{ width: 50, height: 50, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
+                    </TouchableHighlight>
+                    <View style={styles.admin}>
+                        <TouchableHighlight onPress={() => props.navigation.navigate("Admin")}>
+                            <View style={styles.admin}>
+                                <Image style={{ width: 50, height: 50, alignItems: 'center' }} source={require('../assets/admin.png')} />
+                                <View style={styles.conTexto}>
+                                    <Text style={styles.texto}>Admin</Text>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                    </View>
+                </View>
             </View>
 
             <MapView
@@ -43,13 +60,17 @@ export function Map(props) {
                             latitude: marker.ubicacion[0],
                             longitude: marker.ubicacion[1],
                         }}
-                        onPress= {() => marker.libre? (marker.tipo === Bike ? props.navigation.navigate("Bike") : props.navigation.navigate("Patinete")): props.navigation.navigate("noDisponible")}
+                        onPress={() => marker.libre ? (marker.tipo === Bici ? props.navigation.navigate("BikeInfo") : props.navigation.navigate("PatineteInfo")) : props.navigation.navigate("noDisponible")}
                         // onPress={() => marker.tipo === Bike ? props.navigation.navigate("Bike") : props.navigation.navigate("Patinete")}
                         style={styles.marker}
-                        // opacity={marker.libre ? 1.0 : 0.0}
+                    // opacity={marker.libre ? 1.0 : 0.0}
                     >
                         <View style={{ width: 50 }}>
-                            <Image source={marker.tipo} />
+                            <Image source={
+                                marker.libre ? 
+                                    marker.tipo === Bici ? Bici : Patinete
+                                :   marker.tipo === Bici ? BiciNo : PatineteNo 
+                                } />
                         </View>
                     </Marker>
                 ))}
@@ -78,6 +99,28 @@ const styles = StyleSheet.create({
     },
     marker: {
         width: 500
+    },
+    profiles: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    admin: {
+        alignItems: 'center',
+        flexDirection: 'column'
+    },
+    conTexto: {
+        top: 5,
+        borderRadius: 50,
+        padding: 5,
+        backgroundColor: '#333333',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    texto: {
+        color: '#FEFAE0',
+        fontWeight: 'bold',
+        fontFamily: 'AmericanTypewriter-Bold',
+        fontSize: 15
     }
 });
 
