@@ -6,7 +6,6 @@ import { View, Text, TextInput, TouchableHighlight, Image } from 'react-native';
 import { StyleSheet, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { mapStyle } from './mapStyle';
-import { MARKERS_DATA } from './Markers';
 import { default as Bici } from '../assets/vmps/BiciDisp.png';
 import { default as BiciNo } from '../assets/vmps/BiciNoDisp.png';
 import { default as Patinete } from '../assets/vmps/patineteDisp.png';
@@ -85,7 +84,7 @@ export function Map(props) {
                                 latitude: marker.ubicacion[0],
                                 longitude: marker.ubicacion[1],
                             }}
-                            onPress={() => marker.libre ? (marker.tipo === Bici ? props.navigation.navigate("BikeInfo") : props.navigation.navigate("PatineteInfo")) : props.navigation.navigate("noDisponible")}
+                            onPress={() => marker.libre ? (marker.tipo === 'bike' ? props.navigation.navigate("BikeInfo") : props.navigation.navigate("PatineteInfo")) : props.navigation.navigate("noDisponible")}
                             // onPress={() => marker.tipo === Bike ? props.navigation.navigate("Bike") : props.navigation.navigate("Patinete")}
                             style={styles.marker}
                         // opacity={marker.libre ? 1.0 : 0.0}
@@ -93,8 +92,8 @@ export function Map(props) {
                             <View style={{ width: 50 }}>
                                 <Image source={
                                     marker.libre ?
-                                        marker.tipo === Bici ? Bici : Patinete
-                                        : marker.tipo === Bici ? BiciNo : PatineteNo
+                                        marker.tipo === 'bike' ? Bici : Patinete
+                                        : marker.tipo === 'bike' ? BiciNo : PatineteNo
                                 } />
                             </View>
                         </Marker>
