@@ -14,7 +14,7 @@ export function QR(props) {
                 </Text>
             </View>
 
-            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("encurso")}>
+            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Bike")}>
                 <Text style={styles.textButton}>Utilizar</Text>
             </TouchableHighlight>
 
