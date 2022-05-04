@@ -7,7 +7,7 @@ export function Bike(props) {
 
     // put cambia el estado a no libre
     async function changeLibre(id) {
-        const res = await axios.put("http://192.168.0.24:8080/api/v1/vehiculo/1");
+        const res = await axios.put("http://192.168.1.186:8080/api/v1/vehiculo/1");
         console.log(res.data);
     }
 

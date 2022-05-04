@@ -15,14 +15,17 @@ import { default as PatineteNo } from '../assets/vmps/patineteNoDisp.png';
 export function Map(props) {
     // get todos los vehiculos
     const [loading, setLoading] = useState(true);
-    const MARKERS_DATA = [];
+    let MARKERS_DATA = [];
     useEffect(() => {
         const fetchData = async () => {
             try {
+<<<<<<< HEAD
                 const res = await axios.get("http://10.151.177.207:8080/api/v1/vehiculos");
+=======
+                const res = await axios.get("http://192.168.1.186:8080/api/v1/vehiculos");
+>>>>>>> c43159783d09dda7cde4e3454b3a3ce4faf277b6
                 console.log(res.data);
                 MARKERS_DATA = res;
-                print(MARKERS_DATA);
                 setLoading(false);
             } catch (error) {
                 console.log("error", error);
