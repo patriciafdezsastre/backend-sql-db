@@ -12,9 +12,14 @@ import { default as BiciNo } from '../assets/vmps/BiciNoDisp.png';
 import { default as Patinete } from '../assets/vmps/patineteDisp.png';
 import { default as PatineteNo } from '../assets/vmps/patineteNoDisp.png';
 
-import Bike from './Bike';
-
 export function Map(props) {
+
+    // get los datos del vehículo
+    async function getDatos(id) {
+        const res = await axios.get("http://192.168.0.24:8080/api/v1/vehiculo/1");
+        console.log(res.data);
+        return res.data;
+    }
 
     return (
         <View style={styles.container}>
