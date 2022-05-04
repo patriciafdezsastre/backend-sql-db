@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, Image } from 'react-native';
 
@@ -18,7 +19,7 @@ export function Map(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://192.168.0.24:8080/api/v1/vehiculos");
+                const res = await axios.get("http://10.151.177.207:8080/api/v1/vehiculos");
                 console.log(res.data);
                 MARKERS_DATA = res;
                 print(MARKERS_DATA);
