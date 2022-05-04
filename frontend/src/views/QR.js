@@ -1,9 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import {BarCodeScanner} from 'expo-barcode-scanner';
 
 export function QR(props) {
+    const [hasPermission, setHasPermission] = useState(null);
+    const [scanned, setScanned] = useState(false);
 
+    useEffect(()=> {
+        (async () => {
+            const { status } = await BarCodeScanner.requestPermissionsAsync();
+            setHasPermission(status === 'granted');
+        })();
+    }, []);
+
+    const handleBarCodeScanned = ({ type, data }) =>{
+        setScanned(true);
+        alert(`Bar Code With Type ${type} and data ${Linking.openURL(`${data}`)} has been scanned`);
+    }
+    if (hasPermission === null){
+        return  <Text>Requesting for Camera Permission</Text>
+    }
+    if (hasPermission === false){
+        return <Text>No Access to Camera</Text>
+    }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -13,6 +34,10 @@ export function QR(props) {
                     Hi-Go!
                 </Text>
             </View>
+            <BarCodeScanner 
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={StyleSheet.absoluteFillObject}
+            />
 
             <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("encurso")}>
                 <Text style={styles.textButton}>Utilizar</Text>
