@@ -1,9 +1,53 @@
 import React, { useEffect, useState } from 'react';
-
-import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image, Dimensions } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export function QR(props) {
+    const [hasPermission, setHasPermission] = useState(null);
+    const [scanned, setScanned] = useState(false);
+    const [text, setText] = useState('Not yet scanned');
 
+    const askForCameraPermission = () => {
+        (async () => {
+            const { status } = await BarCodeScanner.requestPermissionsAsync();
+            setHasPermission(status == 'granted')
+        })()
+    }
+
+    // Request Camera Permission
+    useEffect(() => {
+        askForCameraPermission();
+    }, []);
+
+    // What happens when we scan the bar code
+    const handleBarCodeScanner = ({ type, data }) => {
+        setScanned(true);
+        setText(data);
+        console.log('Type: ' + type + '\nData: ' + data)
+        props.navigation.navigate("Bike", { id: 2 });
+    }
+
+    // Check permissions and return the screens
+    if (hasPermission === null) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.texto}>Requesting for camera permission</Text>
+            </View>
+        )
+    }
+
+    if (hasPermission === false) {
+        return (
+            <View style={styles.container}>
+                <Text style ={styles.texto}>No access to camera</Text>
+                <TouchableHighlight style={styles.button} onPress={() => askForCameraPermission()}>
+                    <Text style={styles.textButton}>Allow Camera</Text>
+                </TouchableHighlight>
+            </View>
+        )
+    }
+
+    // Return the view
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -13,21 +57,19 @@ export function QR(props) {
                     Hi-Go!
                 </Text>
             </View>
-
-            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Bike")}>
-                <Text style={styles.textButton}>Utilizar</Text>
-            </TouchableHighlight>
-
+            <View style={styles.content}>
+                <BarCodeScanner
+                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanner}
+                    style={styles.qr} />
+                <Text style={styles.texto}>Aún no se ha escaneado nada</Text>
+            </View>
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#3EA9FA',
-        // alignItems: 'center',
-        justifyContent: 'space-around',
         padding: 15
     },
     header: {
@@ -35,27 +77,28 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    bike: {
-        backgroundColor: '#FEFAE0',
-        height: 700
-    },
-    info: {
-        left: 70,
-        top: 70,
-        marginBottom: 20
-    },
     texto: {
         marginBottom: 5,
         fontSize: 25,
         fontWeight: 'bold',
-        fontFamily: 'Times New Roman'
+        fontFamily: 'Times New Roman',
+        top: 100,
+    },
+    content: {
+        alignItems: 'center'
+    }, 
+    qr: {
+        top:50,
+        height: 300, 
+        width: 300, 
+        alignContent: 'center'
     },
     button: {
         alignSelf: 'center',
         width: 350,
         height: 60,
         bottom: 15,
-        // top: 170,
+        top: 170,
         borderRadius: 50,
         backgroundColor: '#333333',
         alignItems: 'center',
@@ -67,6 +110,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'AmericanTypewriter-Bold',
         fontSize: 40
+    },
+    mal: {
+        marginBottom: 5,
+        fontSize: 25,
+        fontWeight: 'bold',
+        fontFamily: 'Times New Roman',
+        color: '#F9C74F',
+        left: 5,
+        alignItems: 'center'
     }
 });
 export default QR;
