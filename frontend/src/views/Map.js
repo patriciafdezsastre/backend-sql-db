@@ -37,7 +37,9 @@ export function Map(props) {
     }
 
     if (loading) return (
-        <View><Text>Loading...</Text></View>
+        <View>
+            <Text>Loading...</Text>
+        </View>
     );
     else {
         return (
@@ -79,10 +81,10 @@ export function Map(props) {
                 >
                     {MARKERS_DATA.map((marker) => (
                         <Marker
-                            key={marker.idveh}
+                            key={marker.id}
                             coordinate={{
-                                latitude: marker.ubicacion[0],
-                                longitude: marker.ubicacion[1],
+                                latitude: marker.latitud,
+                                longitude: marker.longitud,
                             }}
                             onPress={() => marker.libre ? (marker.tipo === 'bike' ? props.navigation.navigate("BikeInfo") : props.navigation.navigate("PatineteInfo")) : props.navigation.navigate("noDisponible")}
                             // onPress={() => marker.tipo === Bike ? props.navigation.navigate("Bike") : props.navigation.navigate("Patinete")}
