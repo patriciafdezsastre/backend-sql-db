@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, Image } from 'react-native';
 
@@ -14,14 +15,13 @@ import { default as PatineteNo } from '../assets/vmps/patineteNoDisp.png';
 export function Map(props) {
     // get todos los vehiculos
     const [loading, setLoading] = useState(true);
-    const MARKERS_DATA = [];
+    let MARKERS_DATA = [];
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://192.168.0.24:8080/api/v1/vehiculos");
+                const res = await axios.get("http://192.168.1.186:8080/api/v1/vehiculos");
                 console.log(res.data);
                 MARKERS_DATA = res;
-                print(MARKERS_DATA);
                 setLoading(false);
             } catch (error) {
                 console.log("error", error);
