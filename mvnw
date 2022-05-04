@@ -60,7 +60,7 @@ case "`uname`" in
       if [ -x "/usr/libexec/java_home" ]; then
         export JAVA_HOME="`/usr/libexec/java_home`"
       else
-        export JAVA_HOME="/Library/Java/Home"
+        export JAVA_HOME="C:\Program Files\Java\jdk-11.0.1"
       fi
     fi
     ;;
