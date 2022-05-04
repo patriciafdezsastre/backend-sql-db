@@ -1,6 +1,7 @@
 package com.staxrt.tutorial.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -30,7 +31,10 @@ public class User {
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@OneToMany(mappedBy = "viajes")
+	private List<Viajes> viajes;
 	private Set<Role> roles = new HashSet<>();
+	
 	public User() {
 	}
 	public User(String username, String email, String password) {

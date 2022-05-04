@@ -30,12 +30,12 @@ import javax.persistence.*;
  * @author Givantha Kalansuriya
  */
 @Entity
-@Table(name = "users")
+@Table(name = "vehiculos")
 @EntityListeners(AuditingEntityListener.class)
 public class Vehiculo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "aparcadoOK", nullable = false)
