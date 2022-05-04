@@ -30,7 +30,7 @@ import javax.persistence.*;
  * @author Givantha Kalansuriya
  */
 @Entity
-@Table(name = "users")
+@Table(name = "vehiculos")
 @EntityListeners(AuditingEntityListener.class)
 public class Vehiculo {
 
