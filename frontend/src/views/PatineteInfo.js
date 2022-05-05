@@ -7,19 +7,30 @@ export function PatineteInfo({navigation, route}) {
     const id = route.params.id;
     const [loading, setLoading] = useState(true);
     const [vehiculo, setVehiculo] = useState();
+    const [precio, setPrecio] = useState();
+
     // get info
     useEffect(() => {
-        const fetchData = async () => {
+        const getVehiculo = async () => {
             try {
-                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/2");
+                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/"+id);
                 console.log(res.data);
                 setVehiculo(res.data);
-                setLoading(false);
             } catch (error) {
                 console.log("error", error);
             }
         };
-        fetchData();
+        const getPrecio = async () => {
+            try {
+                const res = await axios.get("http://192.168.31.213:8080/api/v1/");
+                setPrecio(res.data);
+                setLoading(false);
+            } catch(error) {
+                console.log("error ", error);
+            }
+        }
+        getVehiculo();
+        getPrecio();
     }, []);
 
     if (loading) return (
@@ -47,7 +58,7 @@ export function PatineteInfo({navigation, route}) {
                             </View>
                         }
                         <Text style={styles.texto}>Distancia: XXX</Text>
-                        <Text style={styles.texto}>Precio: XXX</Text>
+                        <Text style={styles.texto}>Precio: {precio} €/min</Text>
                     </View>
 
             </View>

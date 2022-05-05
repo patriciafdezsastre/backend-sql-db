@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image, Dimensions } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import axios from 'axios';
 
 export function QR(props) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    const [text, setText] = useState('Not yet scanned');
+    const [vehiculo, setVehiculo] = useState();
+    const [tipoVehiculo, setTipoVehiculo] = useState();
+
+    const getVehiculo = async (id) => {
+        try {
+            const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/"+id);
+            console.log(res.data);
+            setVehiculo(res.data);
+            const tipo = vehiculo.map(x => { console.log(x.tipo); return x.tipo});
+            setTipoVehiculo(tipo);
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
 
     const askForCameraPermission = () => {
         (async () => {
@@ -22,9 +36,11 @@ export function QR(props) {
     // What happens when we scan the bar code
     const handleBarCodeScanner = ({ type, data }) => {
         setScanned(true);
-        setText(data);
         console.log('Type: ' + type + '\nData: ' + data)
-        props.navigation.navigate("Bike", { id: 2 });
+        getVehiculo(data);
+        tipoVehiculo === 'bike' ? 
+            props.navigation.navigate("Bike", { id: data }) : 
+            props.navigation.navigate("Patinete", { id: data});
     }
 
     // Check permissions and return the screens

@@ -11,7 +11,7 @@ export function BikeInfo({ navigation, route }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/2");
+                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/"+id);
                 console.log(res.data);
                 setVehiculo(res.data);
                 setLoading(false);
@@ -23,8 +23,8 @@ export function BikeInfo({ navigation, route }) {
     }, []);
 
     // put cambia el estado a no libre
-    async function changeLibre(id) {
-        const res = await axios.put("http://192.168.1.186:8080/api/v1/vehiculo/2");
+    async function changeLibre() {
+        const res = await axios.put("http://192.168.1.186:8080/api/v1/vehiculo/"+id);
         console.log(res.data);
     }
 
@@ -61,7 +61,7 @@ export function BikeInfo({ navigation, route }) {
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.button} onPress={() => {
                         navigation.navigate("encurso");
-                        changeLibre(2);
+                        changeLibre();
                     }}>
                         <Text style={styles.textButton}>Utilizar</Text>
                     </TouchableHighlight>

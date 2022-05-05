@@ -82,8 +82,8 @@ export function Map(props) {
                             }}
                             onPress={() => marker.libre ? 
                                 (marker.tipo === "bike" ? 
-                                    props.navigation.navigate("BikeInfo", {id: marker.id}) : 
-                                    props.navigation.navigate("PatineteInfo", {id: marker.id})
+                                    props.navigation.navigate("BikeInfo", {id: marker.id, tipo: marker.tipo}) : 
+                                    props.navigation.navigate("PatineteInfo", {id: marker.id, tipo: marker.tipo})
                                 ) : props.navigation.navigate("noDisponible")}
                             style={styles.marker}
                         >
@@ -96,7 +96,6 @@ export function Map(props) {
                             </View>
                         </Marker>
                     ))}
-                    {/* <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Bike", {id: 2})}> */}
                     <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("QR")}>
                         <Text style={styles.textButton} >Leer QR</Text>
                     </TouchableHighlight>
