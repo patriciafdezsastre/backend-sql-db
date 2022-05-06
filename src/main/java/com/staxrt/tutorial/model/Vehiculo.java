@@ -22,95 +22,106 @@
 
 // import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-// import javax.persistence.*;
+// // import javax.persistence.*;
 
-/**
- * The type Vehiculo.
- *
- * @author Givantha Kalansuriya
- */
-// @Entity
-// @Table(name = "users")
-// @EntityListeners(AuditingEntityListener.class)
-// public class Vehiculo {
+// /**
+//  * The type Vehiculo.
+//  *
+//  * @author Givantha Kalansuriya
+//  */
+// <<<<<<< HEAD
+// // @Entity
+// // @Table(name = "users")
+// // @EntityListeners(AuditingEntityListener.class)
+// // public class Vehiculo {
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.AUTO)
-//     private long id;
+// //     @Id
+// //     @GeneratedValue(strategy = GenerationType.AUTO)
+// //     private long id;
+// =======
+// // @Entity
+// // @Table(name = "vehiculos")
+// // @EntityListeners(AuditingEntityListener.class)
+// // public class Vehiculo {
 
-//     @Column(name = "aparcadoOK", nullable = false)
-//     private Boolean aparcadoOk;;
+// //     @Id
+// // 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+// //     private long id;
+// // >>>>>>> d5c2216c8b11433185df327d43382dacd54dacee
 
-//     @Column(name = "tipo", nullable = false)
-//     private String tipo;
+// //     @Column(name = "aparcadoOK", nullable = false)
+// //     private Boolean aparcadoOk;;
 
-//     @Column(name = "latitud", nullable = false)
-//     private long latitud;
+// //     @Column(name = "tipo", nullable = false)
+// //     private String tipo;
 
-//     @Column(name = "longitud", nullable = false)
-//     private long longitud;
+// //     @Column(name = "latitud", nullable = false)
+// //     private long latitud;
 
-//     @Column(name = "libre", nullable = false)
-//     private Boolean libre;
+// //     @Column(name = "longitud", nullable = false)
+// //     private long longitud;
+
+// //     @Column(name = "libre", nullable = false)
+// //     private Boolean libre;
 
 
-//     public Vehiculo() {
+// //     public Vehiculo() {
 
-//     }
+// //     }
     
-//     public String getTipo() {
-//         return this.tipo;
-//     }
+// //     public String getTipo() {
+// //         return this.tipo;
+// //     }
 
-//     public void setTipo(String tipo) {
-//         this.tipo = tipo;
-//     }
+// //     public void setTipo(String tipo) {
+// //         this.tipo = tipo;
+// //     }
 
-//     public long getId() {
-//         return this.id;
-//     }
+// //     public long getId() {
+// //         return this.id;
+// //     }
 
-//     public void setId(long id) {
-//         this.id = id;
-//     }
+// //     public void setId(long id) {
+// //         this.id = id;
+// //     }
 
-//     public boolean getAparcadoOk() {
-//         return this.aparcadoOk;
-//     }
+// //     public boolean getAparcadoOk() {
+// //         return this.aparcadoOk;
+// //     }
 
-//     public void setAparcadoOk(boolean aparcadoOk) {
-//         this.aparcadoOk = aparcadoOk;
-//     }
+// //     public void setAparcadoOk(boolean aparcadoOk) {
+// //         this.aparcadoOk = aparcadoOk;
+// //     }
     
 
-//     public boolean getLibre() {
-//         return this.libre;
-//     }
+// //     public boolean getLibre() {
+// //         return this.libre;
+// //     }
 
-//     public void setLibre(boolean libre) {
-//         this.libre = libre;
-//     }
+// //     public void setLibre(boolean libre) {
+// //         this.libre = libre;
+// //     }
 
-//     public long getLatitud() {
-//         return this.latitud;
-//     }
+// //     public long getLatitud() {
+// //         return this.latitud;
+// //     }
 
-//     public void setLatitud(long latitud) {
-//         this.latitud = latitud;
-//     }
+// //     public void setLatitud(long latitud) {
+// //         this.latitud = latitud;
+// //     }
 
-//     public long getLongitud() {
-//       return this.longitud;
-//   }
+// //     public long getLongitud() {
+// //       return this.longitud;
+// //   }
 
-//   public void setLongitud(long longitud) {
-//       this.longitud = longitud;
-//   }
+// //   public void setLongitud(long longitud) {
+// //       this.longitud = longitud;
+// //   }
 
 
-// }
+// // }
 
-// /* use users_database;
-// SHOW TABLES;
-// SELECT * FROM users;
-// */
+// // /* use users_database;
+// // SHOW TABLES;
+// // SELECT * FROM users;
+// // */
