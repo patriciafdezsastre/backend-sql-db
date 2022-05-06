@@ -20,7 +20,7 @@ public class JwtResponse {
 
   public String getAccessToken() {
     return token;
-  }
+  } 
 
   public void setAccessToken(String accessToken) {
     this.token = accessToken;

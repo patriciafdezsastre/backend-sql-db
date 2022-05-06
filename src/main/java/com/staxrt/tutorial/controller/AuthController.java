@@ -82,7 +82,7 @@ public class AuthController {
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
-				switch (role) {
+				switch (role) { 
 				case "admin":
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -99,7 +99,7 @@ public class AuthController {
 					roles.add(userRole);
  				}
  			});
- 		}
+ 		} 
  		user.setRoles(roles);
  		userRepository.save(user);
  		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

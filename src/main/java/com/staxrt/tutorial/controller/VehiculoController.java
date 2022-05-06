@@ -18,92 +18,92 @@
  *
  */
 
-package com.staxrt.tutorial.controller;
+// package com.staxrt.tutorial.controller;
 
-import com.staxrt.tutorial.exception.ResourceNotFoundException;
-import com.staxrt.tutorial.model.Vehiculo;
-import com.staxrt.tutorial.repository.VehiculoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+// import com.staxrt.tutorial.exception.ResourceNotFoundException;
+// import com.staxrt.tutorial.model.Vehiculo;
+// import com.staxrt.tutorial.repository.VehiculoRepository;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.*;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+// import java.util.HashMap;
+// import java.util.List;
+// import java.util.Map;
 
-/**
- * The type Vehiculo controller.
- *
- * @author Givantha Kalansuriya
- */
-@RestController
-@RequestMapping("/api/v1")
-public class VehiculoController {
+// /**
+//  * The type Vehiculo controller.
+//  *
+//  * @author Givantha Kalansuriya
+//  */
+// @RestController
+// @RequestMapping("/api/v1")
+// public class VehiculoController {
 
-  @Autowired
-  private VehiculoRepository vehiculoRepository;
+//   @Autowired
+//   private VehiculoRepository vehiculoRepository;
 
-  /**
-   * Get all vehiculos list.
-   *
-   * @return the list
-   */
-  @GetMapping("/vehiculos")
-  public List<Vehiculo> getAllVehiculos() {
-    return vehiculoRepository.findAll();
-  }
+//   /**
+//    * Get all vehiculos list.
+//    *
+//    * @return the list
+//    */
+//   @GetMapping("/vehiculos")
+//   public List<Vehiculo> getAllVehiculos() {
+//     return vehiculoRepository.findAll();
+//   }
      
-  /**
-   * Gets vehiculoss by id.
-   *
-   * @param vehiculoId the vehiculo id
-   * @return the vehiculos by id
-   * @throws ResourceNotFoundException the resource not found exception
-   */
-  @GetMapping("/vehiculo/{id}")
-  public ResponseEntity<Vehiculo> dejarVehiculosById(@PathVariable(value = "id") Long vehiculoId)
-      throws ResourceNotFoundException {
-    Vehiculo vehiculo =
-        vehiculoRepository
-            .findById(vehiculoId)
-            .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+//   /**
+//    * Gets vehiculoss by id.
+//    *
+//    * @param vehiculoId the vehiculo id
+//    * @return the vehiculos by id
+//    * @throws ResourceNotFoundException the resource not found exception
+//    */
+//   @GetMapping("/vehiculo/{id}")
+//   public ResponseEntity<Vehiculo> dejarVehiculosById(@PathVariable(value = "id") Long vehiculoId)
+//       throws ResourceNotFoundException {
+//     Vehiculo vehiculo =
+//         vehiculoRepository
+//             .findById(vehiculoId)
+//             .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
 
-    vehiculo.setLibre(true);
-    final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
-    return ResponseEntity.ok(updatedVehiculo);
-  }
+//     vehiculo.setLibre(true);
+//     final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
+//     return ResponseEntity.ok(updatedVehiculo);
+//   }
 
-  @PutMapping("/vehiculo/{id}")
-    public ResponseEntity<Vehiculo> cogerVehiculosById(@PathVariable(value = "id") Long vehiculoId)
-    throws ResourceNotFoundException {
-      Vehiculo vehiculo =
-          vehiculoRepository
-              .findById(vehiculoId)
-              .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+//   @PutMapping("/vehiculo/{id}")
+//     public ResponseEntity<Vehiculo> cogerVehiculosById(@PathVariable(value = "id") Long vehiculoId)
+//     throws ResourceNotFoundException {
+//       Vehiculo vehiculo =
+//           vehiculoRepository
+//               .findById(vehiculoId)
+//               .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
   
-      vehiculo.setLibre(false);
-      final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
-      return ResponseEntity.ok(updatedVehiculo);
-  }
+//       vehiculo.setLibre(false);
+//       final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
+//       return ResponseEntity.ok(updatedVehiculo);
+//   }
 
-  /**
-   * Delete vehiculo map.
-   *
-   * @param vehiculoId the vehiculo id
-   * @return the map
-   * @throws Exception the exception
-   */
-  @DeleteMapping("/vehiculo/{id}")
-  public Map<String, Boolean> deleteVehiculo(@PathVariable(value = "id") Long vehiculoId) throws Exception {
-    Vehiculo vehiculo =
-        vehiculoRepository
-            .findById(vehiculoId)
-            .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+//   /**
+//    * Delete vehiculo map.
+//    *
+//    * @param vehiculoId the vehiculo id
+//    * @return the map
+//    * @throws Exception the exception
+//    */
+//   @DeleteMapping("/vehiculo/{id}")
+//   public Map<String, Boolean> deleteVehiculo(@PathVariable(value = "id") Long vehiculoId) throws Exception {
+//     Vehiculo vehiculo =
+//         vehiculoRepository
+//             .findById(vehiculoId)
+//             .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
 
-    vehiculoRepository.delete(vehiculo);
-    Map<String, Boolean> response = new HashMap<>();
-    response.put("deleted", Boolean.TRUE);
-    return response;
-  }
-}
+//     vehiculoRepository.delete(vehiculo);
+//     Map<String, Boolean> response = new HashMap<>();
+//     response.put("deleted", Boolean.TRUE);
+//     return response;
+//   }
+// }
