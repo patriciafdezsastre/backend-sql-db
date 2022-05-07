@@ -43,7 +43,6 @@ public class Viajes {
     //@JoinColumn(name="user_id")
     //private User user;
 
-
     @Column(name = "fecha", nullable = false)
     private Timestamp fecha;
 

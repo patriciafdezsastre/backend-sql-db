@@ -18,31 +18,42 @@
  *
  */
 
-// package com.staxrt.tutorial.controller;
+package com.staxrt.tutorial.controller;
 
-// import com.staxrt.tutorial.exception.ResourceNotFoundException;
-// import com.staxrt.tutorial.model.Vehiculo;
-// import com.staxrt.tutorial.repository.VehiculoRepository;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.*;
+import com.staxrt.tutorial.exception.ResourceNotFoundException;
+import com.staxrt.tutorial.model.Vehiculo;
+import com.staxrt.tutorial.repository.VehiculoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-// import java.util.HashMap;
-// import java.util.List;
-// import java.util.Map;
+/**
+ * The type Vehiculo controller.
+ *
+ * @author Givantha Kalansuriya
+ */
+@RestController
+@RequestMapping("/api/v1")
+public class VehiculoController {
 
-// /**
-//  * The type Vehiculo controller.
-//  *
-//  * @author Givantha Kalansuriya
-//  */
-// @RestController
-// @RequestMapping("/api/v1")
-// public class VehiculoController {
+  @Autowired
+  private VehiculoRepository vehiculoRepository;
 
-//   @Autowired
-//   private VehiculoRepository vehiculoRepository;
+  /**
+   * Get all vehiculos list.
+   *
+   * @return the list
+   */
+  @GetMapping("/vehiculos")
+  public List<Vehiculo> getAllVehiculos() {
+    return vehiculoRepository.findAll();
+  }
 
   /**
    * Get vehiculo by id.
@@ -104,9 +115,9 @@
         .findById(vehiculoId)
         .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
 
-//     vehiculoRepository.delete(vehiculo);
-//     Map<String, Boolean> response = new HashMap<>();
-//     response.put("deleted", Boolean.TRUE);
-//     return response;
-//   }
-// }
+    vehiculoRepository.delete(vehiculo);
+    Map<String, Boolean> response = new HashMap<>();
+    response.put("deleted", Boolean.TRUE);
+    return response;
+  }
+}
