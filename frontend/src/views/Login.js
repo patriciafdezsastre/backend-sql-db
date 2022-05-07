@@ -7,20 +7,28 @@ import { View, Text, TextInput, StyleSheet, TouchableHighlight, Image } from 're
 export function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const[isadmin, setisadmin] =useState(false);
+    const[shown, setShown] = useState(false);
 
     function Submit (){
         
-        axios.post('http://10.151.158.6:8080/api/auth/signin', {username:'p',
-        password:'12345678'})
-        .then(res => {   
-         console.log(res);
-         console.log(res.data);
-          })
+        axios.post('http://192.168.43.12:8080/api/auth/signin', {username: email,
+        password: password})
+        .then(res => {  
+             
+         if(res.data.roles==admin){
+             setisadmin(true);
+         }props.navigation.navigate("Map")
+          }
+         
+          )
           .catch(error=>{
             alert("Error server "+error)
           })
     }
+
+    const switchShown = () => setShown(!shown);
+
 
     return (
         <View style={styles.container}>
@@ -34,16 +42,21 @@ export function Login(props) {
 
             <TextInput
                 style={styles.input}
-                placeholder="Email..."
+                placeholder="Username..."
                 value={email}
                 onChangeText={(text) => setEmail(text)}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Contraseña..."
+                onChange={onChange}
+                type={shown ? 'text' : 'password'}
                 value={password}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={(text) =>{ setPassword(text); onChange}}
             />
+            <TouchableHighlight onClick={switchShown}>
+             {shown ? 'Ocultar' : 'Mostrar'}
+            </TouchableHighlight>
             <TouchableHighlight style={styles.button} onPress={() => Submit()}>
                 <Text style={styles.textButton}>Log in</Text>
             </TouchableHighlight>

@@ -6,10 +6,18 @@ import MyButton from './my_button';
 export function Signup(props) {
 
     const [nombre, setNombre] = useState("");
-    const [apellidos, setApellidos] = useState("");
-    const [telefono, setTelefono] = useState("");
+    // const [apellidos, setApellidos] = useState("");
+    // const [telefono, setTelefono] = useState("");
     const [email, setEmail] = useState("");
+    const [role, setrole] = useState("");
     const [password, setPassword] = useState("");
+
+   function signin(){
+    axios.post('http://localhost:8080/api/auth/signup', {username: nombre, email: email,
+    password: password, role: "user"})
+    props.navigation.navigate("Map")
+
+   }
 
     return (
         <View style={styles.container}>
@@ -24,22 +32,22 @@ export function Signup(props) {
 
             <TextInput
                 style={styles.input}
-                placeholder="Nombre..."
+                placeholder="Username..."
                 value={nombre}
                 onChangeText={(text) => setNombre(text)}
             />
-            <TextInput
+            {/* <TextInput
                 style={styles.input}
                 placeholder="Apellidos..."
                 value={apellidos}
                 onChangeText={(text) => setApellidos(text)}
-            />
-            <TextInput
+            /> */}
+            {/* <TextInput
                 style={styles.input}
                 placeholder="Número de teléfono..."
                 value={telefono}
                 onChangeText={(text) => setTelefono(text)}
-            />
+            /> */}
             <TextInput
                 style={styles.input}
                 placeholder="Email..."
@@ -52,7 +60,7 @@ export function Signup(props) {
                 value={password}
                 onChangeText={(text) => setPassword(text)}
             />
-            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Map")}>
+            <TouchableHighlight style={styles.button} onPress={() => signin()}>
                 <Text style={styles.textButton}>Sign up</Text>
             </TouchableHighlight>
         </View>
