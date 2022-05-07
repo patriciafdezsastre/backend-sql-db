@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
 
-export function encurso(props) {
+export function encurso({ navigation, route }) {
 
     // get cambia el estado a libre
     async function changeLibre(id) {
@@ -26,7 +26,7 @@ export function encurso(props) {
 
             </View>
             <TouchableHighlight style={styles.button} onPress={() => {
-                props.navigation.navigate("resumen");
+                navigation.navigate("resumen");
                 changeLibre();
             }}>
                 <Text style={styles.textButton}>Finalizar</Text>

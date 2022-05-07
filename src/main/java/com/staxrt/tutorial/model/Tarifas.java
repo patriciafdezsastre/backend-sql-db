@@ -41,7 +41,6 @@ public class Tarifas {
     @Column(name = "tarifa", nullable = false)
     private Double tarifa;
 
-
     public Tarifas() {
 
     }

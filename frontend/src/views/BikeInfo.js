@@ -24,7 +24,7 @@ export function BikeInfo({navigation, route}) {
         };
         const getPrecio = async () => {
             try {
-                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/tarifa/"+tipo);
+                const res = await axios.get("http://192.168.31.213:8080/api/v1/tarifas/"+tipo);
                 setPrecio(res.data);
                 setLoading(false);
             } catch(error) {

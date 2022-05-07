@@ -3,19 +3,20 @@ import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image, Dimension
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import axios from 'axios';
 
-export function QR(props) {
+export function QR( {navigation, route}) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    const [vehiculo, setVehiculo] = useState();
     const [tipoVehiculo, setTipoVehiculo] = useState();
 
     const getVehiculo = async (id) => {
         try {
             const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/"+id);
             console.log(res.data);
-            setVehiculo(res.data);
-            const tipo = vehiculo.map(x => { console.log(x.tipo); return x.tipo});
-            setTipoVehiculo(tipo);
+            var type = res.data.tipo;
+            setTipoVehiculo(type);
+            type === "bike" ? 
+                navigation.navigate("Bike", { id: id, tipo: type }) : 
+                navigation.navigate("Patinete", { id: id, tipo: type});
         } catch (error) {
             console.log("error", error);
         }
@@ -38,9 +39,7 @@ export function QR(props) {
         setScanned(true);
         console.log('Type: ' + type + '\nData: ' + data)
         getVehiculo(data);
-        tipoVehiculo === 'bike' ? 
-            props.navigation.navigate("Bike", { id: data }) : 
-            props.navigation.navigate("Patinete", { id: data});
+        console.log('El tipoVehiculo es: '+tipoVehiculo);
     }
 
     // Check permissions and return the screens
