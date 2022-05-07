@@ -7,7 +7,6 @@ import { View, Text, TextInput, TouchableHighlight, Image, Alert } from 'react-n
 import { StyleSheet, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { mapStyle } from './mapStyle';
-import { default as Bike } from '../assets/bikeMap.png';
 import { default as Bici } from '../assets/vmps/BiciDisp.png';
 import { default as BiciNo } from '../assets/vmps/BiciNoDisp.png';
 import { default as Patinete } from '../assets/vmps/patineteDisp.png';
@@ -43,6 +42,12 @@ export function Map(props) {
             isApiSubscribed = false;
         }
     }, []);
+
+    async function getVehiculos() {
+        const res = await axios.get("http://10.151.177.207:8080/api/v1/vehiculo/1");
+        console.log(res.data);
+        return res.data;
+    }
 
     if (loading) return (
         <View>
@@ -109,12 +114,13 @@ export function Map(props) {
                                     props.navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo })
                                 ) : props.navigation.navigate("noDisponible")}
                             style={styles.marker}
+                        // opacity={marker.libre ? 1.0 : 0.0}
                         >
                             <View style={{ width: 50 }}>
                                 <Image source={
                                     marker.libre ?
-                                        marker.tipo === "bike" ? Bici : Patinete
-                                        : marker.tipo === "bike" ? BiciNo : PatineteNo
+                                        marker.tipo === 'bike' ? Bici : Patinete
+                                        : marker.tipo === 'bike' ? BiciNo : PatineteNo
                                 } />
                             </View>
                         </Marker>
