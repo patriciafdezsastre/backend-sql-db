@@ -13,7 +13,7 @@ export function Login(props) {
         
         axios.post('http://10.151.158.6:8080/api/auth/signin', {username:'p',
         password:'12345678'})
-        .then(res => {
+        .then(res => {   
          console.log(res);
          console.log(res.data);
           })
