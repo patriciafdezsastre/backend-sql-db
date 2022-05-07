@@ -24,7 +24,6 @@ export function Map(props) {
 
     useEffect(() => {
         (async () => {
-            console.log("***1")
             const response = await getCurrentLocation()
             if (response.status) {
                 //setLocationMapa(response.location)
@@ -49,6 +48,19 @@ export function Map(props) {
         return res.data;
     }
 
+    const myPlace = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'Point',
+              coordinates: [64.165329, 48.844287],
+            }
+          }
+        ]
+      };
     if (loading) return (
         <View>
             <Text>Loading...</Text>
@@ -136,7 +148,6 @@ export function Map(props) {
 
 //GEOLOCALIZACIÓN DE LOS USUARIOS
 export const getCurrentLocation = async () => {
-    console.log("****2")
     const response = { status: false, location: null }
     const resultPermissions = await Permissions.askAsync(Permissions.LOCATION)
     if (resultPermissions.status === "denied") {
