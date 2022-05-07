@@ -3,35 +3,33 @@ import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
 
-export function PatineteInfo({ navigation, route }) {
+export function Patinete({ navigation, route }) {
     const id = route.params.id;
+    const tipo = route.params.tipo;
+
     const [loading, setLoading] = useState(true);
     const [vehiculo, setVehiculo] = useState();
+    const [precio, setPrecio] = useState();
+
     // get info
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/2");
-                console.log(res.data);
-                setVehiculo(res.data);
+        let isApiSubscribed = true;
+        axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id).then((response) => {
+            if (isApiSubscribed) {
+                setVehiculo(response.data);
+                console.log(vehiculo);
                 setLoading(false);
-            } catch (error) {
-                console.log("error", error);
             }
-        };
-        fetchData();
-    }, []);
-
-    // cambia el estado a no libre
-    async function changeLibre(id) {
-        await fetch(`http://localhost:8080/vehiculos/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
         });
-    }
+        axios.get("http://172.20.10.2:8080/api/v1/tarifas/" + tipo).then((response) => {
+            if (isApiSubscribed) {
+                setPrecio(response.data);
+            }
+        })
+        return () => {
+            isApiSubscribed = false;
+        }
+    }, []);
 
     if (loading) return (
         <View>
@@ -58,12 +56,13 @@ export function PatineteInfo({ navigation, route }) {
                             </View>
                         }
                         <Text style={styles.texto}>Distancia: XXX</Text>
-                        <Text style={styles.texto}>Precio: XXX</Text>
-                        <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("malAparcado")}>
+                        <Text style={styles.texto}>Precio: {precio} €/min</Text>
+
+                        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("malAparcado")}>
                             <Text style={styles.textButton}>¿Mal aparcado?</Text>
                         </TouchableHighlight>
                         <TouchableHighlight style={styles.button} onPress={() => {
-                            props.navigation.navigate("encurso");
+                            navigation.navigate("encurso");
                             changeLibre();
                         }}>
                             <Text style={styles.textButton}>Utilizar</Text>
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
         height: 700
     },
     info: {
-        left: 70,
+        // left: 70,
         top: 70,
         marginBottom: 20
     },
@@ -102,7 +101,8 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         fontSize: 25,
         fontWeight: 'bold',
-        fontFamily: 'Times New Roman'
+        fontFamily: 'Times New Roman',
+        left: 20
     },
     button: {
         alignSelf: 'center',
@@ -123,4 +123,4 @@ const styles = StyleSheet.create({
         fontSize: 40
     }
 });
-export default PatineteInfo;
+export default Patinete;
