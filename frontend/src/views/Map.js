@@ -43,7 +43,7 @@ export function Map(props) {
     }, []);
 
     async function getVehiculos() {
-        const res = await axios.get("http://10.151.177.207:8080/api/v1/vehiculo/1");
+        const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/1");
         console.log(res.data);
         return res.data;
     }
