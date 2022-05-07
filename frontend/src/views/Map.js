@@ -17,16 +17,16 @@ export function Map(props) {
     const [loading, setLoading] = useState(true);
     const [MARKERS_DATA, setMarkers] = useState([]);
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculos");
-                setMarkers(res.data);
+        let isApiSubscribed = true;
+        axios.get("http://172.20.10.2:8080/api/v1/vehiculos").then((response) => {
+            if (isApiSubscribed) {
+                setMarkers(response.data);
                 setLoading(false);
-            } catch (error) {
-                console.log("error", error);
             }
-        };
-        fetchData();
+        });
+        return () => {
+            isApiSubscribed = false;
+        }
     }, []);
 
     if (loading) return (

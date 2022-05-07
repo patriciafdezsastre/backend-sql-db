@@ -13,26 +13,22 @@ export function PatineteInfo({ navigation, route }) {
 
     // get info
     useEffect(() => {
-        const getVehiculo = async () => {
-            try {
-                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculo/" + id);
-                console.log(res.data);
-                setVehiculo(res.data);
-            } catch (error) {
-                console.log("error", error);
-            }
-        };
-        const getPrecio = async () => {
-            try {
-                const res = await axios.get("http://192.168.31.213:8080/api/v1/tarifas/" + tipo);
-                setPrecio(res.data);
+        let isApiSubscribed = true;
+        axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id).then((response) => {
+            if (isApiSubscribed) {
+                setVehiculo(response.data);
+                console.log(vehiculo);
                 setLoading(false);
-            } catch (error) {
-                console.log("error ", error);
             }
+        });
+        axios.get("http://172.20.10.2:8080/api/v1/tarifas/" + tipo).then((response) => {
+            if (isApiSubscribed) {
+                setPrecio(response.data);
+            }
+        })
+        return () => {
+            isApiSubscribed = false;
         }
-        getVehiculo();
-        getPrecio();
     }, []);
 
     if (loading) return (
