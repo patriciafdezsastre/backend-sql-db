@@ -18,7 +18,7 @@ export function Map(props) {
     let MARKERS_DATA = [];
     useEffect(() => {
         let isApiSubscribed = true;
-        axios.get("http://172.20.10.2:8080/api/v1/vehiculos").then((response) => {
+        axios.get("http://10.151.177.207:8080/api/v1/vehiculos").then((response) => {
             if (isApiSubscribed) {
                 setMarkers(response.data);
                 setLoading(false);
