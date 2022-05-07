@@ -14,7 +14,7 @@ export function noDisponible(props) {
                 </Text>
             </View>
             <View style={styles.user}>
-                <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/sad.png')} />
+                <Image style={{ top: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/sad.png')} />
                 <View style={styles.info}>
                     <Text style={styles.texto}>Lo sentimos, este vehículo no se encuentra disponible. </Text>
                 </View>

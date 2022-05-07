@@ -14,6 +14,10 @@ import QR from './src/views/QR';
 import encurso from './src/views/encurso';
 import resumen from './src/views/resumen';
 import noDisponible from './src/views/noDisponible';
+import Admin from './src/views/Admin';
+import BikeInfo from './src/views/BikeInfo';
+import PatineteInfo from './src/views/PatineteInfo';
+import FotoEnviada from './src/views/FotoEnviada';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +38,10 @@ export default function App() {
           <Stack.Screen name="encurso" component={encurso} />
           <Stack.Screen name="resumen" component={resumen} />
           <Stack.Screen name="noDisponible" component={noDisponible} />
+          <Stack.Screen name="Admin" component={Admin} />
+          <Stack.Screen name="BikeInfo" component={BikeInfo} />
+          <Stack.Screen name="PatineteInfo" component={PatineteInfo} />
+          <Stack.Screen name="FotoEnviada" component={FotoEnviada} />
         </Stack.Navigator>
     </NavigationContainer>
   );

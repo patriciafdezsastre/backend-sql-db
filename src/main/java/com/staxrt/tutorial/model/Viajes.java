@@ -39,9 +39,10 @@ public class Viajes {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_viaje;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+    //@ManyToOne
+    //@JoinColumn(name="user_id")
+    //private User user;
+
 
     @Column(name = "fecha", nullable = false)
     private Timestamp fecha;
