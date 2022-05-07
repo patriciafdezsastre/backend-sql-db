@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { View, Text, TextInput, StyleSheet, TouchableHighlight, Image } from 'react-native';
-import MyButton from './my_button';
+
 
 export function Login(props) {
     const [email, setEmail] = useState("");
@@ -9,16 +10,15 @@ export function Login(props) {
 
 
     function Submit (){
-        const user = {  
-            "username" : email,
-           "password" : password
-            
-        }
-        console.log("Valor del usuario"+ user)
-        axios.post("http://localhost:8080/api/auth/signin", {user})
+        
+        axios.post('http://10.151.158.6:8080/api/auth/signin', {username:'patry',
+        password:'12345678'})
         .then(res => {
          console.log(res);
          console.log(res.data);
+          })
+          .catch(error=>{
+            alert("Error server "+error)
           })
     }
 

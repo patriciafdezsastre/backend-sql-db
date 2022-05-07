@@ -3,8 +3,8 @@
   "expoServerPort": 19000,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "webpackServerPort": 19006
+  "expoServerNgrokUrl": "https://zv-uvh.anonymous.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.zv-uvh.anonymous.frontend.exp.direct",
+  "ngrokPid": 7980,
+  "webpackServerPort": null
 }
