@@ -15,12 +15,14 @@ import { default as PatineteNo } from '../assets/vmps/patineteNoDisp.png';
 export function Map(props) {
     // get todos los vehiculos
     const [loading, setLoading] = useState(true);
-    const [MARKERS_DATA, setMarkers] = useState([]);
+    let MARKERS_DATA = [];
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://192.168.31.213:8080/api/v1/vehiculos");
-                setMarkers(res.data);
+                console.log("holi");
+                const res = await axios.get("http://10.151.177.207:8080/api/v1/vehiculos");
+                console.log(res.data);
+                MARKERS_DATA = res;
                 setLoading(false);
             } catch (error) {
                 console.log("error", error);
@@ -28,6 +30,12 @@ export function Map(props) {
         };
         fetchData();
     }, []);
+
+    async function getVehiculos() {
+        const res = await axios.get("http://10.151.177.207:8080/api/v1/vehiculo/1");
+        console.log(res.data);
+        return res.data;
+    }
 
     if (loading) return (
         <View>
@@ -72,7 +80,6 @@ export function Map(props) {
                     }}
                     mapType="standard"
                 >
-                    {console.log(MARKERS_DATA)}
                     {MARKERS_DATA.map((marker) => (
                         <Marker
                             key={marker.id}
@@ -80,18 +87,16 @@ export function Map(props) {
                                 latitude: marker.latitud,
                                 longitude: marker.longitud,
                             }}
-                            onPress={() => marker.libre ? 
-                                (marker.tipo === "bike" ? 
-                                    props.navigation.navigate("BikeInfo", {id: marker.id, tipo: marker.tipo}) : 
-                                    props.navigation.navigate("PatineteInfo", {id: marker.id, tipo: marker.tipo})
-                                ) : props.navigation.navigate("noDisponible")}
+                            onPress={() => marker.libre ? (marker.tipo === 'bike' ? props.navigation.navigate("BikeInfo") : props.navigation.navigate("PatineteInfo")) : props.navigation.navigate("noDisponible")}
+                            // onPress={() => marker.tipo === Bike ? props.navigation.navigate("Bike") : props.navigation.navigate("Patinete")}
                             style={styles.marker}
+                        // opacity={marker.libre ? 1.0 : 0.0}
                         >
                             <View style={{ width: 50 }}>
                                 <Image source={
                                     marker.libre ?
-                                        marker.tipo === "bike" ? Bici : Patinete
-                                        : marker.tipo === "bike" ? BiciNo : PatineteNo
+                                        marker.tipo === 'bike' ? Bici : Patinete
+                                        : marker.tipo === 'bike' ? BiciNo : PatineteNo
                                 } />
                             </View>
                         </Marker>
