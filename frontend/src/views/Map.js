@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { View, Text, TextInput, TouchableHighlight, Image } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, Image, Alert } from 'react-native';
 
 // Mapa google maps
 import { StyleSheet, Dimensions } from 'react-native';
@@ -12,11 +12,25 @@ import { default as BiciNo } from '../assets/vmps/BiciNoDisp.png';
 import { default as Patinete } from '../assets/vmps/patineteDisp.png';
 import { default as PatineteNo } from '../assets/vmps/patineteNoDisp.png';
 
+// Geolocalización usuarios
+import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location'
+
+//FUNCIÓN: MAPA GOOGLE MAPS
 export function Map(props) {
-    // get todos los vehiculos
     const [loading, setLoading] = useState(true);
-    let MARKERS_DATA = [];
+    const [loadingLocation, setLoadingLocation] = useState(true);
+    const [MARKERS_DATA, setMarkers] = useState([]);
+
     useEffect(() => {
+        (async () => {
+            console.log("***1")
+            const response = await getCurrentLocation()
+            if (response.status) {
+                //setLocationMapa(response.location)
+                console.log(response.location)
+            }
+        })()
         let isApiSubscribed = true;
         axios.get("http://10.151.177.207:8080/api/v1/vehiculos").then((response) => {
             if (isApiSubscribed) {
@@ -39,7 +53,7 @@ export function Map(props) {
         <View>
             <Text>Loading...</Text>
         </View>
-    );
+    )
     else {
         return (
             <View style={styles.container}>
@@ -77,7 +91,16 @@ export function Map(props) {
                         longitudeDelta: 0.003,
                     }}
                     mapType="standard"
+                    showsUserLocation={true}
                 >
+                    <MapView.Marker
+                        coordinate={{
+                            latitude: Location.latitude,
+                            longitude: Location.longitude
+                        }}
+                        draggable
+                    />
+
                     {MARKERS_DATA.map((marker) => (
                         <Marker
                             key={marker.id}
@@ -85,8 +108,11 @@ export function Map(props) {
                                 latitude: marker.latitud,
                                 longitude: marker.longitud,
                             }}
-                            onPress={() => marker.libre ? (marker.tipo === 'bike' ? props.navigation.navigate("BikeInfo") : props.navigation.navigate("PatineteInfo")) : props.navigation.navigate("noDisponible")}
-                            // onPress={() => marker.tipo === Bike ? props.navigation.navigate("Bike") : props.navigation.navigate("Patinete")}
+                            onPress={() => marker.libre ?
+                                (marker.tipo === "bike" ?
+                                    props.navigation.navigate("BikeInfo", { id: marker.id, tipo: marker.tipo }) :
+                                    props.navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo })
+                                ) : props.navigation.navigate("noDisponible")}
                             style={styles.marker}
                         // opacity={marker.libre ? 1.0 : 0.0}
                         >
@@ -102,11 +128,31 @@ export function Map(props) {
                     <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("QR")}>
                         <Text style={styles.textButton} >Leer QR</Text>
                     </TouchableHighlight>
-
                 </MapView>
             </View>
         );
     };
+}
+
+//GEOLOCALIZACIÓN DE LOS USUARIOS
+export const getCurrentLocation = async () => {
+    console.log("****2")
+    const response = { status: false, location: null }
+    const resultPermissions = await Permissions.askAsync(Permissions.LOCATION)
+    if (resultPermissions.status === "denied") {
+        alert("Debes dar permisos para la localización.")
+        return response
+    }
+    const position = await Location.getCurrentPositionAsync({})
+    const location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.001
+    }
+    response.status = true
+    response.location = location
+    return response
 }
 
 const styles = StyleSheet.create({
