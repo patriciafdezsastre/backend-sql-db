@@ -7,6 +7,21 @@ export function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+
+    function Submit (){
+        const user = {  
+            "username" : email,
+           "password" : password
+            
+        }
+        console.log("Valor del usuario"+ user)
+        axios.post("http://localhost:8080/api/auth/signin", {user})
+        .then(res => {
+         console.log(res);
+         console.log(res.data);
+          })
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -29,7 +44,7 @@ export function Login(props) {
                 value={password}
                 onChangeText={(text) => setPassword(text)}
             />
-            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Map")}>
+            <TouchableHighlight style={styles.button} onPress={() => Submit()}>
                 <Text style={styles.textButton}>Log in</Text>
             </TouchableHighlight>
 
