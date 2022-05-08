@@ -58,7 +58,7 @@ export function Patinete({ navigation, route }) {
                         <Text style={styles.texto}>Distancia: XXX</Text>
                         <Text style={styles.texto}>Precio: {precio} €/min</Text>
 
-                        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("malAparcado")}>
+                        <TouchableHighlight style={styles.button} onPress={() => {navigation.navigate("malAparcado",  {id:id, tipo:tipo})}}>
                             <Text style={styles.textButton}>¿Mal aparcado?</Text>
                         </TouchableHighlight>
                         <TouchableHighlight style={styles.button} onPress={() => {

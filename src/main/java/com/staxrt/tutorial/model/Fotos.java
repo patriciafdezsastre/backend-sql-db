@@ -48,16 +48,18 @@ public class Fotos {
     @Column(name = "vehiculo_id", nullable = false)
     private long vehiculo_id;
 
-    // @Column(name = "imagen", nullable = false)
-    // private Blob imagen;
+    @Lob
+    @Column(name = "imagen", columnDefinition = "longblob", nullable = false)
+    private Blob imagen;
 
     public Fotos() {
 
     }
 
-    public Fotos(long user_id, long vehiculo_id) {
+    public Fotos(long user_id, long vehiculo_id, Blob imagen) {
         this.user_id = user_id;
         this.vehiculo_id = vehiculo_id;
+        this.imagen = imagen;
     }
     
     //implementar getters y setters
@@ -81,17 +83,17 @@ public class Fotos {
         return this.vehiculo_id;
     }
 
-    // public void setVehiculoId(long vehiculo_id) {
-    //     this.vehiculo_id = vehiculo_id;
-    // }
+    public void setVehiculoId(long vehiculo_id) {
+        this.vehiculo_id = vehiculo_id;
+    }
     
-    // public Blob getImagen() {
-    //     return this.imagen;
-    // }
+    public Blob getImagen() {
+        return this.imagen;
+    }
 
-    // public void setImagen(Blob imagen) {
-    //     this.imagen = imagen;
-    // }
+    public void setImagen(Blob imagen) {
+        this.imagen = imagen;
+    }
 }
 
 /* use users_database;

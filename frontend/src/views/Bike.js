@@ -31,14 +31,6 @@ export function Bike({ navigation, route }) {
         }
     }, []);
 
-    const addFoto = async () => {
-        try {
-            const res = await axios.put("http://172.20.10.2:8080/api/v1/fotos/3245/"+id);
-        } catch (error) {
-            console.log("error ", error);
-        }
-    }
-
     const changeUsado = async () => {
         try {
             const res = await axios.put("http://172.20.10.2:8080/api/v1/vehiculo/"+id);
@@ -76,8 +68,7 @@ export function Bike({ navigation, route }) {
                         <Text style={styles.texto}>Distancia: XXX</Text>
                         <Text style={styles.texto}>Precio: {precio} €/min</Text>
                     </View>
-                    {/* <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("malAparcado")}> */}
-                    <TouchableHighlight style={styles.button} onPress={() => addFoto()}>
+                    <TouchableHighlight style={styles.button} onPress={() => {navigation.navigate("malAparcado",  {id:id, tipo:tipo})}}>
                         <Text style={styles.textButton}>¿Mal aparcado?</Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.button} onPress={() => {
