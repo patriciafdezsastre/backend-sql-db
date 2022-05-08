@@ -14,9 +14,11 @@ import QR from './src/views/QR';
 import encurso from './src/views/encurso';
 import resumen from './src/views/resumen';
 import noDisponible from './src/views/noDisponible';
+import Record from './src/views/Record';
+import ListaViajes from './src/views/ListaViajes';
 
 const Stack = createNativeStackNavigator();
-
+//<Stack.Screen name="Record" component={Record} />
 export default function App() {
   return (
     <NavigationContainer>
@@ -34,6 +36,8 @@ export default function App() {
           <Stack.Screen name="encurso" component={encurso} />
           <Stack.Screen name="resumen" component={resumen} />
           <Stack.Screen name="noDisponible" component={noDisponible} />
+          <Stack.Screen name="Record" component={Record} />
+          <Stack.Screen name="ListaViajes" component={ListaViajes} />
         </Stack.Navigator>
     </NavigationContainer>
   );

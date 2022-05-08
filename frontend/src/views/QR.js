@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react';
 
-import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
-import QRCodeScanner from 'react-native-qrcode-scanner';
+import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image, Button } from 'react-native';
+
 import {BarCodeScanner} from 'expo-barcode-scanner';
+
 
 export function QR(props) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+    const [text, setText] = useState('Not yes scanned')
 
+    const askForCameraPermission = () => {
+        (async() => {
+            const {status} = await BarCodeScanner.requestPermissionsAsync();
+            setHasPermission(status == 'granted')
+        })
+    }
     useEffect(()=> {
-        (async () => {
-            const { status } = await BarCodeScanner.requestPermissionsAsync();
-            setHasPermission(status === 'granted');
-        })();
+        askForCameraPermission();
     }, []);
 
     const handleBarCodeScanned = ({ type, data }) =>{
         setScanned(true);
+        setText(data);
         alert(`Bar Code With Type ${type} and data ${Linking.openURL(`${data}`)} has been scanned`);
     }
     if (hasPermission === null){
         return  <Text>Requesting for Camera Permission</Text>
     }
     if (hasPermission === false){
-        return <Text>No Access to Camera</Text>
+        return (
+            <View style ={styles.container}>
+                <Text>No Access to Camera</Text>
+                <Button title={'Allow Camera'} onPress={askForCameraPermission()}/>
+            </View>
+        )
     }
     return (
         <View style={styles.container}>

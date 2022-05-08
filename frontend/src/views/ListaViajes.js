@@ -2,8 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
 
-export function User(props) {
+//<Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/sad.png')} />
 
+export function ListaViajes(props) {
+    // async function viajesUser(id) {
+    //     const res = await axios.put("http://192.168.0.24:8080/api/v1/vehiculo/1");
+    //     console.log(res.data);
+    // }
+    
+    //quiza moalría que pusiera la info sobre el usuario... En vez de Usuario: El nombre del Usuario.
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -14,28 +21,11 @@ export function User(props) {
                 </Text>
             </View>
             <View style={styles.user}>
-                <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
                 <View style={styles.info}>
-                    <Text style={styles.texto}>Nombre: </Text>
-                    <Text style={styles.texto}>Apellidos: </Text>
-                    <Text style={styles.texto}>Email: </Text>
-                    <Text style={styles.texto}>Contraseña: *****</Text>
+                    <Text style={styles.texto}>Viajes del Usuario  </Text>
                 </View>
-                
-                {/* <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("EditUser")}>
-                    <Text style={styles.textButton}>Editar</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}
-                    // onPress={() => props.navigation.navigate("QR")}
-                    >
-                    <Text style={styles.textButton}>Borrar</Text>
-                </TouchableHighlight> */}
-                
-                <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Record")}>
-                    <Text style={styles.textSU}>Historial</Text>
-                </TouchableHighlight>
-            
             </View>
+
         </View>
     );
 };
@@ -55,11 +45,12 @@ const styles = StyleSheet.create({
     },
     user: {
         backgroundColor: '#FEFAE0',
-        height: 700
+        height: 700,
+        alignItems: 'center'
     },
     info: {
-        left: 70,
-        top: 70,
+        // left: 70,
+        top: 0,
         marginBottom: 20
     },
     texto: {
@@ -80,22 +71,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 25
     },
-    textButton: {
-        color: '#FEFAE0',
-        fontWeight: 'bold',
-        fontFamily: 'AmericanTypewriter-Bold',
-        fontSize: 40
-    },
-    buttonSU: {
-        width: 242,
-        height: 60,
-        bottom: 15,
-        borderRadius: 50,
-        // padding: 15,
-        backgroundColor: '#0567B3',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
     textSU: {
         color: '#FEFAE0',
         fontWeight: 'bold',
@@ -103,4 +78,4 @@ const styles = StyleSheet.create({
         fontSize: 40
     }
 });
-export default User;
+export default ListaViajes;
