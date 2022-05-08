@@ -16,6 +16,10 @@ import resumen from './src/views/resumen';
 import noDisponible from './src/views/noDisponible';
 import Record from './src/views/Record';
 import ListaViajes from './src/views/ListaViajes';
+import Admin from './src/views/Admin';
+import BikeInfo from './src/views/BikeInfo';
+import PatineteInfo from './src/views/PatineteInfo';
+import FotoEnviada from './src/views/FotoEnviada';
 
 const Stack = createNativeStackNavigator();
 //<Stack.Screen name="Record" component={Record} />
@@ -38,6 +42,10 @@ export default function App() {
           <Stack.Screen name="noDisponible" component={noDisponible} />
           <Stack.Screen name="Record" component={Record} />
           <Stack.Screen name="ListaViajes" component={ListaViajes} />
+          <Stack.Screen name="Admin" component={Admin} />
+          <Stack.Screen name="BikeInfo" component={BikeInfo} />
+          <Stack.Screen name="PatineteInfo" component={PatineteInfo} />
+          <Stack.Screen name="FotoEnviada" component={FotoEnviada} />
         </Stack.Navigator>
     </NavigationContainer>
   );

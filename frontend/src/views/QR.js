@@ -1,41 +1,68 @@
 import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image, Dimensions } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import axios from 'axios';
 
-import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image, Button } from 'react-native';
-
-import {BarCodeScanner} from 'expo-barcode-scanner';
-
-
-export function QR(props) {
+export function QR( {navigation, route}) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    const [text, setText] = useState('Not yes scanned')
+    const [tipoVehiculo, setTipoVehiculo] = useState();
+
+    const getVehiculo = async (id) => {
+        try {
+            const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id);
+            console.log(res.data);
+            var type = res.data.tipo;
+            setTipoVehiculo(type);
+            type === "bike" ? 
+                navigation.navigate("Bike", { id: id, tipo: type }) : 
+                navigation.navigate("Patinete", { id: id, tipo: type});
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
 
     const askForCameraPermission = () => {
-        (async() => {
-            const {status} = await BarCodeScanner.requestPermissionsAsync();
+        (async () => {
+            const { status } = await BarCodeScanner.requestPermissionsAsync();
             setHasPermission(status == 'granted')
-        })
+        })()
     }
-    useEffect(()=> {
+
+    // Request Camera Permission
+    useEffect(() => {
         askForCameraPermission();
     }, []);
 
-    const handleBarCodeScanned = ({ type, data }) =>{
+    // What happens when we scan the bar code
+    const handleBarCodeScanner = ({ type, data }) => {
         setScanned(true);
-        setText(data);
-        alert(`Bar Code With Type ${type} and data ${Linking.openURL(`${data}`)} has been scanned`);
+        console.log('Type: ' + type + '\nData: ' + data)
+        getVehiculo(data);
+        console.log('El tipoVehiculo es: '+tipoVehiculo);
     }
-    if (hasPermission === null){
-        return  <Text>Requesting for Camera Permission</Text>
-    }
-    if (hasPermission === false){
+
+    // Check permissions and return the screens
+    if (hasPermission === null) {
         return (
-            <View style ={styles.container}>
-                <Text>No Access to Camera</Text>
-                <Button title={'Allow Camera'} onPress={askForCameraPermission()}/>
+            <View style={styles.container}>
+                <Text style={styles.texto}>Requesting for camera permission</Text>
             </View>
         )
     }
+
+    if (hasPermission === false) {
+        return (
+            <View style={styles.container}>
+                <Text style ={styles.texto}>No access to camera</Text>
+                <TouchableHighlight style={styles.button} onPress={() => askForCameraPermission()}>
+                    <Text style={styles.textButton}>Allow Camera</Text>
+                </TouchableHighlight>
+            </View>
+        )
+    }
+
+    // Return the view
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -45,25 +72,19 @@ export function QR(props) {
                     Hi-Go!
                 </Text>
             </View>
-            <BarCodeScanner 
-                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                style={StyleSheet.absoluteFillObject}
-            />
-
-            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("encurso")}>
-                <Text style={styles.textButton}>Utilizar</Text>
-            </TouchableHighlight>
-
+            <View style={styles.content}>
+                <BarCodeScanner
+                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanner}
+                    style={styles.qr} />
+                <Text style={styles.texto}>Aún no se ha escaneado nada</Text>
+            </View>
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#3EA9FA',
-        // alignItems: 'center',
-        justifyContent: 'space-around',
         padding: 15
     },
     header: {
@@ -71,27 +92,28 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    bike: {
-        backgroundColor: '#FEFAE0',
-        height: 700
-    },
-    info: {
-        left: 70,
-        top: 70,
-        marginBottom: 20
-    },
     texto: {
         marginBottom: 5,
         fontSize: 25,
         fontWeight: 'bold',
-        fontFamily: 'Times New Roman'
+        fontFamily: 'Times New Roman',
+        top: 100,
+    },
+    content: {
+        alignItems: 'center'
+    }, 
+    qr: {
+        top:50,
+        height: 300, 
+        width: 300, 
+        alignContent: 'center'
     },
     button: {
         alignSelf: 'center',
         width: 350,
         height: 60,
         bottom: 15,
-        // top: 170,
+        top: 170,
         borderRadius: 50,
         backgroundColor: '#333333',
         alignItems: 'center',
@@ -103,6 +125,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'AmericanTypewriter-Bold',
         fontSize: 40
+    },
+    mal: {
+        marginBottom: 5,
+        fontSize: 25,
+        fontWeight: 'bold',
+        fontFamily: 'Times New Roman',
+        color: '#F9C74F',
+        left: 5,
+        alignItems: 'center'
     }
 });
 export default QR;

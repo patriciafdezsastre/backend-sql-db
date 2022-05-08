@@ -30,7 +30,7 @@ import javax.persistence.*;
  * @author Givantha Kalansuriya
  */
 @Entity
-@Table(name = "users")
+@Table(name = "vehiculos")
 @EntityListeners(AuditingEntityListener.class)
 public class Vehiculo {
 
@@ -45,10 +45,10 @@ public class Vehiculo {
     private String tipo;
 
     @Column(name = "latitud", nullable = false)
-    private long latitud;
+    private Double latitud;
 
     @Column(name = "longitud", nullable = false)
-    private long longitud;
+    private Double longitud;
 
     @Column(name = "libre", nullable = false)
     private Boolean libre;
@@ -91,19 +91,19 @@ public class Vehiculo {
         this.libre = libre;
     }
 
-    public long getLatitud() {
+    public Double getLatitud() {
         return this.latitud;
     }
 
-    public void setLatitud(long latitud) {
+    public void setLatitud(Double latitud) {
         this.latitud = latitud;
     }
 
-    public long getLongitud() {
+    public Double getLongitud() {
       return this.longitud;
   }
 
-  public void setLongitud(long longitud) {
+  public void setLongitud(Double longitud) {
       this.longitud = longitud;
   }
 
