@@ -62,8 +62,3 @@ public class Tarifas {
         this.nombre_tarifa = nombre_tarifa;
     }
 }
-
-/* use users_database;
-SHOW TABLES;
-SELECT * FROM users;
-*/
