@@ -1,16 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
-import MyButton from './my_button';
+
 
 export function Signup(props) {
 
     const [nombre, setNombre] = useState("");
-    const [apellidos, setApellidos] = useState("");
-    const [telefono, setTelefono] = useState("");
     const [email, setEmail] = useState("");
+   
     const [password, setPassword] = useState("");
+    const role = ["user"]
 
+   function signin(){
+    axios.post('http://192.168.1.127:8080/api/auth/signup', {username: nombre, email: email,
+    password: password,role: ["user"] })
+    .then(res=>{
+       alert(res.data.message)
+    props.navigation.navigate("Map")})
+
+    .catch(error=>{
+        alert(res.data.message)
+      })
+
+   }
+  
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -24,22 +38,11 @@ export function Signup(props) {
 
             <TextInput
                 style={styles.input}
-                placeholder="Nombre..."
+                placeholder="Username..."
                 value={nombre}
                 onChangeText={(text) => setNombre(text)}
             />
-            <TextInput
-                style={styles.input}
-                placeholder="Apellidos..."
-                value={apellidos}
-                onChangeText={(text) => setApellidos(text)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Número de teléfono..."
-                value={telefono}
-                onChangeText={(text) => setTelefono(text)}
-            />
+
             <TextInput
                 style={styles.input}
                 placeholder="Email..."
@@ -52,7 +55,7 @@ export function Signup(props) {
                 value={password}
                 onChangeText={(text) => setPassword(text)}
             />
-            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Map")}>
+            <TouchableHighlight style={styles.button} onPress={() => signin()}>
                 <Text style={styles.textButton}>Sign up</Text>
             </TouchableHighlight>
         </View>

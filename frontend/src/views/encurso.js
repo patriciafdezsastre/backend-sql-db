@@ -3,12 +3,16 @@ import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
 
-export function encurso(props) {
-
+export function encurso({ navigation, route }) {
+    const id = route.params.id;
     // get cambia el estado a libre
-    async function changeLibre(id) {
-        const res = await axios.get("http://192.168.0.24:8080/api/v1/vehiculo/1");
+    async function changeLibre() {
+        try {
+        const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id);
         console.log(res.data);
+        } catch (error) {
+            console.log("error ", error);
+        }
     }
 
     return (
@@ -26,7 +30,7 @@ export function encurso(props) {
 
             </View>
             <TouchableHighlight style={styles.button} onPress={() => {
-                props.navigation.navigate("resumen");
+                navigation.navigate("resumen");
                 changeLibre();
             }}>
                 <Text style={styles.textButton}>Finalizar</Text>

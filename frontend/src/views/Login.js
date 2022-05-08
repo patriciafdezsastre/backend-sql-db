@@ -1,11 +1,41 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { View, Text, TextInput, StyleSheet, TouchableHighlight, Image } from 'react-native';
-import MyButton from './my_button';
+
 
 export function Login(props) {
-    const [email, setEmail] = useState("");
+    const [nombre, setNombre] = useState("");
     const [password, setPassword] = useState("");
+    const[isadmin, setisadmin] =useState(false);
+    const[shown, setShown] = useState(false);
+    
+
+    function Submit (){
+        
+        axios.post('http://192.168.1.127:8080/api/auth/signin', {username: nombre,
+        password: password})
+        .then(res => {  
+            props.navigation.navigate("Map")
+             
+             if(res.data.roles[0]== "ROLE_ADMIN"){
+                setisadmin(true)
+                props.navigation.navigate("Map")
+
+             }
+            
+          } 
+         
+          )  
+          .catch(error=>{
+            alert("Usuario no encontrado")
+            props.navigation.navigate("Home")
+
+          })
+    }
+
+    const switchShown = () => setShown(!shown);
+
 
     return (
         <View style={styles.container}>
@@ -19,17 +49,18 @@ export function Login(props) {
 
             <TextInput
                 style={styles.input}
-                placeholder="Email..."
-                value={email}
-                onChangeText={(text) => setEmail(text)}
+                placeholder="Username..."
+                value={nombre}
+                onChangeText={(text) => setNombre(text)}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Contraseña..."
                 value={password}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={(text) =>{ setPassword(text);}}
             />
-            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Map")}>
+
+            <TouchableHighlight style={styles.button} onPress={() => Submit()}>
                 <Text style={styles.textButton}>Log in</Text>
             </TouchableHighlight>
 

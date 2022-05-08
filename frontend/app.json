@@ -31,7 +31,13 @@
         "googleMaps": {
           "apiKey": "AIzaSyCGknKRoDY5XPqySGMv6YUBHI3FyLa_Iag"
         }
-      }
+      },
+      "permissions": [
+        "LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ],
+      "package": "host.exp.exponent"
     },
     "web": {
       "favicon": "./assets/favicon.png"
