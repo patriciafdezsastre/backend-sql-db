@@ -1,8 +1,35 @@
 import React, { useEffect, useState } from 'react';
 
-import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet, Button } from 'react-native';
+import { Camera } from 'expo-camera';
 
 export function malAparcado(props) {
+    const [hasCameraPermission, setHasCameraPermission] = useState(null);
+    const [camera, setCamera] = useState(null);
+    const [image, setImage] = useState(null);
+    const [taken, setTaken] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            const cameraStatus = await Camera.requestCameraPermissionsAsync();
+            setHasCameraPermission(cameraStatus.status === 'granted');
+        })();
+    }, []);
+
+    const takePicture = async () => {
+        if (camera) {
+            const data = await camera.takePictureAsync(null);
+            setImage(data.uri);
+            setTaken(true);
+        }
+    }
+
+    const repeatPicture = async () => {
+        setTaken(false);
+    }
+    if (hasCameraPermission === false) {
+        return <Text>No Camera Access</Text>;
+    }
 
     return (
         <View style={styles.container}>
@@ -14,18 +41,31 @@ export function malAparcado(props) {
                 </Text>
             </View>
 
-            <View style={styles.bike}>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.textButton}>Capturar</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.textButton}>Repetir foto</Text>
-                </TouchableHighlight>
+            <View style={{ flex: 1 }}>
+                {taken ?
+                    <View style={styles.takenPicture}>
+                        <Image source={{ uri: image }} style={{ height: 450 }} />
+                        <TouchableHighlight style={styles.button} onPress={() => { repeatPicture(); }}>
+                            <Text style={styles.textButton}>Repetir imagen</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={styles.button} onPress={() => { }}>
+                            <Text style={styles.textButton}>Enviar</Text>
+                        </TouchableHighlight>
+                    </View> : <View style={styles.notYet}>
+                        <View style={styles.cameraContainer}>
+                            <Camera ref={ref => setCamera(ref)} style={styles.fixedRatio} type={Camera.Constants.Type.back} ratio={'1:1'} />
+                        </View>
+                        <TouchableHighlight style={styles.buttonTake} onPress={() => { takePicture() }}>
+                            <Text style={styles.textButton}>Take picture</Text>
+                        </TouchableHighlight>
+                    </View>
+                }
+                {/* 
                 <TouchableHighlight style={styles.button} onPress={() => {
                     props.navigation.navigate("FotoEnviada");
                 }}>
                     <Text style={styles.textButton}>Enviar</Text>
-                </TouchableHighlight>
+                </TouchableHighlight> */}
 
             </View>
         </View>
@@ -65,7 +105,19 @@ const styles = StyleSheet.create({
         width: 350,
         height: 60,
         bottom: 15,
-        top: 170,
+        top: 30,
+        borderRadius: 50,
+        backgroundColor: '#333333',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 25
+    },
+    buttonTake: {
+        alignSelf: 'center',
+        width: 350,
+        height: 60,
+        bottom: 15,
+        // top: 30,
         borderRadius: 50,
         backgroundColor: '#333333',
         alignItems: 'center',
@@ -77,6 +129,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'AmericanTypewriter-Bold',
         fontSize: 40
+    },
+    cameraContainer: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    fixedRatio: {
+        flex: 1,
+        aspectRatio: 1
+    },
+    notYet: {
+        height: 600
+    },
+    takenPicture: {
+        justifyContent: 'space-around'
     }
 });
 export default malAparcado;
