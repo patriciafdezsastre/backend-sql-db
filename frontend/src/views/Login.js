@@ -13,7 +13,7 @@ export function Login(props) {
 
     function Submit (){
         
-        axios.post('http://192.168.43.120:8080/api/auth/signin', {username: nombre,
+        axios.post('http://192.168.1.127:8080/api/auth/signin', {username: nombre,
         password: password})
         .then(res => {  
             props.navigation.navigate("Map")
@@ -73,7 +73,7 @@ export function Login(props) {
                 <Text style={styles.textButton}>Log in</Text>
             </TouchableHighlight>
 
-            <Map admin={admin}/>
+            
 
         </View>
     );
