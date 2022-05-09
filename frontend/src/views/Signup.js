@@ -8,8 +8,9 @@ export function Signup(props) {
 
     const [nombre, setNombre] = useState("");
     const [email, setEmail] = useState("");
-   
     const [password, setPassword] = useState("");
+  
+
     const role = ["user"]
 
    function signin(){
@@ -24,6 +25,8 @@ export function Signup(props) {
       })
 
    }
+
+   
   
     return (
         <View style={styles.container}>
@@ -53,8 +56,11 @@ export function Signup(props) {
                 style={styles.input}
                 placeholder="Contraseña..."
                 value={password}
+                secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
             />
+
+            
             <TouchableHighlight style={styles.button} onPress={() => signin()}>
                 <Text style={styles.textButton}>Sign up</Text>
             </TouchableHighlight>

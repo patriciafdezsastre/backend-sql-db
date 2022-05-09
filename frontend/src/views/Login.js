@@ -17,6 +17,7 @@ export function Login(props) {
         password: password})
         .then(res => {  
             props.navigation.navigate("Map")
+
              
              if(res.data.roles[0]== "ROLE_ADMIN"){
                 setisadmin(true)
@@ -37,6 +38,8 @@ export function Login(props) {
     const switchShown = () => setShown(!shown);
 
 
+
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -54,15 +57,23 @@ export function Login(props) {
                 onChangeText={(text) => setNombre(text)}
             />
             <TextInput
+                type="password"
                 style={styles.input}
                 placeholder="Contraseña..."
                 value={password}
+                secureTextEntry={true}
                 onChangeText={(text) =>{ setPassword(text);}}
             />
+
+            <TouchableHighlight style={styles.button} onPress={() => mostrar()}>
+            <Text style={styles.textButton}>Mostrar</Text>
+            </TouchableHighlight>
 
             <TouchableHighlight style={styles.button} onPress={() => Submit()}>
                 <Text style={styles.textButton}>Log in</Text>
             </TouchableHighlight>
+
+            
 
         </View>
     );
