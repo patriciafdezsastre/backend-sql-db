@@ -5,6 +5,7 @@ import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet, Button } 
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { Buffer } from "buffer";
+import {fileToArrayBuffer} from 'file2arraybuffer';
 
 export function malAparcado({ navigation, route }) {
     const id = route.params.id;
@@ -23,14 +24,14 @@ export function malAparcado({ navigation, route }) {
                 return;
             }
             // const result = await ImagePicker.launchCameraAsync({ base64: true });
-            const result = await ImagePicker.launchCameraAsync({ base64: true });
+            const result = await ImagePicker.launchCameraAsync();
             // Explore the result
             // console.log(result);
             if (!result.cancelled) {
                 setPickedImagePath(result.uri);
                 setImagen(result);
                 setImagen64(result.base64);
-                console.log(result.uri);
+                console.log(result);
             }
             if (result.cancelled) {
                 tipo === "bike" ?
@@ -40,28 +41,29 @@ export function malAparcado({ navigation, route }) {
         })();
     }, []);
 
-    function imageUriToByteArray(image) {
+    function imageUriToByteArray(file) {
         return new Promise((resolve, reject) => {
             try {
-                let reader = new FileReader();
-                let fileByteArray = [];
-                reader.readAsArrayBuffer(image);
-
-                /*                 fileToArrayBuffer(image).then((data) => {
-                                    let arrayBuffer = data, array = new Uint8Array(arrayBuffer);
-                                    for (const byte of array) {
-                                        fileByteArray.push(byte);
-                                    }
-                                    resolve(fileByteArray);
-                                }) */
-
-                reader.onload = function () {
+                // let reader = new FileReader();
+                // let fileByteArray = [];
+                //  reader.readAsArrayBuffer(file);
+/*  reader.onload = function () {
                     let arrayBuffer = reader.result, array = new Uint8Array(arrayBuffer);
                     for (const byte of array) {
                         fileByteArray.push(byte);
                     }
                     resolve(fileByteArray);
-                };
+                }; */
+
+                fileToArrayBuffer(file).then((data) => {
+                    let arrayBuffer = data, array = new Uint8Array(arrayBuffer);
+                    for (const byte of array) {
+                        fileByteArray.push(byte);
+                    }
+                    resolve(fileByteArray);
+                })
+
+               
                 // var xhr = new XMLHttpRequest();
                 // xhr.open("GET", pickedImagePath);
                 // xhr.responseType = "arraybuffer";
@@ -81,7 +83,7 @@ export function malAparcado({ navigation, route }) {
     const porfavorfunciona = async () => {
         let your_bytes = Buffer.from(imagen64, "base64");
         setImagenByte(your_bytes);
-        const response = await fetch (pickedImagePath);
+        const response = await fetch(pickedImagePath);
         const dat = await response.blob();
         const filename = pickedImagePath.split('/').pop();
         const ext = pickedImagePath.split('.').pop();
@@ -106,7 +108,7 @@ export function malAparcado({ navigation, route }) {
 
         // const res = await axios.put("http://172.20.10.2:8080/api/v1/fotos/");
         const res = await axios.put('uri', formData, {
-            baseURL: "http://172.20.10.2:8080/api/v1/fotos/"+uri,
+            baseURL: "http://172.20.10.2:8080/api/v1/fotos/" + uri,
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -122,17 +124,23 @@ export function malAparcado({ navigation, route }) {
             // const response = await fetch(pickedImagePath);
             // const blob = await response.blob();
             // let imageByte = imagen === '' ? null : imageUriToByteArray(imagen);
-            porfavorfunciona();
-            const res = await axios.post('uri', formData, {
-                baseURL: baseURL,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            // porfavorfunciona();
+
+            // let imageAsArray = imagen ? await imageUriToByteArray(imagen) : null;
+            let imageAsArray = await fileToArrayBuffer(imagen);
+            console.log('el byte array es: ' + imageAsArray);
+            const res = await axios.post("http://172.20.10.2:8080/api/v1/fotos/" + imageAsArray);
+
+            // const res = await axios.post('uri', formData, {
+            //     baseURL: baseURL,
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //     },
+            // });
             // let your_bytes = Buffer.from(pickedImagePath, "base64");
             // console.log(your_bytes);
             // const res = await axios.put("http://172.20.10.2:8080/api/v1/fotos/" + "3245" + "/" + id + "/" + your_bytes);
-            
+
             // var ref = firebase.storage().ref().child("image.jpg");
             // return ref.put(blob);
         } catch (error) {
@@ -150,7 +158,7 @@ export function malAparcado({ navigation, route }) {
             </View>
             {/* <Image style={{ height: 500 }} source={{ uri: 'data:image/jpeg;base64,' + image64 }} /> */}
             <Image style={{ height: 500 }} source={{ uri: pickedImagePath }} />
-            <TouchableHighlight style={styles.button} onPress={() => { porfavorfunciona(); }}>
+            <TouchableHighlight style={styles.button} onPress={() => { sendPicture(); }}>
                 <Text style={styles.textButton}>Enviar</Text>
             </TouchableHighlight>
             {/* <Image style={{ width: 100, height: 100, alignItems: 'center' }} source={{uri: pickedImagePath}}/> */}

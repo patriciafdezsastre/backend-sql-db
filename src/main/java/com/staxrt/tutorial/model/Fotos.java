@@ -50,13 +50,13 @@ public class Fotos {
 
     @Lob
     @Column(name = "imagen", columnDefinition = "longblob", nullable = false)
-    private Blob imagen;
+    private byte[] imagen;
 
     public Fotos() {
 
     }
 
-    public Fotos(long user_id, long vehiculo_id, Blob imagen) {
+    public Fotos(long user_id, long vehiculo_id, byte[] imagen) {
         this.user_id = user_id;
         this.vehiculo_id = vehiculo_id;
         this.imagen = imagen;
@@ -87,11 +87,11 @@ public class Fotos {
         this.vehiculo_id = vehiculo_id;
     }
     
-    public Blob getImagen() {
+    public byte[] getImagen() {
         return this.imagen;
     }
 
-    public void setImagen(Blob imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 }

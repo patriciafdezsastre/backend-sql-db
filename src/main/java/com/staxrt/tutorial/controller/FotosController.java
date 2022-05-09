@@ -47,14 +47,14 @@ public class FotosController {
   @Autowired
   private FotosRepository fotosRepository;
 
-  @PutMapping("/fotos/{user_id}/{vehiculo_id}/{imagen}")
-  public void addFotos(@PathVariable(value = "user_id") Long user_id, @PathVariable(value = "vehiculo_id") Long vehiculo_id, @PathVariable(value = "imagen") Blob imagen) {
+  @PostMapping("/fotos/{user_id}/{vehiculo_id}/{imagen}")
+  public void addFotos(@PathVariable(value = "user_id") Long user_id, @PathVariable(value = "vehiculo_id") Long vehiculo_id, @PathVariable(value = "imagen") byte[] imagen) {
     Fotos foto = new Fotos(user_id, vehiculo_id, imagen);
     fotosRepository.save(foto);
   }
 
-  @PutMapping("/fotos/{imagen}")
-  public void addFotos(@PathVariable(value = "imagen") Blob imagen) {
+  @PostMapping("/fotos/{imagen}")
+  public void addFotos(@PathVariable(value = "imagen") byte[] imagen) {
     Fotos foto = new Fotos(11, 1, imagen);
     fotosRepository.save(foto);
   }

@@ -2262,6 +2262,11 @@
   resolved "https://registry.npmjs.org/@xmldom/xmldom/-/xmldom-0.7.5.tgz"
   integrity sha512-V3BIhmY36fXZ1OtVcI9W+FxQqxVLsPKcNjWigIaa81dLC9IolJl5Mt4Cvhmr0flUnjSpTdrbMTSbXqYqV5dT6A==
 
+FileReader@^0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/FileReader/-/FileReader-0.10.2.tgz#1b117bdb6b5ed85e241ac3cb10f1b7086524e539"
+  integrity sha1-GxF722te2F4kGsPLEPG3CGUk5Tk=
+
 abort-controller@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/abort-controller/-/abort-controller-3.0.0.tgz"
@@ -3517,6 +3522,11 @@ file-to-array-buffer@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/file-to-array-buffer/-/file-to-array-buffer-1.0.0.tgz#baf56edb2ce94f4bfac5158334f0835661d072f8"
   integrity sha512-rcJKsia0uWadVOwR9Ov6r0HLClWs/ZESzayu/wQ+DjRuxw6tD5rv8u7p6LGG3bXMbC+IdWXye/xsY3GnOzj0fA==
+
+file2arraybuffer@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/file2arraybuffer/-/file2arraybuffer-1.2.2.tgz#9e904bad30605efbb0d966441eeeb7514397ed46"
+  integrity sha512-NgIY7xXjn7SvRSvMV6HSBswqZ2L6f9nNYq1EXl8Aikv4m5Vs0M0NAMk03QuErq5vKQlS4BCDAis7Apio1CxmJg==
 
 fill-range@^4.0.0:
   version "4.0.0"
