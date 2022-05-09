@@ -13,7 +13,7 @@ export function Login(props) {
 
     function Submit (){
         
-        axios.post('http://192.168.1.127:8080/api/auth/signin', {username: nombre,
+        axios.post('http://192.168.43.12:8080/api/auth/signin', {username: nombre,
         password: password})
         .then(res => {  
             props.navigation.navigate("Map")
@@ -29,7 +29,7 @@ export function Login(props) {
          
           )  
           .catch(error=>{
-            alert("Usuario no encontrado")
+            alert(res.data.message)
             props.navigation.navigate("Home")
 
           })
@@ -65,9 +65,7 @@ export function Login(props) {
                 onChangeText={(text) =>{ setPassword(text);}}
             />
 
-            <TouchableHighlight style={styles.button} onPress={() => mostrar()}>
-            <Text style={styles.textButton}>Mostrar</Text>
-            </TouchableHighlight>
+
 
             <TouchableHighlight style={styles.button} onPress={() => Submit()}>
                 <Text style={styles.textButton}>Log in</Text>

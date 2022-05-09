@@ -35,7 +35,7 @@ export function Map(props) {
             }
         })()
         let isApiSubscribed = true;
-        axios.get("http://172.20.10.2:8080/api/v1/vehiculos").then((response) => {
+        axios.get("http://192.168.43.12:8080/api/v1/vehiculos").then((response) => {
             if (isApiSubscribed) {
                 setMarkers(response.data);
                 setLoading(false);
@@ -47,17 +47,17 @@ export function Map(props) {
     }, []);
 
     async function getVehiculos() {
-        const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/1");
+        const res = await axios.get("http://192.168.43.12:8080/api/v1/vehiculo/1");
         console.log(res.data);
         return res.data;
     }
 
     if (loading) return (
-        <View>
-            <Text>Loading...</Text>
-        </View>
-    )
-    else {
+         <View>
+             <Text>Loading...</Text>
+         </View>
+     )
+     else {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -134,7 +134,7 @@ export function Map(props) {
             </View>
         );
     };
-}
+ }
 
 //GEOLOCALIZACIÓN DE LOS USUARIOS
 export const getCurrentLocation = async () => {

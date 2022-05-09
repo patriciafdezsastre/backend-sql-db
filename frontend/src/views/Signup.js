@@ -14,19 +14,20 @@ export function Signup(props) {
     const role = ["user"]
 
    function signin(){
-    axios.post('http://192.168.1.127:8080/api/auth/signup', {username: nombre, email: email,
-    password: password,role: ["user"] })
-    .then(res=>{
-       alert(res.data.message)
-    props.navigation.navigate("Map")})
+    
 
-    .catch(error=>{
+    axios.post('http://192.168.43.12:8080/api/auth/signup', {username: nombre, email: email,
+     password: password,role: ["user"] })
+     .then(res=>{
         alert(res.data.message)
-      })
+     props.navigation.navigate("Map")})
 
-   }
-
+     .catch(error=>{
+         alert(res.data.message)
+       })
    
+
+    }
   
     return (
         <View style={styles.container}>
