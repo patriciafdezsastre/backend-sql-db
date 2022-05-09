@@ -24,6 +24,7 @@ import * as Location from 'expo-location'
 export function Map(props) {
     const [loading, setLoading] = useState(true);
     const [MARKERS_DATA, setMarkers] = useState([]);
+    const [admin, setAdmin] = useState(props.admin);
 
     useEffect(() => {
         (async () => {
