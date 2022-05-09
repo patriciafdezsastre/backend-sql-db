@@ -10,6 +10,8 @@ export function encurso({ navigation, route }) {
         try {
         const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id);
         console.log(res.data);
+        viaje_id = res.data.id;
+        console.log(viaje_id);
         } catch (error) {
             console.log("error ", error);
         }
@@ -30,7 +32,7 @@ export function encurso({ navigation, route }) {
 
             </View>
             <TouchableHighlight style={styles.button} onPress={() => {
-                navigation.navigate("resumen");
+                navigation.navigate("resumen", {id: id});
                 changeLibre();
             }}>
                 <Text style={styles.textButton}>Finalizar</Text>

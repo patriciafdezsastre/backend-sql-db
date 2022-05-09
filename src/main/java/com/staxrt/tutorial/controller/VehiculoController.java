@@ -21,8 +21,16 @@
 package com.staxrt.tutorial.controller;
 
 import com.staxrt.tutorial.exception.ResourceNotFoundException;
+
+import java.io.Console;
+import java.sql.Timestamp;
+
+import com.staxrt.tutorial.model.Tarifas;
 import com.staxrt.tutorial.model.Vehiculo;
+import com.staxrt.tutorial.model.Viajes;
 import com.staxrt.tutorial.repository.VehiculoRepository;
+import com.staxrt.tutorial.repository.ViajesRepository;
+import com.staxrt.tutorial.repository.TarifasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +52,10 @@ public class VehiculoController {
 
   @Autowired
   private VehiculoRepository vehiculoRepository;
+  @Autowired
+  private ViajesRepository viajesRepository;
+  @Autowired
+  private TarifasRepository tarifasRepository;
 
   /**
    * Get all vehiculos list.
@@ -55,6 +67,22 @@ public class VehiculoController {
     return vehiculoRepository.findAll();
   }
 
+
+  /**
+   * Get vehiculo by id.
+   *
+   * @param vehiculoId the vehiculo id
+   * @return the vehiculos by id
+   * @throws ResourceNotFoundException the resource not found exception
+   */
+  @GetMapping("/vehiculoinfo/{id}")
+  public ResponseEntity<Vehiculo> getVehiculoInfo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
+    Vehiculo vehiculo = vehiculoRepository
+      .findById(vehiculoId)
+      .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+    return ResponseEntity.ok(vehiculo);
+  }
+
   /**
    * Get vehiculo by id.
    *
@@ -63,32 +91,42 @@ public class VehiculoController {
    * @throws ResourceNotFoundException the resource not found exception
    */
   @GetMapping("/vehiculo/{id}")
-  public Vehiculo getVehiculo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
+  public ResponseEntity<Viajes> getVehiculo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
     Vehiculo vehiculo = vehiculoRepository
       .findById(vehiculoId)
       .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+
+    Viajes viaje = viajesRepository
+      .findById(vehiculo.getIdViajeEnCurso())
+      .orElseThrow(() -> new ResourceNotFoundException("Viaje not found on :: " + vehiculo.getIdViajeEnCurso()));
+
+
+    List<Tarifas> tarifas = tarifasRepository.findAll();
+
     
-    return vehiculo;
+    
+    Timestamp timestampnow = new Timestamp(System.currentTimeMillis());
+    Long tiempoAlquiler = vehiculo.getTiempoAlquilado();
+
+    float diff = timestampnow.getTime() - tiempoAlquiler;
+    float tiempoSec = diff / 1000;
+    viaje.setTiempo(tiempoSec);
+    if (vehiculo.getTipo() == "bike"){
+      viaje.setCoste(tarifas.get(0).getTarifa() * (diff / 60000));
+    }
+    else{
+      viaje.setCoste(tarifas.get(1).getTarifa() * (diff / 60000));
+    }
+    vehiculo.setLibre(true);
+    vehiculo.setTiempoAlquilado(0);
+    vehiculoRepository.save(vehiculo);
+    final Viajes updatedViaje = viajesRepository.save(viaje);
+    return ResponseEntity.ok(updatedViaje);
   }
 
-  /**
-   * Gets vehiculoss by id.
-   *
-   * @param vehiculoId the vehiculo id
-   * @return the vehiculos by id
-   * @throws ResourceNotFoundException the resource not found exception
-   */
- /*  @GetMapping("/vehiculo/{id}")
-  public ResponseEntity<Vehiculo> dejarVehiculosById(@PathVariable(value = "id") Long vehiculoId)
-      throws ResourceNotFoundException {
-    Vehiculo vehiculo = vehiculoRepository
-        .findById(vehiculoId)
-        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+  
 
-    vehiculo.setLibre(true);
-    final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
-    return ResponseEntity.ok(updatedVehiculo);
-  } */
+
 
   @PutMapping("/vehiculo/{id}")
   public ResponseEntity<Vehiculo> cogerVehiculosById(@PathVariable(value = "id") Long vehiculoId)
@@ -96,8 +134,16 @@ public class VehiculoController {
     Vehiculo vehiculo = vehiculoRepository
         .findById(vehiculoId)
         .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-
+    
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    vehiculo.setTiempoAlquilado(timestamp.getTime());
     vehiculo.setLibre(false);
+   
+    Viajes newViaje = new Viajes(timestamp, vehiculo.getLatitud(), vehiculo.getLongitud());
+
+    viajesRepository.save(newViaje);
+    vehiculo.setIdViajeEnCurso(newViaje.getId());
+
     final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
     return ResponseEntity.ok(updatedVehiculo);
   }
