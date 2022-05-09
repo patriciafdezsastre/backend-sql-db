@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['expo-permissions is now deprecated']);
+LogBox.ignoreLogs(['Failed prop type']);
+
 import { View, Text, TextInput, TouchableHighlight, Image, Alert } from 'react-native';
 
 // Mapa google maps
@@ -19,12 +23,11 @@ import * as Location from 'expo-location'
 //FUNCIÓN: MAPA GOOGLE MAPS
 export function Map(props) {
     const [loading, setLoading] = useState(true);
-    const [loadingLocation, setLoadingLocation] = useState(true);
     const [MARKERS_DATA, setMarkers] = useState([]);
+   
 
     useEffect(() => {
         (async () => {
-            console.log("***1")
             const response = await getCurrentLocation()
             if (response.status) {
                 //setLocationMapa(response.location)
@@ -93,14 +96,13 @@ export function Map(props) {
                     mapType="standard"
                     showsUserLocation={true}
                 >
-                    <MapView.Marker
+                    <Marker
                         coordinate={{
                             latitude: Location.latitude,
                             longitude: Location.longitude
                         }}
                         draggable
                     />
-
                     {MARKERS_DATA.map((marker) => (
                         <Marker
                             key={marker.id}
@@ -136,7 +138,6 @@ export function Map(props) {
 
 //GEOLOCALIZACIÓN DE LOS USUARIOS
 export const getCurrentLocation = async () => {
-    console.log("****2")
     const response = { status: false, location: null }
     const resultPermissions = await Permissions.askAsync(Permissions.LOCATION)
     if (resultPermissions.status === "denied") {

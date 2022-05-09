@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import { View, Text, Image, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
-import MyButton from './my_button';
 
 export function Home(props) {
     return (

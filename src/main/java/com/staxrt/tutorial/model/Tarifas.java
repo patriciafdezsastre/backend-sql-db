@@ -23,7 +23,6 @@ package com.staxrt.tutorial.model;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 /**
  * The type Viajes.
@@ -62,8 +61,3 @@ public class Tarifas {
         this.nombre_tarifa = nombre_tarifa;
     }
 }
-
-/* use users_database;
-SHOW TABLES;
-SELECT * FROM users;
-*/
