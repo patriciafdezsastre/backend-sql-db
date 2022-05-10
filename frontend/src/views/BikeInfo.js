@@ -14,13 +14,13 @@ export function BikeInfo({navigation, route}) {
     // get info
     useEffect(() => {
         let isApiSubscribed = true;
-        axios.get("http://192.168.1.127:8080/api/v1/vehiculo/"+id).then((response) => {
+        axios.get("http://172.20.10.13:8080/api/v1/vehiculoinfo/"+id).then((response) => {
             if (isApiSubscribed) {
                 setVehiculo(response.data);
                 setLoading(false);
             }
         });
-        axios.get("http://192.168.1.127:8080/api/v1/tarifas/" + tipo).then((response) => {
+        axios.get("http://172.20.10.13:8080/api/v1/tarifas/" + tipo).then((response) => {
             if (isApiSubscribed) {
                 setPrecio(response.data);
             }

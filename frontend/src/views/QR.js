@@ -8,19 +8,19 @@ export function QR( {navigation, route}) {
     const [scanned, setScanned] = useState(false);
     const [tipoVehiculo, setTipoVehiculo] = useState();
 
-    const getVehiculo = async (id) => {
-        try {
-            const res = await axios.get("http://192.168.1.127:8080/api/v1/vehiculo/"+id);
-            console.log(res.data);
-            var type = res.data.tipo;
-            setTipoVehiculo(type);
-            type === "bike" ? 
-                navigation.navigate("Bike", { id: id, tipo: type }) : 
-                navigation.navigate("Patinete", { id: id, tipo: type});
-        } catch (error) {
-            console.log("error", error);
-        }
-    };
+    // const getVehiculo = async (id) => {
+    //     try {
+    //         const res = await axios.get("http://172.20.10.13:8080/api/v1/vehiculoinfo/"+id);
+    //         console.log(res.data);
+    //         var type = res.data.tipo;
+    //         setTipoVehiculo(type);
+    //         type === "bike" ? 
+    //             navigation.navigate("Bike", { id: id, tipo: type }) : 
+    //             navigation.navigate("Patinete", { id: id, tipo: type});
+    //     } catch (error) {
+    //         console.log("error", error);
+    //     }
+    // };
 
     const askForCameraPermission = () => {
         (async () => {

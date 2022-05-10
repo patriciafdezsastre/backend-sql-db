@@ -10,7 +10,7 @@ export function User({ navigation, route }) {
    console.log("Este id es:" +id)
 
  
-    // axios.get("http://192.168.1.127:8080/api/v2/user/2")
+    // axios.get("http://172.20.10.13:8080/api/v2/user/2")
     // .then((res) => {
     //     setNombre(res.data.username);
     //     setEmail(res.data.email);

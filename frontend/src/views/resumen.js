@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
 
-export function resumen(props) {
+export function resumen(navigation, route) {
+
+    const id = route.params.id;
 
     return (
         <View style={styles.container}>
@@ -10,7 +12,7 @@ export function resumen(props) {
                 <Image style={{ width: 100, height: 100, alignItems: 'center' }} source={require('../assets/def.png')} />
                 <Text
                     style={{ color: '#333333', fontWeight: 'bold', fontFamily: 'Baskerville-Bold', fontSize: 30 }}>
-                    Hi-Go!
+                    {id}
                 </Text>
             </View>
 

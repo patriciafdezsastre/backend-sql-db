@@ -25,7 +25,7 @@ export function EditUser(props) {
 
 
       function Cambiar(){
-          axios.put("http://192.168.1.69:8080/api/v2/user/"+id + nuevo)
+          axios.put("http://172.20.10.13:8080/api/v2/user/"+id + nuevo)
           .then((res) =>{
               alert("User cambiado")
           })
@@ -35,7 +35,7 @@ export function EditUser(props) {
       }
 
       function Eliminar(){
-        axios.delete("http://192.168.1.69:8080/api/v2/user/delete" +id) 
+        axios.delete("http://172.20.10.13:8080/api/v2/user/delete" +id) 
         .then((res) =>{
             alert("User eliminado")
         })
