@@ -35,7 +35,7 @@ import javax.persistence.*;
 public class Vehiculo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "aparcadoOK", nullable = false)
@@ -64,6 +64,14 @@ public class Vehiculo {
 
     }
     
+    public Vehiculo(String tipo, Double latitud, Double longitud, Boolean libre, Boolean aparcadoOK) {
+        this.tipo = tipo; 
+        this.latitud = latitud;
+        this.longitud = longitud; 
+        this.libre = libre;
+        this.aparcadoOk = aparcadoOK;
+    }
+
     public String getTipo() {
         return this.tipo;
     }

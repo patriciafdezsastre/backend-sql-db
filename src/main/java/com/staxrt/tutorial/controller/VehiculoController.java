@@ -32,14 +32,14 @@ import com.staxrt.tutorial.repository.VehiculoRepository;
 import com.staxrt.tutorial.repository.ViajesRepository;
 import com.staxrt.tutorial.repository.TarifasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashMap;
+// import javax.validation.Valid;
+// import java.util.Date;
+// import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+// import java.util.Map;
 
 /**
  * The type Vehiculo controller.
@@ -83,6 +83,16 @@ public class VehiculoController {
     return ResponseEntity.ok(vehiculo);
   }
 
+  @PostMapping("/vehiculo/{tipo}/{latitud}/{longitud}/{libre}/{aparcadoOK}")
+  public void addVMPs(
+    @PathVariable(value = "tipo") String tipo, 
+    @PathVariable(value = "latitud") Double latitud, 
+    @PathVariable(value = "longitud") Double longitud, 
+    @PathVariable(value = "libre") boolean libre, 
+    @PathVariable(value = "aparcadoOK") boolean aparcadoOK) {
+      System.out.println("hello");
+      Vehiculo vehiculo = new Vehiculo(tipo, latitud, longitud, libre, aparcadoOK);
+      vehiculoRepository.save(vehiculo);
   /**
    * Get vehiculo by id.
    *
@@ -100,11 +110,7 @@ public class VehiculoController {
       .findById(vehiculo.getIdViajeEnCurso())
       .orElseThrow(() -> new ResourceNotFoundException("Viaje not found on :: " + vehiculo.getIdViajeEnCurso()));
 
-
     List<Tarifas> tarifas = tarifasRepository.findAll();
-
-    
-    
     Timestamp timestampnow = new Timestamp(System.currentTimeMillis());
     Long tiempoAlquiler = vehiculo.getTiempoAlquilado();
 
@@ -124,10 +130,6 @@ public class VehiculoController {
     final Viajes updatedViaje = viajesRepository.save(viaje);
     return ResponseEntity.ok(updatedViaje);
   }
-
-  
-
-
 
   @PutMapping("/vehiculo/{id}")
   public ResponseEntity<Vehiculo> cogerVehiculosById(@PathVariable(value = "id") Long vehiculoId)
@@ -149,22 +151,11 @@ public class VehiculoController {
     return ResponseEntity.ok(updatedVehiculo);
   }
 
-  /**
-   * Delete vehiculo map.
-   *
-   * @param vehiculoId the vehiculo id
-   * @return the map
-   * @throws Exception the exception
-   */
   @DeleteMapping("/vehiculo/{id}")
-  public Map<String, Boolean> deleteVehiculo(@PathVariable(value = "id") Long vehiculoId) throws Exception {
+  public void deleteVehiculo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
     Vehiculo vehiculo = vehiculoRepository
-        .findById(vehiculoId)
-        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-
-    vehiculoRepository.delete(vehiculo);
-    Map<String, Boolean> response = new HashMap<>();
-    response.put("deleted", Boolean.TRUE);
-    return response;
+      .findById(vehiculoId)
+      .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+    vehiculoRepository.delete(vehiculo);    
   }
 }

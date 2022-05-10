@@ -22,11 +22,11 @@ package com.staxrt.tutorial.model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.imageio.ImageIO;
+// import javax.imageio.ImageIO;
 import javax.persistence.*;
 
-import java.sql.Blob;
-import java.sql.Timestamp;
+// import java.sql.Blob;
+// import java.sql.Timestamp;
 
 /**
  * The type Fotos.
@@ -48,16 +48,18 @@ public class Fotos {
     @Column(name = "vehiculo_id", nullable = false)
     private long vehiculo_id;
 
-    // @Column(name = "imagen", nullable = false)
-    // private Blob imagen;
+    @Lob
+    @Column(name = "imagen", nullable = false)
+    private String imagen;
 
     public Fotos() {
 
     }
 
-    public Fotos(long user_id, long vehiculo_id) {
+    public Fotos( long user_id, long vehiculo_id, String imagen) {
         this.user_id = user_id;
         this.vehiculo_id = vehiculo_id;
+        this.imagen = imagen;
     }
     
     //implementar getters y setters
@@ -81,17 +83,17 @@ public class Fotos {
         return this.vehiculo_id;
     }
 
-    // public void setVehiculoId(long vehiculo_id) {
-    //     this.vehiculo_id = vehiculo_id;
-    // }
+    public void setVehiculoId(long vehiculo_id) {
+        this.vehiculo_id = vehiculo_id;
+    }
     
-    // public Blob getImagen() {
-    //     return this.imagen;
-    // }
+    public String getImagen() {
+        return this.imagen;
+    }
 
-    // public void setImagen(Blob imagen) {
-    //     this.imagen = imagen;
-    // }
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
 
 /* use users_database;

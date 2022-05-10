@@ -20,16 +20,20 @@ export function Admin(props) {
                         <Text style={styles.textButton} >Modificar zonas</Text>
                     </TouchableHighlight>
 
-                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Login")}>
+                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("modificarTarifas")}>
                         <Text style={styles.textButton}>Modificar tarifas</Text>
                     </TouchableHighlight>
 
-                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Login")}>
+                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("addVMP")}>
                         <Text style={styles.textButton}>Añadir VMPs</Text>
                     </TouchableHighlight>
 
-                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Login")}>
+                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("deleteVMP")}>
                         <Text style={styles.textButton}>Eliminar VMPs</Text>
+                    </TouchableHighlight>
+
+                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("verify")}>
+                        <Text style={styles.textButton}>Verificar mal aparcados</Text>
                     </TouchableHighlight>
                 </View>
             </View>
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
         color: '#333333',
         fontWeight: 'bold',
         fontFamily: 'AmericanTypewriter-Bold',
-        fontSize: 35
+        fontSize: 29
     },
 });
 export default Admin;

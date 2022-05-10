@@ -182,13 +182,13 @@ export function Map({navigation, route}) {
                     mapType="standard"
                     showsUserLocation={true}
                 >
-                    <Marker
+                    {/* <Marker
                         coordinate={{
                             latitude: Location.latitude,
                             longitude: Location.longitude
                         }}
                         draggable
-                    />
+                    /> */}
                     {MARKERS_DATA.map((marker) => (
                         <Marker
                             key={marker.id}

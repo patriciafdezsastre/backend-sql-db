@@ -20,18 +20,22 @@
 
 package com.staxrt.tutorial.controller;
 
+import java.util.List;
+
 import com.staxrt.tutorial.exception.ResourceNotFoundException;
 import com.staxrt.tutorial.model.Fotos;
 import com.staxrt.tutorial.repository.FotosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+// import javax.validation.Valid;
+
+// import java.sql.Blob;
+// import java.util.Date;
+// import java.util.HashMap;
+// import java.util.List;
+// import java.util.Map;
 
 /**
  * The type Fotos controller.
@@ -45,12 +49,35 @@ public class FotosController {
   @Autowired
   private FotosRepository fotosRepository;
 
-  @PutMapping("/fotos/{user_id}/{vehiculo_id}")
-  public void addFotos(@PathVariable(value = "user_id") Long user_id, @PathVariable(value = "vehiculo_id") Long vehiculo_id) {
-    Fotos foto = new Fotos(user_id, vehiculo_id);
+  @PostMapping("/fotos/{user_id}/{vehiculo_id}")
+  public void addFotos(@PathVariable(value = "user_id") Long user_id, @PathVariable(value = "vehiculo_id") Long vehiculo_id, @RequestBody String imagen) {
+    System.out.println("hola");
+    // Long id = fotosRepository.count()+1;
+    Fotos foto = new Fotos( user_id, vehiculo_id, imagen);
     fotosRepository.save(foto);
   }
 
-  
+  @GetMapping("/fotos")
+  public List<Fotos> getFotos()  {
+    return fotosRepository.findAll();
+  }
 
+  @GetMapping("/fotos/{vehiculo_id}")
+  public boolean isFotoAlready(@PathVariable(value = "vehiculo_id") Long vehiculo_id)  {
+    List<Fotos> fotos = fotosRepository.findAll();
+    for (int i=0; i<fotos.size(); i++) {
+      if (fotos.get(i).getVehiculoId() == vehiculo_id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @DeleteMapping("/fotos/{id}")
+  public void deleteFoto(@PathVariable(value = "id") Long fotoId) throws ResourceNotFoundException {
+    Fotos foto = fotosRepository
+      .findById(fotoId)
+      .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + fotoId));
+    fotosRepository.delete(foto);    
+  }
 }

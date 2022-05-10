@@ -17,7 +17,12 @@ import noDisponible from './src/views/noDisponible';
 import Admin from './src/views/Admin';
 import BikeInfo from './src/views/BikeInfo';
 import PatineteInfo from './src/views/PatineteInfo';
-import FotoEnviada from './src/views/FotoEnviada';
+import modificarTarifas from './src/views/modificarTarifas';
+import addVMP from './src/views/addVMP';
+import deleteVMP from './src/views/deleteVMP';
+import deletingVMP from './src/views/deletingVMP';
+import verify from './src/views/verify';
+import verifying from './src/views/verifying';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +46,12 @@ export default function App() {
           <Stack.Screen name="Admin" component={Admin} />
           <Stack.Screen name="BikeInfo" component={BikeInfo} />
           <Stack.Screen name="PatineteInfo" component={PatineteInfo} />
-          <Stack.Screen name="FotoEnviada" component={FotoEnviada} />
+          <Stack.Screen name="modificarTarifas" component={modificarTarifas} />
+          <Stack.Screen name="addVMP" component={addVMP} />
+          <Stack.Screen name="deleteVMP" component={deleteVMP} />
+          <Stack.Screen name="deletingVMP" component={deletingVMP} />
+          <Stack.Screen name="verify" component={verify} />
+          <Stack.Screen name="verifying" component={verifying} />
         </Stack.Navigator>
     </NavigationContainer>
   );

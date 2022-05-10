@@ -10,12 +10,14 @@ export function Patinete({ navigation, route }) {
     const [loading, setLoading] = useState(true);
     const [vehiculo, setVehiculo] = useState();
     const [precio, setPrecio] = useState();
+    const [isFotoAlready, setIsFotoAlready] = useState(null);
     const user_id = route.params.id;
 
     // get info
     useEffect(() => {
         let isApiSubscribed = true;
-        axios.get("http://172.20.10.2:8080/api/v1/vehiculoinfo/"+id).then((response) => {
+        axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id).then((response) => {
+
             if (isApiSubscribed) {
                 setVehiculo(response.data);
                 console.log(vehiculo);
@@ -25,6 +27,11 @@ export function Patinete({ navigation, route }) {
         axios.get("http://172.20.10.2:8080/api/v1/tarifas/" + tipo).then((response) => {
             if (isApiSubscribed) {
                 setPrecio(response.data);
+            }
+        })
+        axios.get("http://172.20.10.2:8080/api/v1/fotos/" + id).then((response) => {
+            if (isApiSubscribed) {
+                setIsFotoAlready(response.data);
             }
         })
         return () => {
@@ -59,9 +66,12 @@ export function Patinete({ navigation, route }) {
                         <Text style={styles.texto}>Distancia: XXX</Text>
                         <Text style={styles.texto}>Precio: {precio} €/min</Text>
 
-                        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("malAparcado")}>
-                            <Text style={styles.textButton}>¿Mal aparcado?</Text>
-                        </TouchableHighlight>
+                        {(!vehiculo.aparcadoOk || isFotoAlready) ? null : <View>
+                            <TouchableHighlight style={styles.button} onPress={() => { navigation.navigate("malAparcado", { id: id, tipo: tipo }) }}>
+                                <Text style={styles.textButton}>¿Mal aparcado?</Text>
+                            </TouchableHighlight>
+                        </View>
+                        }
                         <TouchableHighlight style={styles.button} onPress={() => {
                             navigation.navigate("encurso", {id: id, user_id: user_id});
                             changeLibre();
