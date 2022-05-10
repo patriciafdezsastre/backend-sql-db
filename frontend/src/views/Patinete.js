@@ -15,13 +15,14 @@ export function Patinete({ navigation, route }) {
     useEffect(() => {
         let isApiSubscribed = true;
         axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id).then((response) => {
+
             if (isApiSubscribed) {
                 setVehiculo(response.data);
                 console.log(vehiculo);
                 setLoading(false);
             }
         });
-        axios.get("http://172.20.10.2:8080/api/v1/tarifas/" + tipo).then((response) => {
+        axios.get("http://172.20.10.13:8080/api/v1/tarifas/" + tipo).then((response) => {
             if (isApiSubscribed) {
                 setPrecio(response.data);
             }

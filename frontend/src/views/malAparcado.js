@@ -135,8 +135,6 @@ const styles = StyleSheet.create({
     notYet: {
         height: 600
     },
-    // takenPicture: {
-    //     justifyContent: 'space-around'
-    // }
+
 });
 export default malAparcado;

@@ -7,34 +7,34 @@ import { View, Text, TextInput, StyleSheet, TouchableHighlight, Image } from 're
 export function Login(props) {
     const [nombre, setNombre] = useState("");
     const [password, setPassword] = useState("");
-    const[isadmin, setisadmin] =useState(false);
-    const[shown, setShown] = useState(false);
-    
+    const [isadmin, setisadmin] = useState(false);
+    const [shown, setShown] = useState(false);
 
-    function Submit (){
-        
-        axios.post('http://192.168.1.127:8080/api/auth/signin', {username: nombre,
-        password: password})
-        .then(res => {  
-            props.navigation.navigate("Map")
-             
-             if(res.data.roles[0]== "ROLE_ADMIN"){
-                setisadmin(true)
+
+    function Submit() {
+
+        axios.post('http://172.20.10.13:8080/api/auth/signin', {
+            username: nombre,
+            password: password
+        })
+            .then(res => {
                 props.navigation.navigate("Map")
+                if (res.data.roles[0] == "ROLE_ADMIN") {
+                    setisadmin(true)
+                    props.navigation.navigate("Map")
+                }
+            }
+            )
+            .catch(error => {
+                alert("Usuario no encontrado")
+                props.navigation.navigate("Home")
 
-             }
-            
-          } 
-         
-          )  
-          .catch(error=>{
-            alert("Usuario no encontrado")
-            props.navigation.navigate("Home")
-
-          })
+            })
     }
 
     const switchShown = () => setShown(!shown);
+
+
 
 
     return (
@@ -54,15 +54,19 @@ export function Login(props) {
                 onChangeText={(text) => setNombre(text)}
             />
             <TextInput
+                type="password"
                 style={styles.input}
                 placeholder="Contraseña..."
                 value={password}
-                onChangeText={(text) =>{ setPassword(text);}}
+                secureTextEntry={true}
+                onChangeText={(text) => { setPassword(text); }}
             />
 
             <TouchableHighlight style={styles.button} onPress={() => Submit()}>
                 <Text style={styles.textButton}>Log in</Text>
             </TouchableHighlight>
+
+
 
         </View>
     );
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
         // textAlign: 'center'
     },
     button: {
-        alignSelf:'center',
+        alignSelf: 'center',
         width: 242,
         height: 60,
         bottom: 15,

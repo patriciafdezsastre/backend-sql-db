@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "expo-camera": "^12.2.0",
+    "react-native-camera": "^4.2.1"
+  }
+}
