@@ -7,39 +7,44 @@ import { View, Text, TextInput, StyleSheet, TouchableHighlight, Image } from 're
 export function Login(props) {
     const [nombre, setNombre] = useState("");
     const [password, setPassword] = useState("");
-    const[isadmin, setisadmin] =useState(false);
-    const[shown, setShown] = useState(false);
+    const [isadmin, setisadmin] = useState(false);
+    const [id, setId] = useState();
     
 
-    function Submit (){
-        
-        axios.post('http://192.168.43.12:8080/api/auth/signin', {username: nombre,
-        password: password})
-        .then(res => {  
-            props.navigation.navigate("Map")
 
-             
-             if(res.data.roles[0]== "ROLE_ADMIN"){
-                setisadmin(true)
-                props.navigation.navigate("Map")
+    function Submit() {
 
-             }
-            
-          } 
-         
-          )  
-          .catch(error=>{
-            alert(res.data.message)
-            props.navigation.navigate("Home")
+        axios.post('http://172.20.10.13:8080/api/auth/signin', {
+            username: nombre,
+            password: password
+        })
+            .then(res => {
 
-          })
+                if (res.data.roles[0] == "ROLE_ADMIN") {
+                    setisadmin(true)
+                    setId(res.data.id)
+                    props.navigation.navigate("User", { id: id }) 
+                    props.navigation.navigate("EditUser", { id: id }) 
+                    props.navigation.navigate("Map")
+                    
+                }else {
+                    setisadmin(false)
+                    var g= res.data.id;
+                    setId(g)
+                    // props.navigation.navigate("User", { id: id }) 
+                    // props.navigation.navigate("EditUser", { id: id })
+                    // props.navigation.navigate("Map", { admin: isadmin }) 
+                    props.navigation.navigate("EditUser")   
+                }
+                
+            }
+            )
+            .catch(error => {
+                alert(res.data.message)
+                props.navigation.navigate("Home")
+
+            })
     }
-
-    const switchShown = () => setShown(!shown);
-
-
-
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -49,6 +54,8 @@ export function Login(props) {
                     Hi-Go!
                 </Text>
             </View>
+
+            
 
             <TextInput
                 style={styles.input}
@@ -62,18 +69,20 @@ export function Login(props) {
                 placeholder="Contraseña..."
                 value={password}
                 secureTextEntry={true}
-                onChangeText={(text) =>{ setPassword(text);}}
+                onChangeText={(text) => { setPassword(text); }}
             />
+            
 
-
-
-            <TouchableHighlight style={styles.button} onPress={() => Submit()}>
+            <TouchableHighlight style={styles.button} onPress={() =>
+                 Submit()
+                 }>
                 <Text style={styles.textButton}>Log in</Text>
             </TouchableHighlight>
 
-            
+
 
         </View>
+
     );
 };
 
@@ -103,7 +112,7 @@ const styles = StyleSheet.create({
         // textAlign: 'center'
     },
     button: {
-        alignSelf:'center',
+        alignSelf: 'center',
         width: 242,
         height: 60,
         bottom: 15,

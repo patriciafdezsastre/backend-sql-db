@@ -10,7 +10,7 @@ export function QR( {navigation, route}) {
 
     const getVehiculo = async (id) => {
         try {
-            const res = await axios.get("http://192.168.43.12:8080/api/v1/vehiculo/"+id);
+            const res = await axios.get("http://192.168.1.127:8080/api/v1/vehiculo/"+id);
             console.log(res.data);
             var type = res.data.tipo;
             setTipoVehiculo(type);

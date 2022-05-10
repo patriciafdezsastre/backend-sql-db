@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
 
-export function User(props) {
+export function User({ navigation, route }) {
+    const [nombre, setNombre] = useState("Juan");
+    const [email, setEmail] = useState("juan@hol");
+   const id = props.navigation.state.params.id;
+   console.log("Este id es:" +id)
 
+ 
+    // axios.get("http://192.168.1.127:8080/api/v2/user/2")
+    // .then((res) => {
+    //     setNombre(res.data.username);
+    //     setEmail(res.data.email);
+    // })
+    // .catch(error=>{
+    //     alert("Error server "+error)
+    //   })
+ 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -16,20 +31,19 @@ export function User(props) {
             <View style={styles.user}>
                 <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
                 <View style={styles.info}>
-                    <Text style={styles.texto}>Nombre: </Text>
-                    <Text style={styles.texto}>Apellidos: </Text>
-                    <Text style={styles.texto}>Email: </Text>
-                    <Text style={styles.texto}>Contraseña: *****</Text>
+                    
+                    <Text style={styles.texto}>Username: {nombre}</Text>
+                    <Text style={styles.texto}>Email: {email} </Text>
+                   
                 </View>
 
-                {/* <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("EditUser")}>
+                 <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("EditUser")}>
                     <Text style={styles.textButton}>Editar</Text>
+                </TouchableHighlight> 
+
+                <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Map")}>
+                    <Text style={styles.textButton}>Volver</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.button}
-                    // onPress={() => props.navigation.navigate("QR")}
-                    >
-                    <Text style={styles.textButton}>Borrar</Text>
-                </TouchableHighlight> */}
 
             </View>
         </View>
