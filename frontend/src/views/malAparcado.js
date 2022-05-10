@@ -11,6 +11,9 @@ import * as ImagePicker from 'expo-image-picker';
 export function malAparcado({ navigation, route }) {
     const vehiculo_id = route.params.id;
     const tipo = route.params.tipo;
+    const user_id = route.params.user_id;
+    const isAdmin = route.params.isAdmin;
+    
     const [imagen64, setImagen64] = useState(null);
 
     useEffect(() => {
@@ -35,7 +38,7 @@ export function malAparcado({ navigation, route }) {
 
     const sendPicture = async () => {
         try {
-            const res = await axios.post("http://172.20.10.2:8080/api/v1/fotos/" + 33 + "/" + vehiculo_id,
+            const res = await axios.post("http://172.20.10.2:8080/api/v1/fotos/" + user_id + "/" + vehiculo_id,
                 {
                     imagen: imagen64
                 });
@@ -43,7 +46,7 @@ export function malAparcado({ navigation, route }) {
             // const res = await axios.post("http://172.20.10.2:8080/api/v1/fotos/"+33+"/"+vehiculo_id,+"/"+imagen64);
             if (res.status === 200) {
                 Alert.alert('Foto enviada', 'En breve un administrador la aprobará', [
-                    { text: 'Ok', onPress: () => navigation.navigate("Map") }
+                    { text: 'Ok', onPress: () => navigation.navigate("Map", {}) }
                 ])
             }
         } catch (error) {

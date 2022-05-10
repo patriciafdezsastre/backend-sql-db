@@ -58,10 +58,9 @@ export function Map({ navigation, route }) {
         return res.data;
     }
 
-
     async function getUser() {
         const res = await axios.get("http://172.20.10.2:8080/api/v2/user/" + user_id);
-        navigation.navigate("User", { user_id: user_id, isAdmin:isAdmin, username: res.data.username, email: res.data.email, saldo: res.data.saldo })
+        navigation.navigate("User", { user_id: user_id, isAdmin: isAdmin, username: res.data.username, email: res.data.email, saldo: res.data.saldo })
     }
 
     if (loading) return (
@@ -141,7 +140,7 @@ export function Map({ navigation, route }) {
                                 </View>
                             </Marker>
                         ))}
-                        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("QR", { user_id: user_id })}>
+                        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("QR", { user_id: user_id, isAdmin: isAdmin })}>
                             <Text style={styles.textButton} >Leer QR</Text>
                         </TouchableHighlight>
                     </MapView>
@@ -151,7 +150,6 @@ export function Map({ navigation, route }) {
         }
         else {
             return (
-
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <Image style={{ width: 100, height: 100, alignItems: 'center' }} source={require('../assets/def.png')} />

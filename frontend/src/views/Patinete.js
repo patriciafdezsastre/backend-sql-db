@@ -6,12 +6,13 @@ import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 're
 export function Patinete({ navigation, route }) {
     const id = route.params.id;
     const tipo = route.params.tipo;
+    const user_id = route.params.user_id;
+    const isAdmin = route.params.isAdmin;
 
     const [loading, setLoading] = useState(true);
-    const [vehiculo, setVehiculo] = useState();
+    const [vehiculo, setVehiculo] = useState(null);
     const [precio, setPrecio] = useState();
     const [isFotoAlready, setIsFotoAlready] = useState(null);
-    const user_id = route.params.id;
 
     // get info
     useEffect(() => {
@@ -22,16 +23,19 @@ export function Patinete({ navigation, route }) {
                 setVehiculo(response.data);
                 console.log(vehiculo);
                 setLoading(false);
+
             }
         });
         axios.get("http://172.20.10.2:8080/api/v1/tarifas/" + tipo).then((response) => {
             if (isApiSubscribed) {
                 setPrecio(response.data);
+                console.log(precio)
             }
         })
         axios.get("http://172.20.10.2:8080/api/v1/fotos/" + id).then((response) => {
             if (isApiSubscribed) {
                 setIsFotoAlready(response.data);
+                console.log(isFotoAlready)
             }
         })
         return () => {
@@ -39,7 +43,7 @@ export function Patinete({ navigation, route }) {
         }
     }, []);
 
-    if (loading) return (
+    if (loading && vehiculo == null) return (
         <View>
             <Text>Loading...</Text>
         </View>
@@ -66,14 +70,14 @@ export function Patinete({ navigation, route }) {
                         <Text style={styles.texto}>Distancia: XXX</Text>
                         <Text style={styles.texto}>Precio: {precio} €/min</Text>
 
-                        {(!vehiculo.aparcadoOk || isFotoAlready) ? null : <View>
-                            <TouchableHighlight style={styles.button} onPress={() => { navigation.navigate("malAparcado", { id: id, tipo: tipo }) }}>
+                        {(!vehiculo.aparcadoOk || isFotoAlready || isAdmin) ? null : <View>
+                            <TouchableHighlight style={styles.button} onPress={() => { navigation.navigate("malAparcado", { id: id, tipo: tipo, user_id: user_id, isAdmin: isAdmin }) }}>
                                 <Text style={styles.textButton}>¿Mal aparcado?</Text>
                             </TouchableHighlight>
                         </View>
                         }
                         <TouchableHighlight style={styles.button} onPress={() => {
-                            navigation.navigate("encurso", {id: id, user_id: user_id});
+                            navigation.navigate("encurso", { id: id, user_id: user_id });
                             changeLibre();
                         }}>
                             <Text style={styles.textButton}>Utilizar</Text>

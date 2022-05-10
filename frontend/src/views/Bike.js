@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
-
 export function Bike({ navigation, route }) {
     const id = route.params.id;
     const tipo = route.params.tipo;
+    const user_id = route.params.user_id;
+    const isAdmin = route.params.isAdmin;
 
     const [loading, setLoading] = useState(true);
     const [vehiculo, setVehiculo] = useState();
     const [precio, setPrecio] = useState();
     const [isFotoAlready, setIsFotoAlready] = useState(null);
-    const user_id = route.params.user_id;
 
     // get info
     useEffect(() => {
         let isApiSubscribed = true;
         axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id).then((response) => {
-
             if (isApiSubscribed) {
                 setVehiculo(response.data);
                 console.log(vehiculo);
@@ -38,7 +36,6 @@ export function Bike({ navigation, route }) {
             isApiSubscribed = false;
         }
     }, []);
-
     const changeUsado = async () => {
         try {
             const res = await axios.put("http://172.20.10.2:8080/api/v1/vehiculo/" + id);
@@ -46,8 +43,6 @@ export function Bike({ navigation, route }) {
             console.log("error ", error);
         }
     }
-
-
     if (loading) return (
         <View>
             <Text>Loading...</Text>
@@ -63,7 +58,6 @@ export function Bike({ navigation, route }) {
                         Hi-Go!
                     </Text>
                 </View>
-
                 <View style={styles.bike}>
                     <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/bike.png')} />
                     <View style={styles.info}>
@@ -76,16 +70,14 @@ export function Bike({ navigation, route }) {
                         <Text style={styles.texto}>Distancia: XXX</Text>
                         <Text style={styles.texto}>Precio: {precio} €/min</Text>
                     </View>
-                    {(!vehiculo.aparcadoOk || isFotoAlready) ? null : <View>
-                        <TouchableHighlight style={styles.button} onPress={() => { navigation.navigate("malAparcado", { id: id, tipo: tipo }) }}>
+                    {(!vehiculo.aparcadoOk || isFotoAlready || isAdmin) ? null : <View>
+                        <TouchableHighlight style={styles.button} onPress={() => { navigation.navigate("malAparcado", { id: id, tipo: tipo, user_id: user_id, isAdmin: isAdmin }) }}>
                             <Text style={styles.textButton}>¿Mal aparcado?</Text>
                         </TouchableHighlight>
                     </View>
                     }
-
                     <TouchableHighlight style={styles.button} onPress={() => {
-
-                        navigation.navigate("encurso", {id: id, user_id: user_id});
+                        navigation.navigate("encurso", { id: id });
                         changeUsado();
                     }}>
                         <Text style={styles.textButton}>Utilizar</Text>
@@ -95,7 +87,6 @@ export function Bike({ navigation, route }) {
         );
     };
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

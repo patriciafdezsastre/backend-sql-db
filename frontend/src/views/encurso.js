@@ -35,11 +35,7 @@ export function encurso({ navigation, route }) {
                 <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/puntos.gif')} />
 
             </View>
-            <TouchableHighlight style={styles.button} onPress={() => {
-                
-                changeLibre();
-                
-            }}>
+            <TouchableHighlight style={styles.button} onPress={() => {changeLibre();}}>
                 <Text style={styles.textButton}>Finalizar</Text>
             </TouchableHighlight>
 

@@ -3,21 +3,23 @@ import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image, Dimension
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import axios from 'axios';
 
-export function QR( {navigation, route}) {
+export function QR({ navigation, route }) {
+    const user_id = route.params.user_id;
+    const isAdmin = route.params.isAdmin;
+
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [tipoVehiculo, setTipoVehiculo] = useState();
-    const user_id = route.params.user_id;
 
     const getVehiculo = async (id) => {
         try {
-            const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculoinfo/"+id);
+            const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id);
             console.log(res.data);
             var type = res.data.tipo;
             setTipoVehiculo(type);
-            type === "bike" ? 
-                navigation.navigate("Bike", { id: id, tipo: type, user_id: user_id}) : 
-                navigation.navigate("Patinete", { id: id, tipo: type, user_id: user_id});
+            type === "bike" ?
+                navigation.navigate("Bike", { id: id, tipo: type, user_id: user_id, isAdmin: isAdmin }) :
+                navigation.navigate("Patinete", { id: id, tipo: type, user_id: user_id, isAdmin: isAdmin });
         } catch (error) {
             console.log("error", error);
         }
@@ -40,7 +42,7 @@ export function QR( {navigation, route}) {
         setScanned(true);
         console.log('Type: ' + type + '\nData: ' + data)
         getVehiculo(data);
-        console.log('El tipoVehiculo es: '+tipoVehiculo);
+        console.log('El tipoVehiculo es: ' + tipoVehiculo);
     }
 
     // Check permissions and return the screens
@@ -55,7 +57,7 @@ export function QR( {navigation, route}) {
     if (hasPermission === false) {
         return (
             <View style={styles.container}>
-                <Text style ={styles.texto}>No access to camera</Text>
+                <Text style={styles.texto}>No access to camera</Text>
                 <TouchableHighlight style={styles.button} onPress={() => askForCameraPermission()}>
                     <Text style={styles.textButton}>Allow Camera</Text>
                 </TouchableHighlight>
@@ -102,11 +104,11 @@ const styles = StyleSheet.create({
     },
     content: {
         alignItems: 'center'
-    }, 
+    },
     qr: {
-        top:50,
-        height: 300, 
-        width: 300, 
+        top: 50,
+        height: 300,
+        width: 300,
         alignContent: 'center'
     },
     button: {

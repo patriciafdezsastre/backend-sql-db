@@ -74,7 +74,7 @@ public class VehiculoController {
    * @return the vehiculos by id
    * @throws ResourceNotFoundException the resource not found exception
    */
-  @GetMapping("/vehiculoinfo/{id}")
+  @GetMapping("/vehiculo/{id}")
   public Vehiculo getVehiculoInfo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
     Vehiculo vehiculo = vehiculoRepository
         .findById(vehiculoId)
