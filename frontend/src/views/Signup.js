@@ -12,13 +12,13 @@ export function Signup(props) {
     const role = ["user"]
 
     function signin() {
-        axios.post('http://172.20.10.2:8080/api/auth/signup', {
+        axios.post('http://172.20.10.13:8080/api/auth/signup', {
             username: nombre, email: email,
-            password: password, role: ["user"]
+            password: password, role: ["user"], saldo: 0
         })
             .then(res => {
                 alert(res.data.message)
-                props.navigation.navigate("Map")
+                props.navigation.navigate("Login")
             })
 
             .catch(error => {

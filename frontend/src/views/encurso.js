@@ -8,7 +8,7 @@ export function encurso({ navigation, route }) {
     // get cambia el estado a libre
     async function changeLibre() {
         try {
-        const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id);
+        const res = await axios.get("http://172.20.10.13:8080/api/v1/vehiculo/"+id);
         console.log(res.data);
         viaje_id = res.data.id;
         console.log(viaje_id);

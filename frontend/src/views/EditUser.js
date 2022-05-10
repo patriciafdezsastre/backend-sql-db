@@ -1,9 +1,49 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
-import MyButton from './my_button';
+
+
+
+
 
 export function EditUser(props) {
+
+    const [nombre, setNombre] = useState("Juan");
+    const[nuevo, setNuevo] = useState("");
+   // const id = route.params.id;
+
+
+    // axios.get("http://192.168.1.127:8080/api/v2/user/"+ 2)
+    // .then((res) => {
+    //     setNombre(res.data.username);
+       
+    // })
+    // .catch(error=>{
+    //     alert("Error server "+error)
+    //   })
+
+
+      function Cambiar(){
+          axios.put("http://172.20.10.13:8080/api/v2/user/"+id + nuevo)
+          .then((res) =>{
+              alert("User cambiado")
+          })
+          .catch(error=>{
+            alert("Error server "+error)
+          })
+      }
+
+      function Eliminar(){
+        axios.delete("http://172.20.10.13:8080/api/v2/user/delete" +id) 
+        .then((res) =>{
+            alert("User eliminado")
+        })
+        .catch(error=>{
+          alert("Error server "+error)
+        })
+    }
+
 
     return (
         <View style={styles.container}>
@@ -15,12 +55,26 @@ export function EditUser(props) {
                 </Text>
             </View>
             <View style={styles.user}>
-                <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
                 <View style={styles.info}>
-                    <Text style={styles.texto}>Nombre: </Text>
-                    <Text style={styles.texto}>Apellidos: </Text>
-                    <Text style={styles.texto}>Email: </Text>
-                    <Text style={styles.texto}>Contraseña: *****</Text>
+                    <Text style={styles.texto}>Username: {nombre}</Text>
+                    <TextInput
+                       style={styles.input}
+                       placeholder="Username..."
+                       value={nuevo}
+                       onChangeText={(text) => setNuevo(text)}
+            />            
+            <TouchableHighlight style={styles.button} onPress={() => Cambiar()}>
+            <Text style={styles.textButton}>Cambiar</Text>
+            </TouchableHighlight>
+
+            <TouchableHighlight style={styles.button} onPress={() => Eliminar()}>
+            <Text style={styles.textButton}>Eliminar</Text>
+            </TouchableHighlight>
+       
+            <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Map")}>
+            <Text style={styles.textButton}>Volver</Text>
+            </TouchableHighlight>
+
                 </View>
             </View>
         </View>
