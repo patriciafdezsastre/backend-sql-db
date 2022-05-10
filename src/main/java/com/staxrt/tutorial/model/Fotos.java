@@ -22,11 +22,11 @@ package com.staxrt.tutorial.model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.imageio.ImageIO;
+// import javax.imageio.ImageIO;
 import javax.persistence.*;
 
-import java.sql.Blob;
-import java.sql.Timestamp;
+// import java.sql.Blob;
+// import java.sql.Timestamp;
 
 /**
  * The type Fotos.

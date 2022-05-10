@@ -24,14 +24,14 @@ import com.staxrt.tutorial.exception.ResourceNotFoundException;
 import com.staxrt.tutorial.model.Vehiculo;
 import com.staxrt.tutorial.repository.VehiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashMap;
+// import javax.validation.Valid;
+// import java.util.Date;
+// import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+// import java.util.Map;
 
 /**
  * The type Vehiculo controller.

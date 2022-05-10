@@ -24,16 +24,16 @@ import com.staxrt.tutorial.exception.ResourceNotFoundException;
 import com.staxrt.tutorial.model.Fotos;
 import com.staxrt.tutorial.repository.FotosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+// import javax.validation.Valid;
 
-import java.sql.Blob;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+// import java.sql.Blob;
+// import java.util.Date;
+// import java.util.HashMap;
+// import java.util.List;
+// import java.util.Map;
 
 /**
  * The type Fotos controller.
