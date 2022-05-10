@@ -8,23 +8,28 @@ export function Signup(props) {
 
     const [nombre, setNombre] = useState("");
     const [email, setEmail] = useState("");
-   
     const [password, setPassword] = useState("");
     const role = ["user"]
 
-   function signin(){
-    axios.post('http://192.168.1.127:8080/api/auth/signup', {username: nombre, email: email,
-    password: password,role: ["user"] })
-    .then(res=>{
-       alert(res.data.message)
-    props.navigation.navigate("Map")})
+    function signin() {
+        axios.post('http://172.20.10.2:8080/api/auth/signup', {
+            username: nombre, email: email,
+            password: password, role: ["user"],
+            saldo: 0
+        })
+            .then(res => {
+                alert(res.data.message)
+                props.navigation.navigate("Login")
+            })
 
-    .catch(error=>{
-        alert(res.data.message)
-      })
+            .catch(error => {
+                alert(res.data.message)
+            })
 
-   }
-  
+    }
+
+
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -53,8 +58,11 @@ export function Signup(props) {
                 style={styles.input}
                 placeholder="Contraseña..."
                 value={password}
+                secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
             />
+
+
             <TouchableHighlight style={styles.button} onPress={() => signin()}>
                 <Text style={styles.textButton}>Sign up</Text>
             </TouchableHighlight>
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
         // textAlign: 'center'
     },
     button: {
-        alignSelf:'center',
+        alignSelf: 'center',
         width: 242,
         height: 60,
         bottom: 15,

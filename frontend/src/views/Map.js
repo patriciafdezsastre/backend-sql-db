@@ -21,12 +21,19 @@ import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
 //FUNCIÓN: MAPA GOOGLE MAPS
-export function Map(props) {
+export function Map({navigation, route}) {
     const [loading, setLoading] = useState(true);
     const [MARKERS_DATA, setMarkers] = useState([]);
+    const user_id = route.params.id;
+    const isAdmin = route.params.isAdmin;
+    const [username, setUsername] = useState();
+    const [email, setEmail] = useState();
+
 
     useEffect(() => {
         (async () => {
+            console.log("este es el admin: " + isAdmin);
+            console.log("este es la id: " + user_id);
             const response = await getCurrentLocation()
             if (response.status) {
                 //setLocationMapa(response.location)
@@ -46,9 +53,18 @@ export function Map(props) {
     }, []);
 
     async function getVehiculos() {
-        const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/1");
+        const res = await axios.get("http://172.20.10.2:8080/api/v2/user/{id}");
         console.log(res.data);
         return res.data;
+    }
+
+
+    async function getUser() {
+        const res = await axios.get("http://172.20.10.2:8080/api/v2/user/"+ user_id);
+        console.log("hostia puta" + user_id)
+        navigation.navigate("User",{user_id: user_id, username: res.data.username, email: res.data.email, saldo:res.data.saldo})
+
+
     }
 
     if (loading) return (
@@ -57,7 +73,88 @@ export function Map(props) {
         </View>
     )
     else {
+        if(isAdmin){
+            return (
+            
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <Image style={{ width: 100, height: 100, alignItems: 'center' }} source={require('../assets/def.png')} />
+                        <Text
+                            style={{ color: '#333333', fontWeight: 'bold', fontFamily: 'Baskerville-Bold', fontSize: 30 }}>
+                            Hi-Go!
+                        </Text>
+                        <View style={styles.profiles}>
+                            <TouchableHighlight onPress={() => navigation.navigate("User")}>
+                                <Image style={{ width: 50, height: 50, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
+                            </TouchableHighlight>
+                            <View style={styles.admin}>
+                                <TouchableHighlight onPress={() => navigation.navigate("Admin")}>
+                                    <View style={styles.admin}>
+                                        <Image style={{ width: 50, height: 50, alignItems: 'center' }} source={require('../assets/admin.png')} />
+                                        <View style={styles.conTexto}>
+                                            <Text style={styles.texto}>Admin</Text>
+                                        </View>
+                                    </View>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+    
+                    <MapView
+                        customMapStyle={mapStyle}
+                        provider={PROVIDER_GOOGLE}
+                        style={styles.mapStyle}
+                        initialRegion={{
+                            latitude: 40.45315837994751,
+                            longitude: -3.7266484767199968,
+                            latitudeDelta: 0.003,
+                            longitudeDelta: 0.003,
+                        }}
+                        mapType="standard"
+                        showsUserLocation={true}
+                    >
+                        <Marker
+                            coordinate={{
+                                latitude: Location.latitude,
+                                longitude: Location.longitude
+                            }}
+                            draggable
+                        />
+                        {MARKERS_DATA.map((marker) => (
+                            <Marker
+                                key={marker.id}
+                                coordinate={{
+                                    latitude: marker.latitud,
+                                    longitude: marker.longitud,
+                                }}
+                                onPress={() => marker.libre ?
+                                    (marker.tipo === "bike" ?
+                                        navigation.navigate("BikeInfo", { id: marker.id, tipo: marker.tipo }) :
+                                        navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo })
+                                    ) : navigation.navigate("noDisponible")}
+                                style={styles.marker}
+                            // opacity={marker.libre ? 1.0 : 0.0}
+                            >
+                                <View style={{ width: 50 }}>
+                                    <Image source={
+                                        marker.libre ?
+                                            marker.tipo === 'bike' ? Bici : Patinete
+                                            : marker.tipo === 'bike' ? BiciNo : PatineteNo
+                                    } />
+                                </View>
+                            </Marker>
+                        ))}
+                        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("QR", {user_id: user_id})}>
+                            <Text style={styles.textButton} >Leer QR</Text>
+                        </TouchableHighlight>
+                    </MapView>
+                </View>
+            );
+            
+    }
+    else{
         return (
+        
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Image style={{ width: 100, height: 100, alignItems: 'center' }} source={require('../assets/def.png')} />
@@ -66,19 +163,9 @@ export function Map(props) {
                         Hi-Go!
                     </Text>
                     <View style={styles.profiles}>
-                        <TouchableHighlight onPress={() => props.navigation.navigate("User")}>
+                        <TouchableHighlight onPress={() => getUser()}> 
                             <Image style={{ width: 50, height: 50, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
                         </TouchableHighlight>
-                        <View style={styles.admin}>
-                            <TouchableHighlight onPress={() => props.navigation.navigate("Admin")}>
-                                <View style={styles.admin}>
-                                    <Image style={{ width: 50, height: 50, alignItems: 'center' }} source={require('../assets/admin.png')} />
-                                    <View style={styles.conTexto}>
-                                        <Text style={styles.texto}>Admin</Text>
-                                    </View>
-                                </View>
-                            </TouchableHighlight>
-                        </View>
                     </View>
                 </View>
 
@@ -111,9 +198,9 @@ export function Map(props) {
                             }}
                             onPress={() => marker.libre ?
                                 (marker.tipo === "bike" ?
-                                    props.navigation.navigate("BikeInfo", { id: marker.id, tipo: marker.tipo }) :
-                                    props.navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo })
-                                ) : props.navigation.navigate("noDisponible")}
+                                    navigation.navigate("BikeInfo", { id: marker.id, tipo: marker.tipo }) :
+                                    navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo })
+                                ) : navigation.navigate("noDisponible")}
                             style={styles.marker}
                         // opacity={marker.libre ? 1.0 : 0.0}
                         >
@@ -126,15 +213,15 @@ export function Map(props) {
                             </View>
                         </Marker>
                     ))}
-                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("QR")}>
+                    <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("QR", {user_id: user_id})}>
                         <Text style={styles.textButton} >Leer QR</Text>
                     </TouchableHighlight>
                 </MapView>
             </View>
         );
     };
-}
-
+    }
+    };
 //GEOLOCALIZACIÓN DE LOS USUARIOS
 export const getCurrentLocation = async () => {
     const response = { status: false, location: null }

@@ -1,8 +1,29 @@
+import { SYSTEM_BRIGHTNESS } from 'expo-permissions';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
 
-export function User(props) {
+export function User({navigation, route}) {
+    
+    const user_id = route.params.user_id;
+    const username = route.params.username;
+    const email = route.params.email;
+    const saldo = route.params.saldo;
+
+    const [viajes, setViajes] = useState();
+    useEffect(() => {
+        let isApiSubscribed = true;
+        axios.get("http://172.20.10.2:8080/api/v1/viajes/" + user_id).then((response) => {
+            if (isApiSubscribed) {
+                
+                setViajes(response.data);
+            }
+        })
+        return () => {
+            isApiSubscribed = false;
+        }
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -16,20 +37,20 @@ export function User(props) {
             <View style={styles.user}>
                 <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
                 <View style={styles.info}>
-                    <Text style={styles.texto}>Nombre: </Text>
-                    <Text style={styles.texto}>Apellidos: </Text>
-                    <Text style={styles.texto}>Email: </Text>
-                    <Text style={styles.texto}>Contraseña: *****</Text>
+                    <Text style={styles.texto}>Nombre: {username}</Text>
+                    <Text style={styles.texto}>Email: {email}</Text>
+                    <Text style={styles.texto}>Saldo: {saldo}</Text>
+                    <Text style={styles.texto}>Viajes: {viajes}</Text>
                 </View>
-
-                {/* <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("EditUser")}>
+            
+                 <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("EditUser",{ user_id: user_id, username: username})}>
                     <Text style={styles.textButton}>Editar</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.button}
-                    // onPress={() => props.navigation.navigate("QR")}
-                    >
-                    <Text style={styles.textButton}>Borrar</Text>
-                </TouchableHighlight> */}
+
+                <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("Map")}>
+                    <Text style={styles.textButton}>Volver</Text>
+                </TouchableHighlight>
+
 
             </View>
         </View>

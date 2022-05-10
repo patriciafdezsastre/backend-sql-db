@@ -39,7 +39,7 @@ public class Vehiculo {
     private long id;
 
     @Column(name = "aparcadoOK", nullable = false)
-    private Boolean aparcadoOk;;
+    private Boolean aparcadoOk;
 
     @Column(name = "tipo", nullable = false)
     private String tipo;
@@ -52,6 +52,12 @@ public class Vehiculo {
 
     @Column(name = "libre", nullable = false)
     private Boolean libre;
+
+    @Column(name = "tiempoalquilado", nullable = false)
+    private long tiempoalquilado;
+
+    @Column(name = "idViajeEnCurso", nullable = false)
+    private long idViajeEnCurso;
 
 
     public Vehiculo() {
@@ -109,12 +115,27 @@ public class Vehiculo {
 
     public Double getLongitud() {
       return this.longitud;
-  }
+    }
 
-  public void setLongitud(Double longitud) {
-      this.longitud = longitud;
-  }
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
 
+  public long getTiempoAlquilado() {
+    return this.tiempoalquilado;
+    }
+
+    public void setTiempoAlquilado(long tiempoalquilado) {
+        this.tiempoalquilado = tiempoalquilado;
+    }
+
+    public long getIdViajeEnCurso() {
+        return this.idViajeEnCurso;
+    }
+
+    public void setIdViajeEnCurso(long idViajeEnCurso) {
+        this.idViajeEnCurso = idViajeEnCurso;
+    }
 
 }
 

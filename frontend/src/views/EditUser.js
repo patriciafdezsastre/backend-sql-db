@@ -1,9 +1,43 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
-import MyButton from './my_button';
 
-export function EditUser(props) {
+
+export function EditUser({navigation, route}) {
+    const user_id = route.params.user_id;
+    const username = route.params.username;
+    const [nombre, setNombre] = useState("");
+
+    function Cambiar(){
+      axios.put("http://172.20.10.2:8080/api/v2/user/" +user_id+ "/"+nombre)
+      .then(
+          alert("User modificado")
+        )
+        .catch(error =>{
+            alert("Error" +error)
+        }
+            
+        )
+
+    }
+
+    function Borrar(){
+      axios.delete("http://172.20.10.2:8080/api/v2/user/delete/" +user_id)
+      .then(
+          navigation.navigate("Home")   
+      )
+      .catch(error =>{
+        alert("Error" +error)
+    }
+        
+    )
+
+
+
+    }
+    
+    
 
     return (
         <View style={styles.container}>
@@ -17,10 +51,23 @@ export function EditUser(props) {
             <View style={styles.user}>
                 <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
                 <View style={styles.info}>
-                    <Text style={styles.texto}>Nombre: </Text>
-                    <Text style={styles.texto}>Apellidos: </Text>
-                    <Text style={styles.texto}>Email: </Text>
-                    <Text style={styles.texto}>Contraseña: *****</Text>
+                    <Text style={styles.texto}>Nombre: {username} </Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Username..."
+                value={nombre}
+                onChangeText={(text) => setNombre(text)}
+            />
+
+                <TouchableHighlight style={styles.button} onPress={() => Cambiar()}>
+                    <Text style={styles.textButton}>Cambiar</Text>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.button} onPress={() => Borrar()}>
+                    <Text style={styles.textButton}>Borrar</Text>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("Map")}>
+                    <Text style={styles.textButton}>Volver</Text>
+                </TouchableHighlight>
                 </View>
             </View>
         </View>
@@ -34,6 +81,18 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         justifyContent: 'space-around',
         padding: 15
+    },
+    input: {
+        padding: 15,
+        margin: 10,
+        backgroundColor: 'white',
+        color: 'black',
+        borderWidth: 3,
+        borderColor: 'black',
+        fontSize: 25,
+        fontWeight: 'bold',
+        fontFamily: 'Times New Roman'
+        // textAlign: 'center'
     },
     header: {
         justifyContent: 'space-around',

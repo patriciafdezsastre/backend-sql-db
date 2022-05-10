@@ -5,11 +5,17 @@ import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 're
 
 export function encurso({ navigation, route }) {
     const id = route.params.id;
+    const user_id = route.params.user_id;
+    let viaje_id;
     // get cambia el estado a libre
     async function changeLibre() {
         try {
-        const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id);
-        console.log(res.data);
+        const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id + "/" + user_id);
+        console.log("user id:" + user_id);
+        viaje_id = res.data.id;
+        console.log(viaje_id);
+        navigation.navigate("resumen", {id: viaje_id});
+        
         } catch (error) {
             console.log("error ", error);
         }
@@ -30,8 +36,9 @@ export function encurso({ navigation, route }) {
 
             </View>
             <TouchableHighlight style={styles.button} onPress={() => {
-                navigation.navigate("resumen");
+                
                 changeLibre();
+                
             }}>
                 <Text style={styles.textButton}>Finalizar</Text>
             </TouchableHighlight>

@@ -11,11 +11,13 @@ export function Bike({ navigation, route }) {
     const [vehiculo, setVehiculo] = useState();
     const [precio, setPrecio] = useState();
     const [isFotoAlready, setIsFotoAlready] = useState(null);
+    const user_id = route.params.user_id;
 
     // get info
     useEffect(() => {
         let isApiSubscribed = true;
         axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id).then((response) => {
+
             if (isApiSubscribed) {
                 setVehiculo(response.data);
                 console.log(vehiculo);
@@ -82,7 +84,8 @@ export function Bike({ navigation, route }) {
                     }
 
                     <TouchableHighlight style={styles.button} onPress={() => {
-                        navigation.navigate("encurso", { id: id });
+
+                        navigation.navigate("encurso", {id: id, user_id: user_id});
                         changeUsado();
                     }}>
                         <Text style={styles.textButton}>Utilizar</Text>

@@ -7,16 +7,17 @@ export function QR( {navigation, route}) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [tipoVehiculo, setTipoVehiculo] = useState();
+    const user_id = route.params.user_id;
 
     const getVehiculo = async (id) => {
         try {
-            const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id);
+            const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculoinfo/"+id);
             console.log(res.data);
             var type = res.data.tipo;
             setTipoVehiculo(type);
             type === "bike" ? 
-                navigation.navigate("Bike", { id: id, tipo: type }) : 
-                navigation.navigate("Patinete", { id: id, tipo: type});
+                navigation.navigate("Bike", { id: id, tipo: type, user_id: user_id}) : 
+                navigation.navigate("Patinete", { id: id, tipo: type, user_id: user_id});
         } catch (error) {
             console.log("error", error);
         }

@@ -7,6 +7,7 @@ LogBox.ignoreLogs(['source.uri should not be an empty string']);
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet, Button, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
+
 export function malAparcado({ navigation, route }) {
     const vehiculo_id = route.params.id;
     const tipo = route.params.tipo;
@@ -63,6 +64,7 @@ export function malAparcado({ navigation, route }) {
                 <TouchableHighlight style={styles.button} onPress={() => { sendPicture() }}>
                     <Text style={styles.textButton}>Enviar</Text>
                 </TouchableHighlight>
+
             </View>
             }
         </View>
@@ -137,8 +139,5 @@ const styles = StyleSheet.create({
     notYet: {
         height: 600
     },
-    // takenPicture: {
-    //     justifyContent: 'space-around'
-    // }
 });
 export default malAparcado;
