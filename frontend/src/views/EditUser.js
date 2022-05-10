@@ -6,6 +6,7 @@ import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 're
 
 export function EditUser({navigation, route}) {
     const user_id = route.params.user_id;
+    const isAdmin = route.params.isAdmin;
     const username = route.params.username;
     const [nombre, setNombre] = useState("");
 
@@ -15,30 +16,21 @@ export function EditUser({navigation, route}) {
           alert("User modificado")
         )
         .catch(error =>{
-            alert("Error" +error)
-        }
-            
-        )
-
-    }
+            alert("Error" +error),
+            navigation.navigate("Map")   
+        })}
 
     function Borrar(){
       axios.delete("http://172.20.10.2:8080/api/v2/user/delete/" +user_id)
       .then(
+        alert("User eliminado"),
+
           navigation.navigate("Home")   
       )
       .catch(error =>{
         alert("Error" +error)
-    }
-        
-    )
-
-
-
-    }
+    })}
     
-    
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -65,7 +57,7 @@ export function EditUser({navigation, route}) {
                 <TouchableHighlight style={styles.button} onPress={() => Borrar()}>
                     <Text style={styles.textButton}>Borrar</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("Map")}>
+                <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("Map", {id:user_id, isAdmin: isAdmin})}>
                     <Text style={styles.textButton}>Volver</Text>
                 </TouchableHighlight>
                 </View>
@@ -104,7 +96,7 @@ const styles = StyleSheet.create({
         height: 700
     },
     info: {
-        left: 70,
+        // left: 70,
         top: 70,
         marginBottom: 20
     },

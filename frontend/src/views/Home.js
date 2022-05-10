@@ -14,7 +14,7 @@ export function Home(props) {
                 <Text style={styles.textSU} >Sign up</Text>
             </TouchableHighlight>
 
-            <TouchableHighlight style={styles.buttonLI} onPress={() => props.navigation.navigate("Map")}>
+            <TouchableHighlight style={styles.buttonLI} onPress={() => props.navigation.navigate("Login")}>
                 <Text style={styles.textLI}>Log in</Text>
             </TouchableHighlight>
 

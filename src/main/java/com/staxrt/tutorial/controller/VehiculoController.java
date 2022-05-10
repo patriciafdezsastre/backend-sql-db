@@ -75,12 +75,11 @@ public class VehiculoController {
    * @throws ResourceNotFoundException the resource not found exception
    */
   @GetMapping("/vehiculoinfo/{id}")
-  public ResponseEntity<Vehiculo> getVehiculoInfo(@PathVariable(value = "id") Long vehiculoId)
-      throws ResourceNotFoundException {
+  public Vehiculo getVehiculoInfo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
     Vehiculo vehiculo = vehiculoRepository
         .findById(vehiculoId)
         .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-    return ResponseEntity.ok(vehiculo);
+    return vehiculo;
   }
 
   @PostMapping("/vehiculo/{tipo}/{latitud}/{longitud}/{libre}/{aparcadoOK}")

@@ -4,9 +4,10 @@ import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
 
-export function User({navigation, route}) {
-    
+export function User({ navigation, route }) {
+
     const user_id = route.params.user_id;
+    const isAdmin = route.params.isAdmin;
     const username = route.params.username;
     const email = route.params.email;
     const saldo = route.params.saldo;
@@ -16,7 +17,7 @@ export function User({navigation, route}) {
         let isApiSubscribed = true;
         axios.get("http://172.20.10.2:8080/api/v1/viajes/" + user_id).then((response) => {
             if (isApiSubscribed) {
-                
+
                 setViajes(response.data);
             }
         })
@@ -39,15 +40,15 @@ export function User({navigation, route}) {
                 <View style={styles.info}>
                     <Text style={styles.texto}>Nombre: {username}</Text>
                     <Text style={styles.texto}>Email: {email}</Text>
-                    <Text style={styles.texto}>Saldo: {saldo}</Text>
+                    {isAdmin ? null : <Text style={styles.texto}>Saldo: {saldo}</Text>}
                     <Text style={styles.texto}>Viajes: {viajes}</Text>
                 </View>
-            
-                 <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("EditUser",{ user_id: user_id, username: username})}>
-                    <Text style={styles.textButton}>Editar</Text>
-                </TouchableHighlight>
-
-                <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("Map")}>
+                {isAdmin ? null :
+                    <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("EditUser", { user_id: user_id, username: username, isAdmin: isAdmin })}>
+                        <Text style={styles.textButton}>Editar</Text>
+                    </TouchableHighlight>
+                }
+                <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("Map", { id: user_id, isAdmin: isAdmin })}>
                     <Text style={styles.textButton}>Volver</Text>
                 </TouchableHighlight>
 
