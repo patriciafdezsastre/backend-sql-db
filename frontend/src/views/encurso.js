@@ -12,6 +12,8 @@ export function encurso({ navigation, route }) {
         console.log(res.data);
         viaje_id = res.data.id;
         console.log(viaje_id);
+        navigation.navigate("resumen", {id: viaje_id});
+        
         } catch (error) {
             console.log("error ", error);
         }
@@ -32,8 +34,9 @@ export function encurso({ navigation, route }) {
 
             </View>
             <TouchableHighlight style={styles.button} onPress={() => {
-                navigation.navigate("resumen", {id: id});
+                
                 changeLibre();
+                
             }}>
                 <Text style={styles.textButton}>Finalizar</Text>
             </TouchableHighlight>

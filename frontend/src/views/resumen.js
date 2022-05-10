@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
 
-export function resumen(navigation, route) {
+export function resumen({navigation, route}) {
 
     const id = route.params.id;
 

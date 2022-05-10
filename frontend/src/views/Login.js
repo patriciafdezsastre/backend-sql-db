@@ -4,11 +4,12 @@ import axios from 'axios';
 import { View, Text, TextInput, StyleSheet, TouchableHighlight, Image } from 'react-native';
 
 
-export function Login(props) {
+export function Login({navigation, route}) {
     const [nombre, setNombre] = useState("");
     const [password, setPassword] = useState("");
     const [isadmin, setisadmin] = useState(false);
     const [shown, setShown] = useState(false);
+    let id;
 
 
     function Submit() {
@@ -18,16 +19,19 @@ export function Login(props) {
             password: password
         })
             .then(res => {
-                props.navigation.navigate("Map")
                 if (res.data.roles[0] == "ROLE_ADMIN") {
-                    setisadmin(true)
-                    props.navigation.navigate("Map")
+                    setisadmin(true);
+                    console.log(res.data.id)
+                    navigation.navigate("Map", {isAdmin: true, id: res.data.id});
+                }
+                else{
+                    navigation.navigate("Map", {isAdmin: false, id: res.data.id});
                 }
             }
             )
             .catch(error => {
                 alert("Usuario no encontrado")
-                props.navigation.navigate("Home")
+                navigation.navigate("Home")
 
             })
     }

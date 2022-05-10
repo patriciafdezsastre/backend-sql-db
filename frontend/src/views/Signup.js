@@ -18,7 +18,7 @@ export function Signup(props) {
         })
             .then(res => {
                 alert(res.data.message)
-                props.navigation.navigate("Map")
+                props.navigation.navigate("Login")
             })
 
             .catch(error => {
