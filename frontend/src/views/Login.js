@@ -13,7 +13,7 @@ export function Login(props) {
 
     function Submit() {
 
-        axios.post('http://172.20.10.2:8080/api/auth/signin', {
+        axios.post('http://172.20.10.13:8080/api/auth/signin', {
             username: nombre,
             password: password
         })
