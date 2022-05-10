@@ -83,4 +83,12 @@ public class VehiculoController {
       Vehiculo vehiculo = new Vehiculo(id, tipo, latitud, longitud, libre, aparcadoOK);
       vehiculoRepository.save(vehiculo);
   }
+
+  @DeleteMapping("/vehiculo/{id}")
+  public void deleteVehiculo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
+    Vehiculo vehiculo = vehiculoRepository
+      .findById(vehiculoId)
+      .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+    vehiculoRepository.delete(vehiculo);    
+  }
 }

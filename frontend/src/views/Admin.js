@@ -28,7 +28,7 @@ export function Admin(props) {
                         <Text style={styles.textButton}>Añadir VMPs</Text>
                     </TouchableHighlight>
 
-                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("Login")}>
+                    <TouchableHighlight style={styles.button} onPress={() => props.navigation.navigate("deleteVMP")}>
                         <Text style={styles.textButton}>Eliminar VMPs</Text>
                     </TouchableHighlight>
 

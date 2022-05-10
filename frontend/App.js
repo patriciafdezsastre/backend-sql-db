@@ -19,6 +19,8 @@ import BikeInfo from './src/views/BikeInfo';
 import PatineteInfo from './src/views/PatineteInfo';
 import modificarTarifas from './src/views/modificarTarifas';
 import addVMP from './src/views/addVMP';
+import deleteVMP from './src/views/deleteVMP';
+import deletingVMP from './src/views/deletingVMP';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +46,8 @@ export default function App() {
           <Stack.Screen name="PatineteInfo" component={PatineteInfo} />
           <Stack.Screen name="modificarTarifas" component={modificarTarifas} />
           <Stack.Screen name="addVMP" component={addVMP} />
+          <Stack.Screen name="deleteVMP" component={deleteVMP} />
+          <Stack.Screen name="deletingVMP" component={deletingVMP} />
         </Stack.Navigator>
     </NavigationContainer>
   );
