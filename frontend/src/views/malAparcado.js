@@ -1,36 +1,52 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet, Button } from 'react-native';
-import { Camera } from 'expo-camera';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['source.uri should not be an empty string']);
 
-export function malAparcado(props) {
-    const [hasCameraPermission, setHasCameraPermission] = useState(null);
-    const [camera, setCamera] = useState(null);
-    const [image, setImage] = useState(null);
-    const [taken, setTaken] = useState(false);
+import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet, Button, Alert } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+
+export function malAparcado({ navigation, route }) {
+    const vehiculo_id = route.params.id;
+    const tipo = route.params.tipo;
+    const [imagen64, setImagen64] = useState(null);
 
     useEffect(() => {
         (async () => {
-            const cameraStatus = await Camera.requestCameraPermissionsAsync();
-            setHasCameraPermission(cameraStatus.status === 'granted');
+            // Ask the user for the permission to access the camera
+            const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+            if (permissionResult.granted === false) {
+                alert("You've refused to allow this app to access your camera!");
+                return;
+            }
+            const result = await ImagePicker.launchCameraAsync({ base64: true });
+            if (!result.cancelled) {
+                setImagen64(result.base64);
+            }
+            if (result.cancelled) {
+                tipo === "bike" ?
+                    navigation.navigate("Bike", { id: vehiculo_id, tipo: tipo }) :
+                    navigation.navigate("Patinete", { id: vehiculo_id, tipo: tipo });
+            }
         })();
     }, []);
 
-    const takePicture = async () => {
-        if (camera) {
-            const data = await camera.takePictureAsync(null);
-            setImage(data.uri);
-            setTaken(true);
+    const sendPicture = async () => {
+        try {
+            const res = await axios.post("http://172.20.10.2:8080/api/v1/fotos/"+33+"/"+vehiculo_id,
+                {
+                    imagen: imagen64
+                });
+            if (res.status === 200) {
+                Alert.alert('Foto enviada', 'En breve un administrador la aprobará', [
+                    {text: 'Ok', onPress: () => navigation.navigate("Map")}
+                ])
+            }
+        } catch (error) {
+            console.log("error ", error);
         }
     }
-
-    const repeatPicture = async () => {
-        setTaken(false);
-    }
-    if (hasCameraPermission === false) {
-        return <Text>No Camera Access</Text>;
-    }
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -40,38 +56,16 @@ export function malAparcado(props) {
                     Hi-Go!
                 </Text>
             </View>
-
-            <View style={{ flex: 1 }}>
-                {taken ?
-                    <View style={styles.takenPicture}>
-                        <Image source={{ uri: image }} style={{ height: 450 }} />
-                        <TouchableHighlight style={styles.button} onPress={() => { repeatPicture(); }}>
-                            <Text style={styles.textButton}>Repetir imagen</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight style={styles.button} onPress={() => { }}>
-                            <Text style={styles.textButton}>Enviar</Text>
-                        </TouchableHighlight>
-                    </View> : <View style={styles.notYet}>
-                        <View style={styles.cameraContainer}>
-                            <Camera ref={ref => setCamera(ref)} style={styles.fixedRatio} type={Camera.Constants.Type.back} ratio={'1:1'} />
-                        </View>
-                        <TouchableHighlight style={styles.buttonTake} onPress={() => { takePicture() }}>
-                            <Text style={styles.textButton}>Take picture</Text>
-                        </TouchableHighlight>
-                    </View>
-                }
-                {/* 
-                <TouchableHighlight style={styles.button} onPress={() => {
-                    props.navigation.navigate("FotoEnviada");
-                }}>
+            {imagen64 === null ? null : <View>
+                <Image style={{ height: 500 }} source={{ uri: 'data:image/jpeg;base64,' + imagen64 }} />
+                <TouchableHighlight style={styles.button} onPress={() => { sendPicture(); navigation.navigate }}>
                     <Text style={styles.textButton}>Enviar</Text>
-                </TouchableHighlight> */}
-
+                </TouchableHighlight>
             </View>
+            }
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -141,8 +135,6 @@ const styles = StyleSheet.create({
     notYet: {
         height: 600
     },
-    takenPicture: {
-        justifyContent: 'space-around'
-    }
+
 });
 export default malAparcado;
