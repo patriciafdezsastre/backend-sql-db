@@ -32,7 +32,7 @@ import com.staxrt.tutorial.repository.VehiculoRepository;
 import com.staxrt.tutorial.repository.ViajesRepository;
 import com.staxrt.tutorial.repository.TarifasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 // import javax.validation.Valid;
@@ -67,7 +67,6 @@ public class VehiculoController {
     return vehiculoRepository.findAll();
   }
 
-
   /**
    * Get vehiculo by id.
    *
@@ -76,23 +75,26 @@ public class VehiculoController {
    * @throws ResourceNotFoundException the resource not found exception
    */
   @GetMapping("/vehiculoinfo/{id}")
-  public ResponseEntity<Vehiculo> getVehiculoInfo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
+  public ResponseEntity<Vehiculo> getVehiculoInfo(@PathVariable(value = "id") Long vehiculoId)
+      throws ResourceNotFoundException {
     Vehiculo vehiculo = vehiculoRepository
-      .findById(vehiculoId)
-      .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+        .findById(vehiculoId)
+        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
     return ResponseEntity.ok(vehiculo);
   }
 
   @PostMapping("/vehiculo/{tipo}/{latitud}/{longitud}/{libre}/{aparcadoOK}")
   public void addVMPs(
-    @PathVariable(value = "tipo") String tipo, 
-    @PathVariable(value = "latitud") Double latitud, 
-    @PathVariable(value = "longitud") Double longitud, 
-    @PathVariable(value = "libre") boolean libre, 
-    @PathVariable(value = "aparcadoOK") boolean aparcadoOK) {
-      System.out.println("hello");
-      Vehiculo vehiculo = new Vehiculo(tipo, latitud, longitud, libre, aparcadoOK);
-      vehiculoRepository.save(vehiculo);
+      @PathVariable(value = "tipo") String tipo,
+      @PathVariable(value = "latitud") Double latitud,
+      @PathVariable(value = "longitud") Double longitud,
+      @PathVariable(value = "libre") boolean libre,
+      @PathVariable(value = "aparcadoOK") boolean aparcadoOK) {
+    System.out.println("hello");
+    Vehiculo vehiculo = new Vehiculo(tipo, latitud, longitud, libre, aparcadoOK);
+    vehiculoRepository.save(vehiculo);
+  }
+
   /**
    * Get vehiculo by id.
    *
@@ -101,14 +103,15 @@ public class VehiculoController {
    * @throws ResourceNotFoundException the resource not found exception
    */
   @GetMapping("/vehiculo/{id}/{user_id}")
-  public ResponseEntity<Viajes> getVehiculo(@PathVariable(value = "id") Long vehiculoId, @PathVariable(value = "user_id") Long userId) throws ResourceNotFoundException {
+  public ResponseEntity<Viajes> getVehiculo(@PathVariable(value = "id") Long vehiculoId,
+      @PathVariable(value = "user_id") Long userId) throws ResourceNotFoundException {
     Vehiculo vehiculo = vehiculoRepository
-      .findById(vehiculoId)
-      .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+        .findById(vehiculoId)
+        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
 
     Viajes viaje = viajesRepository
-      .findById(vehiculo.getIdViajeEnCurso())
-      .orElseThrow(() -> new ResourceNotFoundException("Viaje not found on :: " + vehiculo.getIdViajeEnCurso()));
+        .findById(vehiculo.getIdViajeEnCurso())
+        .orElseThrow(() -> new ResourceNotFoundException("Viaje not found on :: " + vehiculo.getIdViajeEnCurso()));
 
     List<Tarifas> tarifas = tarifasRepository.findAll();
     Timestamp timestampnow = new Timestamp(System.currentTimeMillis());
@@ -117,10 +120,9 @@ public class VehiculoController {
     float diff = timestampnow.getTime() - tiempoAlquiler;
     float tiempoSec = diff / 1000;
     viaje.setTiempo(tiempoSec);
-    if (vehiculo.getTipo() == "bike"){
+    if (vehiculo.getTipo() == "bike") {
       viaje.setCoste(tarifas.get(0).getTarifa() * (diff / 60000));
-    }
-    else{
+    } else {
       viaje.setCoste(tarifas.get(1).getTarifa() * (diff / 60000));
     }
     viaje.setUserId(userId);
@@ -137,11 +139,11 @@ public class VehiculoController {
     Vehiculo vehiculo = vehiculoRepository
         .findById(vehiculoId)
         .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-    
+
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     vehiculo.setTiempoAlquilado(timestamp.getTime());
     vehiculo.setLibre(false);
-   
+
     Viajes newViaje = new Viajes(timestamp, vehiculo.getLatitud(), vehiculo.getLongitud());
 
     viajesRepository.save(newViaje);
@@ -154,8 +156,8 @@ public class VehiculoController {
   @DeleteMapping("/vehiculo/{id}")
   public void deleteVehiculo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
     Vehiculo vehiculo = vehiculoRepository
-      .findById(vehiculoId)
-      .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-    vehiculoRepository.delete(vehiculo);    
+        .findById(vehiculoId)
+        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+    vehiculoRepository.delete(vehiculo);
   }
 }
