@@ -48,9 +48,16 @@ public class ViajesController {
    *
    * @return the list
    */
-  @GetMapping("/viajes")
-  public List<Viajes> getAllViajes() {
-    return viajesRepository.findAll();
+  @GetMapping("/viajes/{user_id}")
+  public List<Viajes> getAllViajes(@PathVariable(value = "user_id") Long user_id) {
+    List<Viajes> viajes = viajesRepository.findAll();
+    for(int i = 0; i < viajes.size(); i++){
+      if(viajes.get(i).getUserId() != user_id){
+        viajes.remove(i);
+        i--;
+      }
+    }
+    return viajes;
   }
 
 

@@ -8,7 +8,7 @@ INSERT INTO roles(name) VALUES('ROLE_USER');
 INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
-INSERT INTO `users_database`.`users` (`email`, `password`, `username`) VALUES ('laura@gmail.com','12345678', 'laaura_fg');
+INSERT INTO `users_database`.`users` (`email`, `password`, `username`, `saldo`) VALUES ('laura@gmail.com','12345678', 'laaura_fg', 0);
 INSERT INTO `users_database`.`user_roles` (`user_id`, `role_id`) VALUES (1, 3);
 
 

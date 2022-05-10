@@ -41,7 +41,7 @@ export function Map({navigation, route}) {
             }
         })()
         let isApiSubscribed = true;
-        axios.get("http://172.20.10.5:8080/api/v1/vehiculos").then((response) => {
+        axios.get("http://172.20.10.2:8080/api/v1/vehiculos").then((response) => {
             if (isApiSubscribed) {
                 setMarkers(response.data);
                 setLoading(false);
@@ -53,18 +53,16 @@ export function Map({navigation, route}) {
     }, []);
 
     async function getVehiculos() {
-        const res = await axios.get("http://172.20.10.5:8080/api/v2/user/{id}");
+        const res = await axios.get("http://172.20.10.2:8080/api/v2/user/{id}");
         console.log(res.data);
         return res.data;
     }
 
 
     async function getUser() {
-        const res = await axios.get("http://172.20.10.5:8080/api/v2/user/"+ id_user);
-        setUsername(res.data.username)
-        setEmail(res.data.email)
-
-        navigation.navigate("User",{id: user_id, username: username, email: email})
+        const res = await axios.get("http://172.20.10.2:8080/api/v2/user/"+ user_id);
+        console.log("hostia puta" + user_id)
+        navigation.navigate("User",{user_id: user_id, username: res.data.username, email: res.data.email, saldo:res.data.saldo})
 
 
     }

@@ -9,6 +9,8 @@ export function resumen({navigation, route}) {
     const [viajeInfo, setViajeInfo] = useState();
     const [idViaje, setIdViaje] = useState(0);
     const [precioViaje, setPrecioViaje] = useState(0);
+    const [fechaViaje, setFechaViaje] = useState();
+    const [tiempoViaje, setTiempoViaje] = useState();
 
     useEffect(() => {
         let isApiSubscribed = true;
@@ -16,7 +18,9 @@ export function resumen({navigation, route}) {
             if (isApiSubscribed) {
                 setViajeInfo(response.data);
                 setIdViaje(response.data.id);
+                setFechaViaje(response.data.fecha)
                 setPrecioViaje(response.data.coste);
+                setTiempoViaje(response.data.tiempo);
             }
         })
         return () => {
@@ -34,15 +38,20 @@ export function resumen({navigation, route}) {
                 </Text>
             </View>
 
-            <View style={styles.info}>
-                <Text style={styles.texto}>Resumen del viaje</Text>
+            <View style={styles.bike}>
+
+            <Text style={styles.texto}>Resumen del viaje</Text>
+
+            <Text style={styles.texto}></Text>
+            <Text style={styles.info}>Fecha:  {fechaViaje}</Text>
+                <Text style={styles.info}>Precio:  {precioViaje}€</Text>
+                <Text style={styles.info}>Tiempo de Viaje: {tiempoViaje}s</Text>
+                <TouchableHighlight style={styles.button} onPress={() => {
+            }}>
+                <Text style={styles.textButton}>Pagar</Text>
+            </TouchableHighlight>
             </View>
-            <View style={styles.info}>
-                <Text style={styles.texto}>{precioViaje}</Text>
-            </View>
-            <View style={styles.info}>
-                <Text style={styles.texto}>{idViaje}</Text>
-            </View>
+            
 
         </View>
     );
@@ -62,13 +71,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     bike: {
+        paddingTop: 20,
         backgroundColor: '#FEFAE0',
-        height: 700
+        height: 700,
+        fontSize: 100,
+        alignItems: 'center',
     },
     info: {
-        left: 70,
         // top: 70,
-        marginBottom: 20
+        marginBottom: 20,
+        fontSize: 20
     },
     texto: {
         marginBottom: 5,

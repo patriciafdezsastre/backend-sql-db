@@ -10,7 +10,7 @@ export function EditUser({navigation, route}) {
     const [nombre, setNombre] = useState("");
 
     function Cambiar(){
-      axios.put("/user/" +user_id+ "/"+nombre)
+      axios.put("http://172.20.10.2:8080/api/v2/user/" +user_id+ "/"+nombre)
       .then(
           alert("User modificado")
         )
@@ -23,7 +23,7 @@ export function EditUser({navigation, route}) {
     }
 
     function Borrar(){
-      axios.delete("/user/delete/" +user_id)
+      axios.delete("http://172.20.10.2:8080/api/v2/user/delete/" +user_id)
       .then(
           navigation.navigate("Home")   
       )
@@ -81,6 +81,18 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         justifyContent: 'space-around',
         padding: 15
+    },
+    input: {
+        padding: 15,
+        margin: 10,
+        backgroundColor: 'white',
+        color: 'black',
+        borderWidth: 3,
+        borderColor: 'black',
+        fontSize: 25,
+        fontWeight: 'bold',
+        fontFamily: 'Times New Roman'
+        // textAlign: 'center'
     },
     header: {
         justifyContent: 'space-around',
