@@ -26,6 +26,9 @@ export function Map({navigation, route}) {
     const [MARKERS_DATA, setMarkers] = useState([]);
     const user_id = route.params.id;
     const isAdmin = route.params.isAdmin;
+    const [username, setUsername] = useState();
+    const [email, setEmail] = useState();
+
 
     useEffect(() => {
         (async () => {
@@ -38,7 +41,7 @@ export function Map({navigation, route}) {
             }
         })()
         let isApiSubscribed = true;
-        axios.get("http://172.20.10.2:8080/api/v1/vehiculos").then((response) => {
+        axios.get("http://172.20.10.5:8080/api/v1/vehiculos").then((response) => {
             if (isApiSubscribed) {
                 setMarkers(response.data);
                 setLoading(false);
@@ -50,9 +53,20 @@ export function Map({navigation, route}) {
     }, []);
 
     async function getVehiculos() {
-        const res = await axios.get("http://172.20.10.2:8080/api/v1/vehiculo/1");
+        const res = await axios.get("http://172.20.10.5:8080/api/v2/user/{id}");
         console.log(res.data);
         return res.data;
+    }
+
+
+    async function getUser() {
+        const res = await axios.get("http://172.20.10.5:8080/api/v2/user/"+ id_user);
+        setUsername(res.data.username)
+        setEmail(res.data.email)
+
+        navigation.navigate("User",{id: user_id, username: username, email: email})
+
+
     }
 
     if (loading) return (
@@ -151,7 +165,7 @@ export function Map({navigation, route}) {
                         Hi-Go!
                     </Text>
                     <View style={styles.profiles}>
-                        <TouchableHighlight onPress={() => navigation.navigate("User")}>
+                        <TouchableHighlight onPress={() => getUser()}> 
                             <Image style={{ width: 50, height: 50, alignItems: 'center' }} source={require('../assets/Avatar.png')} />
                         </TouchableHighlight>
                     </View>
