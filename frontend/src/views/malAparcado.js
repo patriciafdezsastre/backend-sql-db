@@ -34,13 +34,15 @@ export function malAparcado({ navigation, route }) {
 
     const sendPicture = async () => {
         try {
-            const res = await axios.post("http://172.20.10.2:8080/api/v1/fotos/"+33+"/"+vehiculo_id,
+            const res = await axios.post("http://172.20.10.2:8080/api/v1/fotos/" + 33 + "/" + vehiculo_id,
                 {
                     imagen: imagen64
                 });
+            console.log(imagen64)
+            // const res = await axios.post("http://172.20.10.2:8080/api/v1/fotos/"+33+"/"+vehiculo_id,+"/"+imagen64);
             if (res.status === 200) {
                 Alert.alert('Foto enviada', 'En breve un administrador la aprobará', [
-                    {text: 'Ok', onPress: () => navigation.navigate("Map")}
+                    { text: 'Ok', onPress: () => navigation.navigate("Map") }
                 ])
             }
         } catch (error) {
@@ -58,7 +60,7 @@ export function malAparcado({ navigation, route }) {
             </View>
             {imagen64 === null ? null : <View>
                 <Image style={{ height: 500 }} source={{ uri: 'data:image/jpeg;base64,' + imagen64 }} />
-                <TouchableHighlight style={styles.button} onPress={() => { sendPicture(); navigation.navigate }}>
+                <TouchableHighlight style={styles.button} onPress={() => { sendPicture() }}>
                     <Text style={styles.textButton}>Enviar</Text>
                 </TouchableHighlight>
             </View>

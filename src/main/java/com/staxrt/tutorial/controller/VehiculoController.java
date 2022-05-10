@@ -79,8 +79,7 @@ public class VehiculoController {
     @PathVariable(value = "libre") boolean libre, 
     @PathVariable(value = "aparcadoOK") boolean aparcadoOK) {
       System.out.println("hello");
-      Long id = vehiculoRepository.count()+1;
-      Vehiculo vehiculo = new Vehiculo(id, tipo, latitud, longitud, libre, aparcadoOK);
+      Vehiculo vehiculo = new Vehiculo(tipo, latitud, longitud, libre, aparcadoOK);
       vehiculoRepository.save(vehiculo);
   }
 

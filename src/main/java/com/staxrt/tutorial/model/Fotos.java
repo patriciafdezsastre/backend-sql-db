@@ -56,8 +56,7 @@ public class Fotos {
 
     }
 
-    public Fotos(Long id, long user_id, long vehiculo_id, String imagen) {
-        this.id = id;
+    public Fotos( long user_id, long vehiculo_id, String imagen) {
         this.user_id = user_id;
         this.vehiculo_id = vehiculo_id;
         this.imagen = imagen;

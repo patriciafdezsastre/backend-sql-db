@@ -21,6 +21,8 @@ import modificarTarifas from './src/views/modificarTarifas';
 import addVMP from './src/views/addVMP';
 import deleteVMP from './src/views/deleteVMP';
 import deletingVMP from './src/views/deletingVMP';
+import verify from './src/views/verify';
+import verifying from './src/views/verifying';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +50,8 @@ export default function App() {
           <Stack.Screen name="addVMP" component={addVMP} />
           <Stack.Screen name="deleteVMP" component={deleteVMP} />
           <Stack.Screen name="deletingVMP" component={deletingVMP} />
+          <Stack.Screen name="verify" component={verify} />
+          <Stack.Screen name="verifying" component={verifying} />
         </Stack.Navigator>
     </NavigationContainer>
   );

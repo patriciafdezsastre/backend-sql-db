@@ -10,7 +10,7 @@ export function Bike({ navigation, route }) {
     const [loading, setLoading] = useState(true);
     const [vehiculo, setVehiculo] = useState();
     const [precio, setPrecio] = useState();
-    const [pictureSent, setPictureSent] = useState();
+    const [isFotoAlready, setIsFotoAlready] = useState(null);
 
     // get info
     useEffect(() => {
@@ -27,7 +27,11 @@ export function Bike({ navigation, route }) {
                 setPrecio(response.data);
             }
         })
-        // axios.get("http://172.20.10.2:8080/api/v1/tarifas/")
+        axios.get("http://172.20.10.2:8080/api/v1/fotos/" + id).then((response) => {
+            if (isApiSubscribed) {
+                setIsFotoAlready(response.data);
+            }
+        })
         return () => {
             isApiSubscribed = false;
         }
@@ -70,7 +74,7 @@ export function Bike({ navigation, route }) {
                         <Text style={styles.texto}>Distancia: XXX</Text>
                         <Text style={styles.texto}>Precio: {precio} €/min</Text>
                     </View>
-                    {!vehiculo.aparcadoOk ? null : <View>
+                    {(!vehiculo.aparcadoOk || isFotoAlready) ? null : <View>
                         <TouchableHighlight style={styles.button} onPress={() => { navigation.navigate("malAparcado", { id: id, tipo: tipo }) }}>
                             <Text style={styles.textButton}>¿Mal aparcado?</Text>
                         </TouchableHighlight>
