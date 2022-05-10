@@ -1,10 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, StyleSheet, Image } from 'react-native';
 
 export function resumen({navigation, route}) {
 
-    const id = route.params.id;
+    let id = route.params.id;
+    const [viajeInfo, setViajeInfo] = useState();
+    const [idViaje, setIdViaje] = useState(0);
+    const [precioViaje, setPrecioViaje] = useState(0);
+
+    useEffect(() => {
+        let isApiSubscribed = true;
+        axios.get("http://172.20.10.2:8080/api/v1/viaje/"+id).then((response) => {
+            if (isApiSubscribed) {
+                setViajeInfo(response.data);
+                setIdViaje(response.data.id);
+                setPrecioViaje(response.data.coste);
+            }
+        })
+        return () => {
+            isApiSubscribed = false;
+        }
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -12,12 +30,18 @@ export function resumen({navigation, route}) {
                 <Image style={{ width: 100, height: 100, alignItems: 'center' }} source={require('../assets/def.png')} />
                 <Text
                     style={{ color: '#333333', fontWeight: 'bold', fontFamily: 'Baskerville-Bold', fontSize: 30 }}>
-                    {id}
+                    Hi-Go!
                 </Text>
             </View>
 
             <View style={styles.info}>
                 <Text style={styles.texto}>Resumen del viaje</Text>
+            </View>
+            <View style={styles.info}>
+                <Text style={styles.texto}>{precioViaje}</Text>
+            </View>
+            <View style={styles.info}>
+                <Text style={styles.texto}>{idViaje}</Text>
             </View>
 
         </View>

@@ -132,7 +132,7 @@ export function Map({navigation, route}) {
                                 </View>
                             </Marker>
                         ))}
-                        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("QR")}>
+                        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("QR", {user_id: user_id})}>
                             <Text style={styles.textButton} >Leer QR</Text>
                         </TouchableHighlight>
                     </MapView>
@@ -201,7 +201,7 @@ export function Map({navigation, route}) {
                             </View>
                         </Marker>
                     ))}
-                    <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("QR")}>
+                    <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("QR", {user_id: user_id})}>
                         <Text style={styles.textButton} >Leer QR</Text>
                     </TouchableHighlight>
                 </MapView>

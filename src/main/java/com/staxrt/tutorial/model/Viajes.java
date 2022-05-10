@@ -67,6 +67,9 @@ public class Viajes {
     @Column(name = "coste", nullable = true)
     private double coste;
 
+    @Column(name = "user_id", nullable = true)
+    private long user_id;
+
     public Viajes() {
     }
 
@@ -132,6 +135,14 @@ public class Viajes {
 
     public void setCoste (double coste) {
         this.coste = coste;
+    }
+
+    public double getUserId() {
+        return this.user_id;
+    }
+
+    public void setUserId (long user_id) {
+        this.user_id = user_id;
     }
     //implementar getters y setters
 

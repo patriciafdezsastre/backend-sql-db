@@ -90,8 +90,8 @@ public class VehiculoController {
    * @return the vehiculos by id
    * @throws ResourceNotFoundException the resource not found exception
    */
-  @GetMapping("/vehiculo/{id}")
-  public ResponseEntity<Viajes> getVehiculo(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
+  @GetMapping("/vehiculo/{id}/{user_id}")
+  public ResponseEntity<Viajes> getVehiculo(@PathVariable(value = "id") Long vehiculoId, @PathVariable(value = "user_id") Long userId) throws ResourceNotFoundException {
     Vehiculo vehiculo = vehiculoRepository
       .findById(vehiculoId)
       .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
@@ -117,6 +117,7 @@ public class VehiculoController {
     else{
       viaje.setCoste(tarifas.get(1).getTarifa() * (diff / 60000));
     }
+    viaje.setUserId(userId);
     vehiculo.setLibre(true);
     vehiculo.setTiempoAlquilado(0);
     vehiculoRepository.save(vehiculo);

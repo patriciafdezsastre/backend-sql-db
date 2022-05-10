@@ -10,6 +10,7 @@ export function Bike({ navigation, route }) {
     const [loading, setLoading] = useState(true);
     const [vehiculo, setVehiculo] = useState();
     const [precio, setPrecio] = useState();
+    const user_id = route.params.user_id;
 
     // get info
     useEffect(() => {
@@ -81,7 +82,7 @@ export function Bike({ navigation, route }) {
                         <Text style={styles.textButton}>¿Mal aparcado?</Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.button} onPress={() => {
-                        navigation.navigate("encurso", {id: id});
+                        navigation.navigate("encurso", {id: id, user_id: user_id});
                         changeUsado();
                     }}>
                         <Text style={styles.textButton}>Utilizar</Text>
