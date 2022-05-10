@@ -49,14 +49,15 @@ public class Fotos {
     private long vehiculo_id;
 
     @Lob
-    @Column(name = "imagen", columnDefinition = "longblob", nullable = false)
-    private byte[] imagen;
+    @Column(name = "imagen", nullable = false)
+    private String imagen;
 
     public Fotos() {
 
     }
 
-    public Fotos(long user_id, long vehiculo_id, byte[] imagen) {
+    public Fotos(Long id, long user_id, long vehiculo_id, String imagen) {
+        this.id = id;
         this.user_id = user_id;
         this.vehiculo_id = vehiculo_id;
         this.imagen = imagen;
@@ -87,11 +88,11 @@ public class Fotos {
         this.vehiculo_id = vehiculo_id;
     }
     
-    public byte[] getImagen() {
+    public String getImagen() {
         return this.imagen;
     }
 
-    public void setImagen(byte[] imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 }

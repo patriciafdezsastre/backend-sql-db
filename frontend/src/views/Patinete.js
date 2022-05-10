@@ -14,7 +14,7 @@ export function Patinete({ navigation, route }) {
     // get info
     useEffect(() => {
         let isApiSubscribed = true;
-        axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id).then((response) => {
+        axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id).then((response) => {
             if (isApiSubscribed) {
                 setVehiculo(response.data);
                 console.log(vehiculo);
@@ -58,9 +58,12 @@ export function Patinete({ navigation, route }) {
                         <Text style={styles.texto}>Distancia: XXX</Text>
                         <Text style={styles.texto}>Precio: {precio} €/min</Text>
 
-                        <TouchableHighlight style={styles.button} onPress={() => {navigation.navigate("malAparcado",  {id:id, tipo:tipo})}}>
-                            <Text style={styles.textButton}>¿Mal aparcado?</Text>
-                        </TouchableHighlight>
+                        {!vehiculo.aparcadoOk ? null : <View>
+                            <TouchableHighlight style={styles.button} onPress={() => { navigation.navigate("malAparcado", { id: id, tipo: tipo }) }}>
+                                <Text style={styles.textButton}>¿Mal aparcado?</Text>
+                            </TouchableHighlight>
+                        </View>
+                        }
                         <TouchableHighlight style={styles.button} onPress={() => {
                             navigation.navigate("encurso");
                             changeLibre();

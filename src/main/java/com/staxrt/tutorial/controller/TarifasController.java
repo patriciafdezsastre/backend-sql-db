@@ -58,4 +58,11 @@ public class TarifasController {
     return tarifa.getTarifa();
   }
 
+  @PostMapping("/tarifas/{tipo}/{precio}")
+  public void changeTarifaByTipo(@PathVariable(value = "tipo") String tipo, @PathVariable(value = "precio") Double precio) throws ResourceNotFoundException {
+    Tarifas newTarifa = tarifasRepository.findById(tipo)
+      .orElseThrow(() -> new ResourceNotFoundException("Tarifa not found on :: " + tipo));
+    newTarifa.setTarifa(precio);
+    tarifasRepository.save(newTarifa);
+  }
 }

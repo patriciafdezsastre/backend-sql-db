@@ -1,5 +1,7 @@
 package com.staxrt.tutorial.repository;
 
+import java.util.List;
+
 import com.staxrt.tutorial.model.Fotos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,5 +13,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface FotosRepository extends JpaRepository<Fotos, Long> {
-
 }

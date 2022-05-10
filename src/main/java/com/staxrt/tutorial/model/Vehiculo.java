@@ -58,6 +58,15 @@ public class Vehiculo {
 
     }
     
+    public Vehiculo(Long id,String tipo, Double latitud, Double longitud, Boolean libre, Boolean aparcadoOK) {
+        this.id = id;
+        this.tipo = tipo; 
+        this.latitud = latitud;
+        this.longitud = longitud; 
+        this.libre = libre;
+        this.aparcadoOk = aparcadoOK;
+    }
+
     public String getTipo() {
         return this.tipo;
     }

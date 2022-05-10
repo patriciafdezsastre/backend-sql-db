@@ -71,53 +71,16 @@ public class VehiculoController {
     return vehiculo;
   }
 
-  /**
-   * Gets vehiculoss by id.
-   *
-   * @param vehiculoId the vehiculo id
-   * @return the vehiculos by id
-   * @throws ResourceNotFoundException the resource not found exception
-   */
- /*  @GetMapping("/vehiculo/{id}")
-  public ResponseEntity<Vehiculo> dejarVehiculosById(@PathVariable(value = "id") Long vehiculoId)
-      throws ResourceNotFoundException {
-    Vehiculo vehiculo = vehiculoRepository
-        .findById(vehiculoId)
-        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-
-    vehiculo.setLibre(true);
-    final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
-    return ResponseEntity.ok(updatedVehiculo);
-  } */
-
-  @PutMapping("/vehiculo/{id}")
-  public ResponseEntity<Vehiculo> cogerVehiculosById(@PathVariable(value = "id") Long vehiculoId)
-      throws ResourceNotFoundException {
-    Vehiculo vehiculo = vehiculoRepository
-        .findById(vehiculoId)
-        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-
-    vehiculo.setLibre(false);
-    final Vehiculo updatedVehiculo = vehiculoRepository.save(vehiculo);
-    return ResponseEntity.ok(updatedVehiculo);
-  }
-
-  /**
-   * Delete vehiculo map.
-   *
-   * @param vehiculoId the vehiculo id
-   * @return the map
-   * @throws Exception the exception
-   */
-  @DeleteMapping("/vehiculo/{id}")
-  public Map<String, Boolean> deleteVehiculo(@PathVariable(value = "id") Long vehiculoId) throws Exception {
-    Vehiculo vehiculo = vehiculoRepository
-        .findById(vehiculoId)
-        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
-
-    vehiculoRepository.delete(vehiculo);
-    Map<String, Boolean> response = new HashMap<>();
-    response.put("deleted", Boolean.TRUE);
-    return response;
+  @PostMapping("/vehiculo/{tipo}/{latitud}/{longitud}/{libre}/{aparcadoOK}")
+  public void addVMPs(
+    @PathVariable(value = "tipo") String tipo, 
+    @PathVariable(value = "latitud") Double latitud, 
+    @PathVariable(value = "longitud") Double longitud, 
+    @PathVariable(value = "libre") boolean libre, 
+    @PathVariable(value = "aparcadoOK") boolean aparcadoOK) {
+      System.out.println("hello");
+      Long id = vehiculoRepository.count()+1;
+      Vehiculo vehiculo = new Vehiculo(id, tipo, latitud, longitud, libre, aparcadoOK);
+      vehiculoRepository.save(vehiculo);
   }
 }
