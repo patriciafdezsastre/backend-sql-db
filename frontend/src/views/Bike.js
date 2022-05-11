@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
+
 export function Bike({ navigation, route }) {
     const id = route.params.id;
     const tipo = route.params.tipo;
@@ -36,6 +38,7 @@ export function Bike({ navigation, route }) {
             isApiSubscribed = false;
         }
     }, []);
+
     const changeUsado = async () => {
         try {
             const res = await axios.put("http://172.20.10.2:8080/api/v1/vehiculo/" + id);
@@ -43,7 +46,7 @@ export function Bike({ navigation, route }) {
             console.log("error ", error);
         }
     }
-    if (loading) return (
+    if (loading || vehiculo == null) return (
         <View>
             <Text>Loading...</Text>
         </View>

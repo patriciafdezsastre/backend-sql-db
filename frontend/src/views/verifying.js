@@ -5,6 +5,10 @@ import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet, Dimension
 export function verifying({ navigation, route }) {
     const pic = route.params.pic;
     const id = route.params.id;
+    const userId = route.params.userId;
+    const vehId = route.params.vehId;
+
+    const [saldos, setSaldos] = useState(null);
 
     const deleteFoto = async () => {
         try {
@@ -18,6 +22,30 @@ export function verifying({ navigation, route }) {
             console.log("error ", error);
         }
     };
+
+
+    const addSaldo = async () => {
+        try {
+            // cambiar veh a mal aparcado
+            const res = await axios.post("http://172.20.10.2:8080/api/v1/vehiculos/" + vehId);
+            // obtener saldo
+            axios.get("http:172.20.10.2:8080/api/v2/user/saldo/" + userId)
+                .then(ans => setSaldos(ans.data.saldo + 1))
+                .catch(error => { alert("Ha habido un error " + error + " al hacer el get al saldo") })
+            axios.put("http://172.20.10.2:8080/api/v2/user/saldo/" + userId + "/" + saldos)
+                .then("conseguido")
+                .catch(error => { alert("Ha habido un error " + error + " al hacer el put al saldo") })
+
+            if (res.status === 200) {
+                Alert.alert('Foto verificada', ' ', [
+                    { text: 'Ok', onPress: () => navigation.navigate("Admin") }
+                ])
+            }
+
+        } catch (error) {
+            console.log("error ", error);
+        }
+    }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -34,7 +62,7 @@ export function verifying({ navigation, route }) {
                     <TouchableHighlight style={styles.button} onPress={() => deleteFoto()}>
                         <Text style={styles.textButton}>Sí</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.button} onPress={() => deleteFoto()}>
+                    <TouchableHighlight style={styles.button} onPress={() => { deleteFoto(); addSaldo(); }}>
                         <Text style={styles.textButton}>No</Text>
                     </TouchableHighlight>
                 </View>

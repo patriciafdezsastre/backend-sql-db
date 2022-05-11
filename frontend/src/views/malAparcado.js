@@ -13,7 +13,7 @@ export function malAparcado({ navigation, route }) {
     const tipo = route.params.tipo;
     const user_id = route.params.user_id;
     const isAdmin = route.params.isAdmin;
-    
+
     const [imagen64, setImagen64] = useState(null);
 
     useEffect(() => {
@@ -53,6 +53,7 @@ export function malAparcado({ navigation, route }) {
             console.log("error ", error);
         }
     }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>

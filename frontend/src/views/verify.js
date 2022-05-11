@@ -21,10 +21,10 @@ export function verify({navigation, route}) {
         }
     }, []);
 
-    const getPic = (im, id) => {
+    const getPic = (im, id, userId, vehId) => {
         var pic = im.slice(11,-2);
         // console.log(pic);
-        navigation.navigate("verifying", {pic:pic, id:id})
+        navigation.navigate("verifying", {pic:pic, id:id, userId, vehId})
     }
 
     if (loading) return (
@@ -46,7 +46,7 @@ export function verify({navigation, route}) {
                 <View style={styles.info}>
                     <Text style={styles.texto}>Fotos en total: {fotos.length}</Text>
                     {fotos.map((pic) => (
-                        <TouchableHighlight onPress={() => getPic(pic.imagen, pic.id)}>
+                        <TouchableHighlight onPress={() => getPic(pic.imagen, pic.id, pic.user_id, pic.vehiculo_id)}>
                             <View style={{ height: 60, }}>
                                 
                                 <Text style={styles.texto2}>Foto </Text>

@@ -18,30 +18,34 @@ export function Patinete({ navigation, route }) {
     useEffect(() => {
         let isApiSubscribed = true;
         axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id).then((response) => {
-
             if (isApiSubscribed) {
                 setVehiculo(response.data);
                 console.log(vehiculo);
                 setLoading(false);
-
             }
         });
         axios.get("http://172.20.10.2:8080/api/v1/tarifas/" + tipo).then((response) => {
             if (isApiSubscribed) {
                 setPrecio(response.data);
-                console.log(precio)
             }
         })
         axios.get("http://172.20.10.2:8080/api/v1/fotos/" + id).then((response) => {
             if (isApiSubscribed) {
                 setIsFotoAlready(response.data);
-                console.log(isFotoAlready)
             }
         })
         return () => {
             isApiSubscribed = false;
         }
     }, []);
+
+    const changeUsado = async () => {
+        try {
+            const res = await axios.put("http://172.20.10.2:8080/api/v1/vehiculo/" + id);
+        } catch (error) {
+            console.log("error ", error);
+        }
+    }
 
     if (loading && vehiculo == null) return (
         <View>
@@ -78,7 +82,7 @@ export function Patinete({ navigation, route }) {
                         }
                         <TouchableHighlight style={styles.button} onPress={() => {
                             navigation.navigate("encurso", { id: id, user_id: user_id });
-                            changeLibre();
+                            changeUsado();
                         }}>
                             <Text style={styles.textButton}>Utilizar</Text>
                         </TouchableHighlight>

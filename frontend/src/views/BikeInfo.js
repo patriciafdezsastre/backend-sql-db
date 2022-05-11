@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { View, Text, TextInput, TouchableHighlight, Image, StyleSheet } from 'react-native';
 
-export function BikeInfo({navigation, route}) {
+export function BikeInfo({ navigation, route }) {
     const id = route.params.id;
     const tipo = route.params.tipo;
 
@@ -14,7 +14,7 @@ export function BikeInfo({navigation, route}) {
     // get info
     useEffect(() => {
         let isApiSubscribed = true;
-        axios.get("http://172.20.10.2:8080/api/v1/vehiculo/"+id).then((response) => {
+        axios.get("http://172.20.10.2:8080/api/v1/vehiculo/" + id).then((response) => {
             if (isApiSubscribed) {
                 setVehiculo(response.data);
                 setLoading(false);
@@ -50,8 +50,8 @@ export function BikeInfo({navigation, route}) {
                     <Image style={{ top: 20, left: 20, width: 150, height: 150, alignItems: 'center' }} source={require('../assets/bike.png')} />
                     <View style={styles.info}>
                         {vehiculo.aparcadoOk ? <Text></Text> :
-                            <View style={{flexDirection:'row', alignItems:'center'}}>
-                                <Image style={{ width: 25, height: 25}} source={require('../assets/mal.png')} />
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Image style={{ width: 25, height: 25 }} source={require('../assets/mal.png')} />
                                 <Text style={styles.mal}>¡Mal aparcado!</Text>
                             </View>
                         }
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     },
     info: {
         // left: 70,
-        alignItems:'center',
+        alignItems: 'center',
         top: 70,
         marginBottom: 20
     },

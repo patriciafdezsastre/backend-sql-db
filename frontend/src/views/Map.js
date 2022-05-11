@@ -109,13 +109,13 @@ export function Map({ navigation, route }) {
                         mapType="standard"
                         showsUserLocation={true}
                     >
-                        <Marker
+                        {/* <Marker
                             coordinate={{
                                 latitude: Location.latitude,
                                 longitude: Location.longitude
                             }}
                             draggable
-                        />
+                        /> */}
                         {MARKERS_DATA.map((marker) => (
                             <Marker
                                 key={marker.id}
@@ -123,11 +123,16 @@ export function Map({ navigation, route }) {
                                     latitude: marker.latitud,
                                     longitude: marker.longitud,
                                 }}
-                                onPress={() => marker.libre ?
-                                    (marker.tipo === "bike" ?
-                                        navigation.navigate("BikeInfo", { id: marker.id, tipo: marker.tipo }) :
-                                        navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo })
-                                    ) : navigation.navigate("noDisponible")}
+                                // onPress={() => {getDistance(marker.latitud, marker.longitud);
+                                onPress={() => {
+                                    {
+                                        marker.libre ?
+                                        (marker.tipo === "bike" ?
+                                            navigation.navigate("BikeInfo", { id: marker.id, tipo: marker.tipo, }) :
+                                            navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo })
+                                        ) : navigation.navigate("noDisponible")
+                                    }
+                                }}
                                 style={styles.marker}
                             // opacity={marker.libre ? 1.0 : 0.0}
                             >
@@ -193,8 +198,8 @@ export function Map({ navigation, route }) {
                                 }}
                                 onPress={() => marker.libre ?
                                     (marker.tipo === "bike" ?
-                                        navigation.navigate("BikeInfo", { id: marker.id, tipo: marker.tipo }) :
-                                        navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo })
+                                        navigation.navigate("BikeInfo", { id: marker.id, tipo: marker.tipo, location: getCurrentLocation() }) :
+                                        navigation.navigate("PatineteInfo", { id: marker.id, tipo: marker.tipo, location: getCurrentLocation() })
                                     ) : navigation.navigate("noDisponible")}
                                 style={styles.marker}
                             // opacity={marker.libre ? 1.0 : 0.0}

@@ -159,4 +159,13 @@ public class VehiculoController {
         .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
     vehiculoRepository.delete(vehiculo);
   }
+
+  @PostMapping("/vehiculo/{id}")
+  public void changeAparcadoOk(@PathVariable(value = "id") Long vehiculoId) throws ResourceNotFoundException {
+    Vehiculo vehiculo = vehiculoRepository
+        .findById(vehiculoId)
+        .orElseThrow(() -> new ResourceNotFoundException("Vehiculo not found on :: " + vehiculoId));
+    vehiculo.setAparcadoOk(false);
+    vehiculoRepository.save(vehiculo);
+  }
 }

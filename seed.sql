@@ -11,5 +11,15 @@ INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 INSERT INTO `users_database`.`users` (`email`, `password`, `username`, `saldo`) VALUES ('laura@gmail.com','$2a$10$LkB/VZzE9MoFuKPAMTrfX.FBYuGFi6rK86me0d7Rty5VENTLQopcq', 'laaura_fg', 0);
 INSERT INTO `users_database`.`user_roles` (`user_id`, `role_id`) VALUES (1, 3);
 
+INSERT INTO `users_database`.`zona` ( `latitud`, `longitud`) VALUES ('40.47294', '-3.68194');
+INSERT INTO `users_database`.`zona` ( `latitud`, `longitud`) VALUES ('40.44817', '-3.70416');
+INSERT INTO `users_database`.`zona` ( `latitud`, `longitud`) VALUES ('40.43899', '-3.70368');
+INSERT INTO `users_database`.`zona` ( `latitud`, `longitud`) VALUES ('40.43179', '-3.73107');
+INSERT INTO `users_database`.`zona` ( `latitud`, `longitud`) VALUES ('40.43167', '-3.73171');
+INSERT INTO `users_database`.`zona` ( `latitud`, `longitud`) VALUES ('40.42874', '-3.68397');
+INSERT INTO `users_database`.`zona` (`latitud`, `longitud`) VALUES ('40.42213', '-3.69758');
+INSERT INTO `users_database`.`zona` (`latitud`, `longitud`) VALUES ('40.41835', '-3.71206');
+INSERT INTO `users_database`.`zona` (`latitud`, `longitud`) VALUES ('40.40418', '-3.70111');
+INSERT INTO `users_database`.`zona` (`latitud`, `longitud`) VALUES ('40.40284', '-3.70115');
 
 
