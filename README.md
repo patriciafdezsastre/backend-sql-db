@@ -24,6 +24,8 @@ create database users_database
 
 + change `spring.datasource.username` and `spring.datasource.password` as per your mysql installation
 
+To run the application, you have to search the direction IP 127.20.10.2 and change it for the device's IP.
+
 **4. Build and run the app**
 
 ```bash
